@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[oc]
+*.pyc
+*.egg-info
+build/
+dist/
+wheels/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+.venv-abides/
+
+# Personal / internal docs
+.claude/
+HANDOFF.md
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+
+# ABIDES simulation logs (regenerable, large)
+log/
+vendor/abides-sim/__pycache__/
+vendor/abides-sim/test_output/
+vendor/abides-sim/log/
+vendor/abides-sim/**/__pycache__/
+
+# Raw proprietary market data (symlink to external drive)
+data/raw_link/
+data/processed/
+
+# Synthetic LOB episode parquets (regenerable from scripts/)
+data/synthetic/aapl/episode_seed*.parquet
+data/synthetic/aapl/episode_seed*.facts.json
+data/synthetic/multi_ticker/*_episodes/
+
+# Keep summary JSONs (small, reproducibility)
+!data/synthetic/herder_params.json
+!data/synthetic/calib_results.json
+!data/synthetic/calib_results.csv
+!data/synthetic/calib_stage3_results.json
+!data/synthetic/calib_stage4_results.json
+!data/synthetic/calib_stage5_results.json
+!data/synthetic/herder_smoke_test.json
+!data/synthetic/aapl/batch_summary.json
+!data/synthetic/aapl/pilot_summary.json
+!data/synthetic/multi_ticker/*_step0.json
+!data/synthetic/multi_ticker/multi_ticker_summary.json
+
+# Streamlit cache
+.streamlit/cache/
+
+# Jupyter
+.ipynb_checkpoints/
