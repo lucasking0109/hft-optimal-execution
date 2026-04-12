@@ -1,0 +1,68 @@
+{
+  "timestamp_et": "2026-05-04T13:58:56.169803-05:00",
+  "params": {
+    "num_noise": 350,
+    "fund_vol": 0.001,
+    "mm": "aggressive",
+    "num_momentum": 25,
+    "num_obi": 50,
+    "num_herder": 50,
+    "herder_max_size": 7
+  },
+  "seed": 1234,
+  "runtime_s": 341.41210266703274,
+  "pilot_facts_summary": {
+    "excess_kurtosis": 126.00797237687067,
+    "hill_tail_index": 1.1878544648488485,
+    "vol_autocorr_lag_1": 0.10152208939180733,
+    "vol_autocorr_lag_10": 0.5875482251043131,
+    "vol_autocorr_lag_50": 0.12890778178343834,
+    "spread_bps_median": 1.2671830068439478,
+    "spread_bps_p95": 224.8355319221461,
+    "trade_size_median": 4.0,
+    "trade_size_p95": 9.0,
+    "n_returns": 899,
+    "n_spread_obs": 118671,
+    "n_trades": 69436
+  },
+  "real_facts_summary": {
+    "excess_kurtosis": 16.35319084072168,
+    "hill_tail_index": 3.8499957873162827,
+    "vol_autocorr_lag_1": 0.26883956685455684,
+    "vol_autocorr_lag_10": 0.18075280182081094,
+    "vol_autocorr_lag_50": 0.1374770818117086,
+    "spread_bps_median": 0.6420958006928794,
+    "spread_bps_p95": 1.283573468535238,
+    "trade_size_median": 71.0,
+    "trade_size_p95": 300.0,
+    "n_returns": 23399,
+    "n_spread_obs": 431291,
+    "n_trades": 246275
+  },
+  "distances": {
+    "kurtosis_ratio": 7.705405850404044,
+    "hill_ratio": 0.30853396483243073,
+    "spread_ks_dist": 0.4658465301979424,
+    "spread_ks_pvalue": 0.0,
+    "spread_wass": 39.653720269926794,
+    "trade_size_ks_dist": 0.7664140955142623,
+    "trade_size_ks_pvalue": 0.0,
+    "autocorr_l2": 1.670017626138545
+  },
+  "total_distance": 3.076864586429138,
+  "stage4_404_reference": {
+    "autocorr_l2": 1.902,
+    "kurtosis_ratio": 2.03,
+    "total_distance": 2.436
+  },
+  "drifts": {
+    "autocorr_l2_pct": 0.12196759929624333,
+    "kurtosis_ratio_pct": 2.7957664287704653
+  },
+  "go_no_go": {
+    "autocorr_ok": true,
+    "kurt_ok": false,
+    "runtime_ok": true,
+    "overall_pass": false
+  }
+}

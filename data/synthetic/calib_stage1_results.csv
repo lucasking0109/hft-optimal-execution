@@ -1,0 +1,4 @@
+cell,num_noise,fund_vol,mm,success,runtime_s,total_dist,kurtosis_ratio,hill_ratio,spread_ks,trade_size_ks,autocorr_l2
+101,500,0.001,aggressive,true,18.7,2.332,2.39,0.63,0.691,0.643,1.893
+102,500,0.001,aggressive,true,76.3,2.631,3.37,0.43,0.579,0.762,2.074
+103,500,0.001,aggressive,false,300.0,,,,,,

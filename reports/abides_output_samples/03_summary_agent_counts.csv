@@ -1,0 +1,6 @@
+AgentStrategy,count
+NoiseAgent,20000
+ValueAgent,400
+MomentumAgent,75
+AdaptivePOVMarketMakerAgent,6
+ExecutionAgent,3

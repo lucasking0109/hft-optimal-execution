@@ -1,0 +1,1965 @@
+{
+  "timestamp_et": "2026-05-04T16:18:39.634944-05:00",
+  "n_episodes": 100,
+  "n_success": 89,
+  "n_failed": 11,
+  "total_runtime_s": 2088.017411582987,
+  "params": {
+    "num_noise": 350,
+    "fund_vol": 0.001,
+    "mm": "aggressive",
+    "num_momentum": 25,
+    "num_obi": 50,
+    "num_herder": 50,
+    "herder_max_size": 7
+  },
+  "herder_threshold_bps": 1.1212288670555184,
+  "seed_base": 1000,
+  "aggregate_facts": {
+    "n_success": 89,
+    "n_total": 100,
+    "excess_kurtosis": {
+      "median": 58.224364699135975,
+      "iqr_low": 45.66212938840404,
+      "iqr_high": 114.89949925511017,
+      "min": 15.97106454553931,
+      "max": 298.97784522122816
+    },
+    "hill_tail_index": {
+      "median": 1.1475079020641874,
+      "iqr_low": 0.8917945163175923,
+      "iqr_high": 1.7385660183423293,
+      "min": 0.3267307860264276,
+      "max": 57.11286480097846
+    },
+    "vol_autocorr_lag_1": {
+      "median": 0.024424440610140822,
+      "iqr_low": 0.0008971107928177632,
+      "iqr_high": 0.10257187421744057,
+      "min": -0.020141723934590246,
+      "max": 0.6756735181743041
+    },
+    "vol_autocorr_lag_10": {
+      "median": 0.6857282026161428,
+      "iqr_low": 0.37189013176181374,
+      "iqr_high": 0.8304851073423821,
+      "min": -0.014565062864548388,
+      "max": 0.9377160736730831
+    },
+    "vol_autocorr_lag_50": {
+      "median": 0.22336560288287194,
+      "iqr_low": 0.03827761669410332,
+      "iqr_high": 0.39380580546711585,
+      "min": -0.007834991862076647,
+      "max": 0.8286199040742341
+    },
+    "spread_bps_median": {
+      "median": 1.3046800738076156,
+      "iqr_low": 0.5610818606580857,
+      "iqr_high": 2.9641287928275335,
+      "min": 0.0443915100349228,
+      "max": 18.338352250791445
+    },
+    "spread_bps_p95": {
+      "median": 221.7450527070838,
+      "iqr_low": 49.846836640415326,
+      "iqr_high": 417.74494762679427,
+      "min": 1.67982012732333,
+      "max": 1060.8699353023871
+    },
+    "trade_size_median": {
+      "median": 5.0,
+      "iqr_low": 5.0,
+      "iqr_high": 6.0,
+      "min": 3.0,
+      "max": 7.0
+    },
+    "trade_size_p95": {
+      "median": 31.0,
+      "iqr_low": 26.0,
+      "iqr_high": 34.0,
+      "min": 9.0,
+      "max": 39.0
+    },
+    "n_returns": {
+      "median": 299.0,
+      "iqr_low": 299.0,
+      "iqr_high": 299.0,
+      "min": 299.0,
+      "max": 299.0
+    },
+    "n_spread_obs": {
+      "median": 34100.0,
+      "iqr_low": 32821.0,
+      "iqr_high": 36003.0,
+      "min": 32141.0,
+      "max": 39829.0
+    },
+    "n_trades": {
+      "median": 16552.0,
+      "iqr_low": 15722.0,
+      "iqr_high": 18210.0,
+      "min": 15068.0,
+      "max": 25244.0
+    }
+  },
+  "per_episode": [
+    {
+      "seed": 1000,
+      "success": true,
+      "runtime_s": 29.941774624981917,
+      "facts_summary": {
+        "excess_kurtosis": 168.20201951736408,
+        "hill_tail_index": 0.7533738163511322,
+        "vol_autocorr_lag_1": 0.07387424128000739,
+        "vol_autocorr_lag_10": 0.08317246608929167,
+        "vol_autocorr_lag_50": 0.02085785877820955,
+        "spread_bps_median": 2.43340561442936,
+        "spread_bps_p95": 124.39295783600382,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 20.0,
+        "n_returns": 299,
+        "n_spread_obs": 37084,
+        "n_trades": 18466
+      },
+      "error": null
+    },
+    {
+      "seed": 1001,
+      "success": true,
+      "runtime_s": 27.0727304170141,
+      "facts_summary": {
+        "excess_kurtosis": 298.97784522122816,
+        "hill_tail_index": 0.5061496512745411,
+        "vol_autocorr_lag_1": -0.0006029486487067965,
+        "vol_autocorr_lag_10": -0.00013305505832401793,
+        "vol_autocorr_lag_50": -0.0006820416794339173,
+        "spread_bps_median": 0.0443915100349228,
+        "spread_bps_p95": 1.67982012732333,
+        "trade_size_median": 4.0,
+        "trade_size_p95": 20.0,
+        "n_returns": 299,
+        "n_spread_obs": 38548,
+        "n_trades": 25244
+      },
+      "error": null
+    },
+    {
+      "seed": 1002,
+      "success": true,
+      "runtime_s": 27.399807292036712,
+      "facts_summary": {
+        "excess_kurtosis": 229.1425699013634,
+        "hill_tail_index": 0.5348474087647381,
+        "vol_autocorr_lag_1": 0.10223775200828,
+        "vol_autocorr_lag_10": 0.004718612574644942,
+        "vol_autocorr_lag_50": -0.004266801075789634,
+        "spread_bps_median": 0.9236351641101765,
+        "spread_bps_p95": 52.69596236704652,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 24.0,
+        "n_returns": 299,
+        "n_spread_obs": 36289,
+        "n_trades": 17290
+      },
+      "error": null
+    },
+    {
+      "seed": 1003,
+      "success": true,
+      "runtime_s": 23.38748991698958,
+      "facts_summary": {
+        "excess_kurtosis": 214.92448756363228,
+        "hill_tail_index": 0.845808838509293,
+        "vol_autocorr_lag_1": 0.3511853977975587,
+        "vol_autocorr_lag_10": 0.0038745440156497707,
+        "vol_autocorr_lag_50": 0.012133652676730182,
+        "spread_bps_median": 0.08621071870181436,
+        "spread_bps_p95": 33.068609491215824,
+        "trade_size_median": 7.0,
+        "trade_size_p95": 28.0,
+        "n_returns": 299,
+        "n_spread_obs": 33958,
+        "n_trades": 16754
+      },
+      "error": null
+    },
+    {
+      "seed": 1004,
+      "success": true,
+      "runtime_s": 22.683575583039783,
+      "facts_summary": {
+        "excess_kurtosis": 33.52190228759479,
+        "hill_tail_index": 1.7617214230803517,
+        "vol_autocorr_lag_1": 0.0035330292538057074,
+        "vol_autocorr_lag_10": 0.8676916334230066,
+        "vol_autocorr_lag_50": 0.6610871066711769,
+        "spread_bps_median": 5.2799577603379175,
+        "spread_bps_p95": 300.3516406659802,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 35.0,
+        "n_returns": 299,
+        "n_spread_obs": 33780,
+        "n_trades": 15562
+      },
+      "error": null
+    },
+    {
+      "seed": 1005,
+      "success": true,
+      "runtime_s": 18.865525375003926,
+      "facts_summary": {
+        "excess_kurtosis": 44.810432387779294,
+        "hill_tail_index": 1.3552897782114428,
+        "vol_autocorr_lag_1": 0.10506553259819212,
+        "vol_autocorr_lag_10": 0.8975432705855272,
+        "vol_autocorr_lag_50": 0.3641762538707505,
+        "spread_bps_median": 1.3856995803309842,
+        "spread_bps_p95": 703.1594811346143,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 32.0,
+        "n_returns": 299,
+        "n_spread_obs": 32613,
+        "n_trades": 15402
+      },
+      "error": null
+    },
+    {
+      "seed": 1006,
+      "success": true,
+      "runtime_s": 19.189898625016212,
+      "facts_summary": {
+        "excess_kurtosis": 113.20690455801251,
+        "hill_tail_index": 0.597267293704346,
+        "vol_autocorr_lag_1": 0.011221774585287735,
+        "vol_autocorr_lag_10": 0.557369748641057,
+        "vol_autocorr_lag_50": 0.18220345723823622,
+        "spread_bps_median": 0.4847897224578839,
+        "spread_bps_p95": 146.20986722323372,
+        "trade_size_median": 4.0,
+        "trade_size_p95": 30.0,
+        "n_returns": 299,
+        "n_spread_obs": 32635,
+        "n_trades": 15720
+      },
+      "error": null
+    },
+    {
+      "seed": 1007,
+      "success": true,
+      "runtime_s": 23.4678145829821,
+      "facts_summary": {
+        "excess_kurtosis": 114.89949925511017,
+        "hill_tail_index": 0.6018351867276223,
+        "vol_autocorr_lag_1": 0.028879373536619596,
+        "vol_autocorr_lag_10": -0.009494772266915894,
+        "vol_autocorr_lag_50": 0.008591868882149807,
+        "spread_bps_median": 0.1165727131501383,
+        "spread_bps_p95": 25.333457144748028,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 26.0,
+        "n_returns": 299,
+        "n_spread_obs": 36003,
+        "n_trades": 19190
+      },
+      "error": null
+    },
+    {
+      "seed": 1008,
+      "success": true,
+      "runtime_s": 18.32282254192978,
+      "facts_summary": {
+        "excess_kurtosis": 28.592103397290376,
+        "hill_tail_index": 3.1855872493659354,
+        "vol_autocorr_lag_1": 0.27394201245345823,
+        "vol_autocorr_lag_10": 0.34612674607473337,
+        "vol_autocorr_lag_50": 0.4423713588722477,
+        "spread_bps_median": 0.0999645125980277,
+        "spread_bps_p95": 7.003641893784769,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 36.0,
+        "n_returns": 299,
+        "n_spread_obs": 32642,
+        "n_trades": 15848
+      },
+      "error": null
+    },
+    {
+      "seed": 1009,
+      "success": true,
+      "runtime_s": 22.456468707998283,
+      "facts_summary": {
+        "excess_kurtosis": 39.96421525693067,
+        "hill_tail_index": 1.6264303546698435,
+        "vol_autocorr_lag_1": 0.08981864498308618,
+        "vol_autocorr_lag_10": 0.9232832392867673,
+        "vol_autocorr_lag_50": 0.38072497025949414,
+        "spread_bps_median": 3.6529319715466215,
+        "spread_bps_p95": 408.59366741692384,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 32.0,
+        "n_returns": 299,
+        "n_spread_obs": 34595,
+        "n_trades": 17466
+      },
+      "error": null
+    },
+    {
+      "seed": 1010,
+      "success": true,
+      "runtime_s": 26.03199383302126,
+      "facts_summary": {
+        "excess_kurtosis": 46.82019402262796,
+        "hill_tail_index": 0.9437638676491764,
+        "vol_autocorr_lag_1": 0.015196129276367496,
+        "vol_autocorr_lag_10": 0.7472847188353212,
+        "vol_autocorr_lag_50": 0.44920257900945953,
+        "spread_bps_median": 2.4840622544860147,
+        "spread_bps_p95": 407.06961792958714,
+        "trade_size_median": 4.0,
+        "trade_size_p95": 24.0,
+        "n_returns": 299,
+        "n_spread_obs": 37106,
+        "n_trades": 21258
+      },
+      "error": null
+    },
+    {
+      "seed": 1011,
+      "success": true,
+      "runtime_s": 34.55402245791629,
+      "facts_summary": {
+        "excess_kurtosis": 120.4611966838633,
+        "hill_tail_index": 1.7385660183423293,
+        "vol_autocorr_lag_1": 0.13507733566936858,
+        "vol_autocorr_lag_10": 0.039300031099954266,
+        "vol_autocorr_lag_50": 0.1433896015426402,
+        "spread_bps_median": 0.5871177967985305,
+        "spread_bps_p95": 300.99580421218445,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 9.0,
+        "n_returns": 299,
+        "n_spread_obs": 39829,
+        "n_trades": 25212
+      },
+      "error": null
+    },
+    {
+      "seed": 1012,
+      "success": true,
+      "runtime_s": 26.759652083041146,
+      "facts_summary": {
+        "excess_kurtosis": 60.71967689313909,
+        "hill_tail_index": 0.9540804038029301,
+        "vol_autocorr_lag_1": -0.00822599332492369,
+        "vol_autocorr_lag_10": 0.784969364304079,
+        "vol_autocorr_lag_50": 0.03827761669410332,
+        "spread_bps_median": 2.5826164089513486,
+        "spread_bps_p95": 330.4571051245335,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 26.0,
+        "n_returns": 299,
+        "n_spread_obs": 36319,
+        "n_trades": 20024
+      },
+      "error": null
+    },
+    {
+      "seed": 1013,
+      "success": true,
+      "runtime_s": 22.768424000008963,
+      "facts_summary": {
+        "excess_kurtosis": 103.45808726008964,
+        "hill_tail_index": 0.7941950026675884,
+        "vol_autocorr_lag_1": 0.03046809601402991,
+        "vol_autocorr_lag_10": 0.6975791345290495,
+        "vol_autocorr_lag_50": 0.15899357206948544,
+        "spread_bps_median": 3.7835517364319653,
+        "spread_bps_p95": 423.81939395126017,
+        "trade_size_median": 3.0,
+        "trade_size_p95": 33.0,
+        "n_returns": 299,
+        "n_spread_obs": 34014,
+        "n_trades": 16192
+      },
+      "error": null
+    },
+    {
+      "seed": 1014,
+      "success": true,
+      "runtime_s": 30.29444487497676,
+      "facts_summary": {
+        "excess_kurtosis": 58.224364699135975,
+        "hill_tail_index": 0.9212722702797658,
+        "vol_autocorr_lag_1": 0.05097968011626202,
+        "vol_autocorr_lag_10": 0.753057103299609,
+        "vol_autocorr_lag_50": 0.06990917423115384,
+        "spread_bps_median": 2.666615873983353,
+        "spread_bps_p95": 764.0011648124464,
+        "trade_size_median": 4.0,
+        "trade_size_p95": 24.0,
+        "n_returns": 299,
+        "n_spread_obs": 37985,
+        "n_trades": 19720
+      },
+      "error": null
+    },
+    {
+      "seed": 1015,
+      "success": true,
+      "runtime_s": 14.485694541945122,
+      "facts_summary": {
+        "excess_kurtosis": 29.44076865127564,
+        "hill_tail_index": 5.445445084984588,
+        "vol_autocorr_lag_1": 0.3158761457855288,
+        "vol_autocorr_lag_10": 0.3911076777470739,
+        "vol_autocorr_lag_50": 0.19741356328415602,
+        "spread_bps_median": 0.09790723289683026,
+        "spread_bps_p95": 12.270997306132623,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 35.0,
+        "n_returns": 299,
+        "n_spread_obs": 33706,
+        "n_trades": 18210
+      },
+      "error": null
+    },
+    {
+      "seed": 1016,
+      "success": true,
+      "runtime_s": 18.879164166050032,
+      "facts_summary": {
+        "excess_kurtosis": 144.8616830090676,
+        "hill_tail_index": 0.6538974932527315,
+        "vol_autocorr_lag_1": 0.0185462785021394,
+        "vol_autocorr_lag_10": 0.5304891787679253,
+        "vol_autocorr_lag_50": 0.09183510194305598,
+        "spread_bps_median": 0.6825905285688514,
+        "spread_bps_p95": 161.0716148335209,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 36.0,
+        "n_returns": 299,
+        "n_spread_obs": 32811,
+        "n_trades": 15802
+      },
+      "error": null
+    },
+    {
+      "seed": 1017,
+      "success": true,
+      "runtime_s": 23.68655199999921,
+      "facts_summary": {
+        "excess_kurtosis": 289.0757757489835,
+        "hill_tail_index": 0.6645397541570129,
+        "vol_autocorr_lag_1": 0.1151612746407716,
+        "vol_autocorr_lag_10": 0.0066577126341033546,
+        "vol_autocorr_lag_50": -0.0013035961262843412,
+        "spread_bps_median": 0.4149913312921908,
+        "spread_bps_p95": 33.017868944066095,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 24.0,
+        "n_returns": 299,
+        "n_spread_obs": 36324,
+        "n_trades": 20504
+      },
+      "error": null
+    },
+    {
+      "seed": 1018,
+      "success": true,
+      "runtime_s": 21.95357629202772,
+      "facts_summary": {
+        "excess_kurtosis": 38.1291622629889,
+        "hill_tail_index": 1.4542059432756966,
+        "vol_autocorr_lag_1": -0.0068343708323795405,
+        "vol_autocorr_lag_10": 0.8507623626808384,
+        "vol_autocorr_lag_50": 0.408540707201605,
+        "spread_bps_median": 2.059197011222624,
+        "spread_bps_p95": 96.69661194014628,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 32.0,
+        "n_returns": 299,
+        "n_spread_obs": 33685,
+        "n_trades": 16138
+      },
+      "error": null
+    },
+    {
+      "seed": 1019,
+      "success": false,
+      "runtime_s": 1.0164469999726862,
+      "facts_summary": null,
+      "error": "is/vendor/abides-sim/config/calib_aapl.py\", line 494, in <module>\n    kernel.runner(agents=agents,\n  File \"/Users/lucasking/Projects/HFT Date Analysis/vendor/abides-sim/Kernel.py\", line 259, in runner\n    agents[agent].receiveMessage(self.currentTime, msg)\n  File \"/Users/lucasking/Projects/HFT Date Analysis/vendor/abides-sim/agent/market_makers/AdaptiveMarketMakerAgent.py\", line 168, in receiveMessage\n    self.placeOrders(mid)\nUnboundLocalError: local variable 'mid' referenced before assignment\n"
+    },
+    {
+      "seed": 1020,
+      "success": true,
+      "runtime_s": 20.721497958991677,
+      "facts_summary": {
+        "excess_kurtosis": 72.76382736900612,
+        "hill_tail_index": 1.14987200193752,
+        "vol_autocorr_lag_1": 0.01501386653253141,
+        "vol_autocorr_lag_10": 0.7544745883881976,
+        "vol_autocorr_lag_50": 0.3804030075161451,
+        "spread_bps_median": 6.023820280631454,
+        "spread_bps_p95": 258.5298982385989,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 34.0,
+        "n_returns": 299,
+        "n_spread_obs": 33372,
+        "n_trades": 15120
+      },
+      "error": null
+    },
+    {
+      "seed": 1021,
+      "success": true,
+      "runtime_s": 23.161002542008646,
+      "facts_summary": {
+        "excess_kurtosis": 52.83832609361764,
+        "hill_tail_index": 1.0808212601819762,
+        "vol_autocorr_lag_1": -0.006199478711287827,
+        "vol_autocorr_lag_10": 0.8381901399413718,
+        "vol_autocorr_lag_50": 0.4246075810491095,
+        "spread_bps_median": 1.9549577729121053,
+        "spread_bps_p95": 450.7111615742681,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 30.0,
+        "n_returns": 299,
+        "n_spread_obs": 34100,
+        "n_trades": 16754
+      },
+      "error": null
+    },
+    {
+      "seed": 1022,
+      "success": true,
+      "runtime_s": 19.408800040953793,
+      "facts_summary": {
+        "excess_kurtosis": 57.63988483038116,
+        "hill_tail_index": 2.059849305479707,
+        "vol_autocorr_lag_1": -0.010606649271277623,
+        "vol_autocorr_lag_10": 0.8105735406416303,
+        "vol_autocorr_lag_50": 0.35086376300345606,
+        "spread_bps_median": 1.9472481211373784,
+        "spread_bps_p95": 379.43602814577855,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 35.0,
+        "n_returns": 299,
+        "n_spread_obs": 32615,
+        "n_trades": 15700
+      },
+      "error": null
+    },
+    {
+      "seed": 1023,
+      "success": true,
+      "runtime_s": 19.80055245803669,
+      "facts_summary": {
+        "excess_kurtosis": 25.827149072521713,
+        "hill_tail_index": 3.008660093893351,
+        "vol_autocorr_lag_1": -0.010418131951149262,
+        "vol_autocorr_lag_10": 0.917484391188945,
+        "vol_autocorr_lag_50": 0.8286199040742341,
+        "spread_bps_median": 1.5726688653194136,
+        "spread_bps_p95": 34.76107711721149,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 33.0,
+        "n_returns": 299,
+        "n_spread_obs": 32745,
+        "n_trades": 15290
+      },
+      "error": null
+    },
+    {
+      "seed": 1024,
+      "success": true,
+      "runtime_s": 28.06040037504863,
+      "facts_summary": {
+        "excess_kurtosis": 88.35832458451495,
+        "hill_tail_index": 1.1548755022410397,
+        "vol_autocorr_lag_1": 0.004189994387951705,
+        "vol_autocorr_lag_10": 0.6569453247187502,
+        "vol_autocorr_lag_50": 0.28083967328158826,
+        "spread_bps_median": 0.2002703649927402,
+        "spread_bps_p95": 209.31823048953754,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 20.0,
+        "n_returns": 299,
+        "n_spread_obs": 37508,
+        "n_trades": 22732
+      },
+      "error": null
+    },
+    {
+      "seed": 1025,
+      "success": true,
+      "runtime_s": 20.15654304099735,
+      "facts_summary": {
+        "excess_kurtosis": 68.73889232431836,
+        "hill_tail_index": 1.1031774954830393,
+        "vol_autocorr_lag_1": 0.2554175658215431,
+        "vol_autocorr_lag_10": 0.6863521376949947,
+        "vol_autocorr_lag_50": 0.15961340178702382,
+        "spread_bps_median": 2.4776271709248774,
+        "spread_bps_p95": 316.3848505504476,
+        "trade_size_median": 4.0,
+        "trade_size_p95": 34.0,
+        "n_returns": 299,
+        "n_spread_obs": 32930,
+        "n_trades": 15342
+      },
+      "error": null
+    },
+    {
+      "seed": 1026,
+      "success": true,
+      "runtime_s": 19.547884290921502,
+      "facts_summary": {
+        "excess_kurtosis": 52.294099589884055,
+        "hill_tail_index": 1.7098827263335779,
+        "vol_autocorr_lag_1": 0.01377320991291945,
+        "vol_autocorr_lag_10": 0.7057700201001135,
+        "vol_autocorr_lag_50": 0.7061196730553867,
+        "spread_bps_median": 3.8202689193546098,
+        "spread_bps_p95": 188.85632320345763,
+        "trade_size_median": 7.0,
+        "trade_size_p95": 33.0,
+        "n_returns": 299,
+        "n_spread_obs": 32447,
+        "n_trades": 15270
+      },
+      "error": null
+    },
+    {
+      "seed": 1027,
+      "success": true,
+      "runtime_s": 27.54242112499196,
+      "facts_summary": {
+        "excess_kurtosis": 122.49430638568839,
+        "hill_tail_index": 0.8789267162468346,
+        "vol_autocorr_lag_1": 0.0008971107928177632,
+        "vol_autocorr_lag_10": 0.5797957219375471,
+        "vol_autocorr_lag_50": 0.23012877826012,
+        "spread_bps_median": 1.0104953723905106,
+        "spread_bps_p95": 133.8311096138637,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 25.0,
+        "n_returns": 299,
+        "n_spread_obs": 36823,
+        "n_trades": 19908
+      },
+      "error": null
+    },
+    {
+      "seed": 1028,
+      "success": true,
+      "runtime_s": 28.044160624966025,
+      "facts_summary": {
+        "excess_kurtosis": 240.52568396637264,
+        "hill_tail_index": 0.6194861673823099,
+        "vol_autocorr_lag_1": 0.03264157388106252,
+        "vol_autocorr_lag_10": 0.07199192937061225,
+        "vol_autocorr_lag_50": 0.00918202437203747,
+        "spread_bps_median": 0.24988348236106572,
+        "spread_bps_p95": 221.7450527070838,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 20.0,
+        "n_returns": 299,
+        "n_spread_obs": 37531,
+        "n_trades": 21888
+      },
+      "error": null
+    },
+    {
+      "seed": 1029,
+      "success": true,
+      "runtime_s": 22.845643042004667,
+      "facts_summary": {
+        "excess_kurtosis": 71.58740872116728,
+        "hill_tail_index": 0.9396800770667142,
+        "vol_autocorr_lag_1": -0.002155366682933899,
+        "vol_autocorr_lag_10": 0.7895525895943432,
+        "vol_autocorr_lag_50": 0.18705339273022176,
+        "spread_bps_median": 1.2645852889820575,
+        "spread_bps_p95": 591.907410766882,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 26.0,
+        "n_returns": 299,
+        "n_spread_obs": 34571,
+        "n_trades": 17288
+      },
+      "error": null
+    },
+    {
+      "seed": 1030,
+      "success": true,
+      "runtime_s": 16.513432125095278,
+      "facts_summary": {
+        "excess_kurtosis": 15.97106454553931,
+        "hill_tail_index": 6.845034322125297,
+        "vol_autocorr_lag_1": 0.10257187421744057,
+        "vol_autocorr_lag_10": 0.842177504670042,
+        "vol_autocorr_lag_50": 0.6927722128495677,
+        "spread_bps_median": 0.5785865131483785,
+        "spread_bps_p95": 14.314845575227213,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 36.0,
+        "n_returns": 299,
+        "n_spread_obs": 32312,
+        "n_trades": 15584
+      },
+      "error": null
+    },
+    {
+      "seed": 1031,
+      "success": true,
+      "runtime_s": 17.936750040971674,
+      "facts_summary": {
+        "excess_kurtosis": 20.534388769627846,
+        "hill_tail_index": 2.6299733308549946,
+        "vol_autocorr_lag_1": 0.2297899795242229,
+        "vol_autocorr_lag_10": 0.3432323210014987,
+        "vol_autocorr_lag_50": 0.3562246814310856,
+        "spread_bps_median": 0.2981203511857737,
+        "spread_bps_p95": 4.988591667846162,
+        "trade_size_median": 7.0,
+        "trade_size_p95": 39.0,
+        "n_returns": 299,
+        "n_spread_obs": 32650,
+        "n_trades": 15740
+      },
+      "error": null
+    },
+    {
+      "seed": 1032,
+      "success": false,
+      "runtime_s": 0.9856656669871882,
+      "facts_summary": null,
+      "error": "is/vendor/abides-sim/config/calib_aapl.py\", line 494, in <module>\n    kernel.runner(agents=agents,\n  File \"/Users/lucasking/Projects/HFT Date Analysis/vendor/abides-sim/Kernel.py\", line 259, in runner\n    agents[agent].receiveMessage(self.currentTime, msg)\n  File \"/Users/lucasking/Projects/HFT Date Analysis/vendor/abides-sim/agent/market_makers/AdaptiveMarketMakerAgent.py\", line 168, in receiveMessage\n    self.placeOrders(mid)\nUnboundLocalError: local variable 'mid' referenced before assignment\n"
+    },
+    {
+      "seed": 1033,
+      "success": true,
+      "runtime_s": 25.940864958101884,
+      "facts_summary": {
+        "excess_kurtosis": 75.08490953748277,
+        "hill_tail_index": 1.0926255206070972,
+        "vol_autocorr_lag_1": 0.012663092018836343,
+        "vol_autocorr_lag_10": 0.724974351405498,
+        "vol_autocorr_lag_50": 0.020125555836865667,
+        "spread_bps_median": 0.557838561520296,
+        "spread_bps_p95": 620.5474916423681,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 24.0,
+        "n_returns": 299,
+        "n_spread_obs": 36063,
+        "n_trades": 19184
+      },
+      "error": null
+    },
+    {
+      "seed": 1034,
+      "success": false,
+      "runtime_s": 0.9208489579614252,
+      "facts_summary": null,
+      "error": "is/vendor/abides-sim/config/calib_aapl.py\", line 494, in <module>\n    kernel.runner(agents=agents,\n  File \"/Users/lucasking/Projects/HFT Date Analysis/vendor/abides-sim/Kernel.py\", line 259, in runner\n    agents[agent].receiveMessage(self.currentTime, msg)\n  File \"/Users/lucasking/Projects/HFT Date Analysis/vendor/abides-sim/agent/market_makers/AdaptiveMarketMakerAgent.py\", line 168, in receiveMessage\n    self.placeOrders(mid)\nUnboundLocalError: local variable 'mid' referenced before assignment\n"
+    },
+    {
+      "seed": 1035,
+      "success": true,
+      "runtime_s": 29.955092624993995,
+      "facts_summary": {
+        "excess_kurtosis": 114.22727110034849,
+        "hill_tail_index": 0.7692476994993928,
+        "vol_autocorr_lag_1": 0.6248241903824117,
+        "vol_autocorr_lag_10": 0.026317783828575022,
+        "vol_autocorr_lag_50": -0.005913009017492868,
+        "spread_bps_median": 0.6492376026877474,
+        "spread_bps_p95": 125.44552835572811,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 22.0,
+        "n_returns": 299,
+        "n_spread_obs": 36440,
+        "n_trades": 17740
+      },
+      "error": null
+    },
+    {
+      "seed": 1036,
+      "success": true,
+      "runtime_s": 25.17859620798845,
+      "facts_summary": {
+        "excess_kurtosis": 237.7401100798914,
+        "hill_tail_index": 0.5995967858268235,
+        "vol_autocorr_lag_1": 0.010883588496594064,
+        "vol_autocorr_lag_10": 0.06772561339623881,
+        "vol_autocorr_lag_50": 3.827030574194642e-05,
+        "spread_bps_median": 0.3853971865777334,
+        "spread_bps_p95": 201.03779288845578,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 33.0,
+        "n_returns": 299,
+        "n_spread_obs": 34292,
+        "n_trades": 15740
+      },
+      "error": null
+    },
+    {
+      "seed": 1037,
+      "success": true,
+      "runtime_s": 23.144982125028037,
+      "facts_summary": {
+        "excess_kurtosis": 54.234079885222776,
+        "hill_tail_index": 1.2096409063541531,
+        "vol_autocorr_lag_1": -0.020141723934590246,
+        "vol_autocorr_lag_10": 0.8304851073423821,
+        "vol_autocorr_lag_50": 0.6185570258031663,
+        "spread_bps_median": 5.335283017003745,
+        "spread_bps_p95": 469.56977079589075,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 30.0,
+        "n_returns": 299,
+        "n_spread_obs": 34253,
+        "n_trades": 16358
+      },
+      "error": null
+    },
+    {
+      "seed": 1038,
+      "success": true,
+      "runtime_s": 19.615169666009024,
+      "facts_summary": {
+        "excess_kurtosis": 40.44185347394818,
+        "hill_tail_index": 1.796093461271217,
+        "vol_autocorr_lag_1": -0.01606793035756308,
+        "vol_autocorr_lag_10": 0.5791528654535101,
+        "vol_autocorr_lag_50": 0.2845047134359292,
+        "spread_bps_median": 0.19825928349094946,
+        "spread_bps_p95": 13.896821556807804,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 32.0,
+        "n_returns": 299,
+        "n_spread_obs": 33218,
+        "n_trades": 15744
+      },
+      "error": null
+    },
+    {
+      "seed": 1039,
+      "success": true,
+      "runtime_s": 19.89384399994742,
+      "facts_summary": {
+        "excess_kurtosis": 38.46507408115084,
+        "hill_tail_index": 3.4174677007048735,
+        "vol_autocorr_lag_1": 0.4681488073191078,
+        "vol_autocorr_lag_10": 0.3676995717363547,
+        "vol_autocorr_lag_50": 0.13913519226642437,
+        "spread_bps_median": 0.2952290977798772,
+        "spread_bps_p95": 35.25725380753512,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 34.0,
+        "n_returns": 299,
+        "n_spread_obs": 32992,
+        "n_trades": 15568
+      },
+      "error": null
+    },
+    {
+      "seed": 1040,
+      "success": true,
+      "runtime_s": 22.256740333046764,
+      "facts_summary": {
+        "excess_kurtosis": 128.58813889633234,
+        "hill_tail_index": 0.73703394452473,
+        "vol_autocorr_lag_1": -0.011650155034831251,
+        "vol_autocorr_lag_10": 0.6353924996028092,
+        "vol_autocorr_lag_50": 0.030745289143896563,
+        "spread_bps_median": 2.251216063689766,
+        "spread_bps_p95": 261.3291976189673,
+        "trade_size_median": 4.0,
+        "trade_size_p95": 30.0,
+        "n_returns": 299,
+        "n_spread_obs": 34369,
+        "n_trades": 16126
+      },
+      "error": null
+    },
+    {
+      "seed": 1041,
+      "success": true,
+      "runtime_s": 20.268905458040535,
+      "facts_summary": {
+        "excess_kurtosis": 64.36667542932577,
+        "hill_tail_index": 1.6225284664194874,
+        "vol_autocorr_lag_1": -0.01447665137341682,
+        "vol_autocorr_lag_10": 0.842438907398097,
+        "vol_autocorr_lag_50": 0.4028763523740276,
+        "spread_bps_median": 1.306933281056002,
+        "spread_bps_p95": 55.86530694002074,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 37.0,
+        "n_returns": 299,
+        "n_spread_obs": 33324,
+        "n_trades": 15632
+      },
+      "error": null
+    },
+    {
+      "seed": 1042,
+      "success": true,
+      "runtime_s": 21.900095583987422,
+      "facts_summary": {
+        "excess_kurtosis": 56.77541877838884,
+        "hill_tail_index": 1.92608545316126,
+        "vol_autocorr_lag_1": 0.15460640796452968,
+        "vol_autocorr_lag_10": 0.8292927742314662,
+        "vol_autocorr_lag_50": 0.20855879070289343,
+        "spread_bps_median": 0.9322010198279157,
+        "spread_bps_p95": 32.41954184044091,
+        "trade_size_median": 4.0,
+        "trade_size_p95": 36.0,
+        "n_returns": 299,
+        "n_spread_obs": 33382,
+        "n_trades": 15328
+      },
+      "error": null
+    },
+    {
+      "seed": 1043,
+      "success": true,
+      "runtime_s": 22.261893291957676,
+      "facts_summary": {
+        "excess_kurtosis": 43.44078590329058,
+        "hill_tail_index": 2.0774367377831955,
+        "vol_autocorr_lag_1": -0.015322538960537249,
+        "vol_autocorr_lag_10": 0.8259596932354216,
+        "vol_autocorr_lag_50": 0.5998680555691124,
+        "spread_bps_median": 5.607484698036949,
+        "spread_bps_p95": 220.19543973941367,
+        "trade_size_median": 4.0,
+        "trade_size_p95": 33.0,
+        "n_returns": 299,
+        "n_spread_obs": 33301,
+        "n_trades": 15410
+      },
+      "error": null
+    },
+    {
+      "seed": 1044,
+      "success": true,
+      "runtime_s": 19.646121082943864,
+      "facts_summary": {
+        "excess_kurtosis": 108.98159183099742,
+        "hill_tail_index": 1.284921586647352,
+        "vol_autocorr_lag_1": 0.20909974094440498,
+        "vol_autocorr_lag_10": 0.5323866441588891,
+        "vol_autocorr_lag_50": 0.22059240027329782,
+        "spread_bps_median": 0.5637508221366156,
+        "spread_bps_p95": 17.127330126973693,
+        "trade_size_median": 7.0,
+        "trade_size_p95": 35.0,
+        "n_returns": 299,
+        "n_spread_obs": 32738,
+        "n_trades": 15764
+      },
+      "error": null
+    },
+    {
+      "seed": 1045,
+      "success": true,
+      "runtime_s": 19.61469220800791,
+      "facts_summary": {
+        "excess_kurtosis": 45.66212938840404,
+        "hill_tail_index": 1.5623929978397444,
+        "vol_autocorr_lag_1": 0.02294270175237143,
+        "vol_autocorr_lag_10": 0.5852425632259073,
+        "vol_autocorr_lag_50": 0.3367487197299174,
+        "spread_bps_median": 0.6922297213775371,
+        "spread_bps_p95": 49.73477615107151,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 31.0,
+        "n_returns": 299,
+        "n_spread_obs": 33004,
+        "n_trades": 15968
+      },
+      "error": null
+    },
+    {
+      "seed": 1046,
+      "success": false,
+      "runtime_s": 9.74935958290007,
+      "facts_summary": null,
+      "error": "facts_failed: ValueError: Hill estimator: too few positive log-ratios after filtering"
+    },
+    {
+      "seed": 1047,
+      "success": false,
+      "runtime_s": 1.0277220830321312,
+      "facts_summary": null,
+      "error": "is/vendor/abides-sim/config/calib_aapl.py\", line 494, in <module>\n    kernel.runner(agents=agents,\n  File \"/Users/lucasking/Projects/HFT Date Analysis/vendor/abides-sim/Kernel.py\", line 259, in runner\n    agents[agent].receiveMessage(self.currentTime, msg)\n  File \"/Users/lucasking/Projects/HFT Date Analysis/vendor/abides-sim/agent/market_makers/AdaptiveMarketMakerAgent.py\", line 168, in receiveMessage\n    self.placeOrders(mid)\nUnboundLocalError: local variable 'mid' referenced before assignment\n"
+    },
+    {
+      "seed": 1048,
+      "success": true,
+      "runtime_s": 28.857695959042758,
+      "facts_summary": {
+        "excess_kurtosis": 38.90332859369302,
+        "hill_tail_index": 0.986901943210093,
+        "vol_autocorr_lag_1": -0.010541080540777549,
+        "vol_autocorr_lag_10": 0.37189013176181374,
+        "vol_autocorr_lag_50": 0.45476666726571163,
+        "spread_bps_median": 2.9641287928275335,
+        "spread_bps_p95": 336.37223011198597,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 21.0,
+        "n_returns": 299,
+        "n_spread_obs": 37287,
+        "n_trades": 20188
+      },
+      "error": null
+    },
+    {
+      "seed": 1049,
+      "success": true,
+      "runtime_s": 18.856701917015016,
+      "facts_summary": {
+        "excess_kurtosis": 57.42114991855258,
+        "hill_tail_index": 1.055915109221877,
+        "vol_autocorr_lag_1": 0.02606557406047506,
+        "vol_autocorr_lag_10": 0.9058422005140075,
+        "vol_autocorr_lag_50": 0.12064693094919668,
+        "spread_bps_median": 0.7283055970285132,
+        "spread_bps_p95": 670.0712891108248,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 33.0,
+        "n_returns": 299,
+        "n_spread_obs": 33681,
+        "n_trades": 16722
+      },
+      "error": null
+    },
+    {
+      "seed": 1050,
+      "success": true,
+      "runtime_s": 25.361513374955393,
+      "facts_summary": {
+        "excess_kurtosis": 95.97343966090207,
+        "hill_tail_index": 1.7537081631038272,
+        "vol_autocorr_lag_1": 0.021192870262800853,
+        "vol_autocorr_lag_10": 0.23847480798047907,
+        "vol_autocorr_lag_50": 0.19448561186252375,
+        "spread_bps_median": 0.7214421628836044,
+        "spread_bps_p95": 47.641669494401086,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 30.0,
+        "n_returns": 299,
+        "n_spread_obs": 34343,
+        "n_trades": 17296
+      },
+      "error": null
+    },
+    {
+      "seed": 1051,
+      "success": false,
+      "runtime_s": 1.0965303330449387,
+      "facts_summary": null,
+      "error": "is/vendor/abides-sim/config/calib_aapl.py\", line 494, in <module>\n    kernel.runner(agents=agents,\n  File \"/Users/lucasking/Projects/HFT Date Analysis/vendor/abides-sim/Kernel.py\", line 259, in runner\n    agents[agent].receiveMessage(self.currentTime, msg)\n  File \"/Users/lucasking/Projects/HFT Date Analysis/vendor/abides-sim/agent/market_makers/AdaptiveMarketMakerAgent.py\", line 168, in receiveMessage\n    self.placeOrders(mid)\nUnboundLocalError: local variable 'mid' referenced before assignment\n"
+    },
+    {
+      "seed": 1052,
+      "success": true,
+      "runtime_s": 26.74492295901291,
+      "facts_summary": {
+        "excess_kurtosis": 47.437789226715,
+        "hill_tail_index": 1.6979005592530114,
+        "vol_autocorr_lag_1": 0.05584917507984471,
+        "vol_autocorr_lag_10": 0.7943776611268981,
+        "vol_autocorr_lag_50": 0.27504260566158434,
+        "spread_bps_median": 18.338352250791445,
+        "spread_bps_p95": 436.68991801911403,
+        "trade_size_median": 4.0,
+        "trade_size_p95": 28.0,
+        "n_returns": 299,
+        "n_spread_obs": 35966,
+        "n_trades": 16616
+      },
+      "error": null
+    },
+    {
+      "seed": 1053,
+      "success": false,
+      "runtime_s": 0.995262874988839,
+      "facts_summary": null,
+      "error": "is/vendor/abides-sim/config/calib_aapl.py\", line 494, in <module>\n    kernel.runner(agents=agents,\n  File \"/Users/lucasking/Projects/HFT Date Analysis/vendor/abides-sim/Kernel.py\", line 259, in runner\n    agents[agent].receiveMessage(self.currentTime, msg)\n  File \"/Users/lucasking/Projects/HFT Date Analysis/vendor/abides-sim/agent/market_makers/AdaptiveMarketMakerAgent.py\", line 168, in receiveMessage\n    self.placeOrders(mid)\nUnboundLocalError: local variable 'mid' referenced before assignment\n"
+    },
+    {
+      "seed": 1054,
+      "success": true,
+      "runtime_s": 19.25287062500138,
+      "facts_summary": {
+        "excess_kurtosis": 46.16332318330339,
+        "hill_tail_index": 1.4115586030133318,
+        "vol_autocorr_lag_1": 0.11477969440233377,
+        "vol_autocorr_lag_10": 0.799698903325768,
+        "vol_autocorr_lag_50": 0.3045954910574589,
+        "spread_bps_median": 7.382480144204446,
+        "spread_bps_p95": 418.8004935930244,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 34.0,
+        "n_returns": 299,
+        "n_spread_obs": 32712,
+        "n_trades": 15392
+      },
+      "error": null
+    },
+    {
+      "seed": 1055,
+      "success": true,
+      "runtime_s": 9.830927124945447,
+      "facts_summary": {
+        "excess_kurtosis": 24.39232357890612,
+        "hill_tail_index": 5.738813481463763,
+        "vol_autocorr_lag_1": 0.2297035219871954,
+        "vol_autocorr_lag_10": 0.774703203245002,
+        "vol_autocorr_lag_50": 0.11971465510853162,
+        "spread_bps_median": 0.09909575126966431,
+        "spread_bps_p95": 12.676279511963239,
+        "trade_size_median": 7.0,
+        "trade_size_p95": 39.0,
+        "n_returns": 299,
+        "n_spread_obs": 32141,
+        "n_trades": 16582
+      },
+      "error": null
+    },
+    {
+      "seed": 1056,
+      "success": true,
+      "runtime_s": 18.898086584056728,
+      "facts_summary": {
+        "excess_kurtosis": 78.9234404995993,
+        "hill_tail_index": 2.372586277264552,
+        "vol_autocorr_lag_1": -0.01934966839233501,
+        "vol_autocorr_lag_10": 0.8753182051943512,
+        "vol_autocorr_lag_50": 0.40979112631509007,
+        "spread_bps_median": 1.1923806874074663,
+        "spread_bps_p95": 74.5567919213274,
+        "trade_size_median": 7.0,
+        "trade_size_p95": 33.0,
+        "n_returns": 299,
+        "n_spread_obs": 32581,
+        "n_trades": 15686
+      },
+      "error": null
+    },
+    {
+      "seed": 1057,
+      "success": true,
+      "runtime_s": 29.15997083298862,
+      "facts_summary": {
+        "excess_kurtosis": 232.69527678394223,
+        "hill_tail_index": 0.622887736144095,
+        "vol_autocorr_lag_1": 0.32652013091684495,
+        "vol_autocorr_lag_10": 0.0022354670346112437,
+        "vol_autocorr_lag_50": -0.0030702992822454096,
+        "spread_bps_median": 0.9603412917467035,
+        "spread_bps_p95": 49.846836640415326,
+        "trade_size_median": 4.0,
+        "trade_size_p95": 12.0,
+        "n_returns": 299,
+        "n_spread_obs": 37854,
+        "n_trades": 20172
+      },
+      "error": null
+    },
+    {
+      "seed": 1058,
+      "success": true,
+      "runtime_s": 24.008093207958154,
+      "facts_summary": {
+        "excess_kurtosis": 70.02971121140239,
+        "hill_tail_index": 1.1633663832608736,
+        "vol_autocorr_lag_1": 0.04256056703270872,
+        "vol_autocorr_lag_10": 0.6857282026161428,
+        "vol_autocorr_lag_50": 0.26745652254117946,
+        "spread_bps_median": 0.677031699591363,
+        "spread_bps_p95": 173.6853762466901,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 30.0,
+        "n_returns": 299,
+        "n_spread_obs": 34440,
+        "n_trades": 17640
+      },
+      "error": null
+    },
+    {
+      "seed": 1059,
+      "success": true,
+      "runtime_s": 26.20595345797483,
+      "facts_summary": {
+        "excess_kurtosis": 97.4517517524991,
+        "hill_tail_index": 1.2392697653575906,
+        "vol_autocorr_lag_1": 0.09704859019077423,
+        "vol_autocorr_lag_10": 0.6673998844608376,
+        "vol_autocorr_lag_50": 0.07254089065386816,
+        "spread_bps_median": 2.9402910888177933,
+        "spread_bps_p95": 443.3184071949633,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 31.0,
+        "n_returns": 299,
+        "n_spread_obs": 35248,
+        "n_trades": 16682
+      },
+      "error": null
+    },
+    {
+      "seed": 1060,
+      "success": true,
+      "runtime_s": 25.970841250033118,
+      "facts_summary": {
+        "excess_kurtosis": 47.59800817109905,
+        "hill_tail_index": 1.1428812747534216,
+        "vol_autocorr_lag_1": -0.0032988924017597556,
+        "vol_autocorr_lag_10": 0.8442797626647691,
+        "vol_autocorr_lag_50": 0.3315507012875989,
+        "spread_bps_median": 4.261627669751058,
+        "spread_bps_p95": 417.74494762679427,
+        "trade_size_median": 4.0,
+        "trade_size_p95": 28.0,
+        "n_returns": 299,
+        "n_spread_obs": 34743,
+        "n_trades": 15940
+      },
+      "error": null
+    },
+    {
+      "seed": 1061,
+      "success": true,
+      "runtime_s": 27.00694429106079,
+      "facts_summary": {
+        "excess_kurtosis": 79.18180418020542,
+        "hill_tail_index": 0.776474225856061,
+        "vol_autocorr_lag_1": -0.001371270614349621,
+        "vol_autocorr_lag_10": 0.8316715859807602,
+        "vol_autocorr_lag_50": 0.22336560288287194,
+        "spread_bps_median": 3.023903469197641,
+        "spread_bps_p95": 427.9831170357081,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 24.0,
+        "n_returns": 299,
+        "n_spread_obs": 36356,
+        "n_trades": 18662
+      },
+      "error": null
+    },
+    {
+      "seed": 1062,
+      "success": true,
+      "runtime_s": 15.81967174995225,
+      "facts_summary": {
+        "excess_kurtosis": 251.69523160985418,
+        "hill_tail_index": 1.0908735948753614,
+        "vol_autocorr_lag_1": 0.16613792149061674,
+        "vol_autocorr_lag_10": 0.04864080885781952,
+        "vol_autocorr_lag_50": -0.001171198596252026,
+        "spread_bps_median": 1.5021333244998272,
+        "spread_bps_p95": 513.51424622625,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 35.0,
+        "n_returns": 299,
+        "n_spread_obs": 32396,
+        "n_trades": 15588
+      },
+      "error": null
+    },
+    {
+      "seed": 1063,
+      "success": true,
+      "runtime_s": 18.215616874978878,
+      "facts_summary": {
+        "excess_kurtosis": 46.12176814767072,
+        "hill_tail_index": 1.8185541951261746,
+        "vol_autocorr_lag_1": -0.0041610302961905266,
+        "vol_autocorr_lag_10": 0.7841362222045418,
+        "vol_autocorr_lag_50": 0.682447347595267,
+        "spread_bps_median": 2.8894496561554908,
+        "spread_bps_p95": 396.33946546386994,
+        "trade_size_median": 4.0,
+        "trade_size_p95": 31.0,
+        "n_returns": 299,
+        "n_spread_obs": 34288,
+        "n_trades": 18036
+      },
+      "error": null
+    },
+    {
+      "seed": 1064,
+      "success": true,
+      "runtime_s": 16.528445875039324,
+      "facts_summary": {
+        "excess_kurtosis": 17.612232022550003,
+        "hill_tail_index": 4.325628920561193,
+        "vol_autocorr_lag_1": 0.1290641337332988,
+        "vol_autocorr_lag_10": 0.6155776339162764,
+        "vol_autocorr_lag_50": 0.5176864048891334,
+        "spread_bps_median": 0.350754121360926,
+        "spread_bps_p95": 23.25182114738417,
+        "trade_size_median": 7.0,
+        "trade_size_p95": 34.0,
+        "n_returns": 299,
+        "n_spread_obs": 32821,
+        "n_trades": 15878
+      },
+      "error": null
+    },
+    {
+      "seed": 1065,
+      "success": true,
+      "runtime_s": 27.653049667016603,
+      "facts_summary": {
+        "excess_kurtosis": 65.3165812316767,
+        "hill_tail_index": 1.1538569938015713,
+        "vol_autocorr_lag_1": 0.004110328331204657,
+        "vol_autocorr_lag_10": 0.9091564041947748,
+        "vol_autocorr_lag_50": 0.27681658582145896,
+        "spread_bps_median": 5.037360423138275,
+        "spread_bps_p95": 425.78529676046986,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 26.0,
+        "n_returns": 299,
+        "n_spread_obs": 35161,
+        "n_trades": 16800
+      },
+      "error": null
+    },
+    {
+      "seed": 1066,
+      "success": true,
+      "runtime_s": 19.081619667005725,
+      "facts_summary": {
+        "excess_kurtosis": 52.091081276911844,
+        "hill_tail_index": 0.7145760731169664,
+        "vol_autocorr_lag_1": -0.0019438228271114906,
+        "vol_autocorr_lag_10": 0.8958267657087889,
+        "vol_autocorr_lag_50": 0.16623549554405953,
+        "spread_bps_median": 3.2886875724881555,
+        "spread_bps_p95": 626.1553079119908,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 33.0,
+        "n_returns": 299,
+        "n_spread_obs": 32353,
+        "n_trades": 15732
+      },
+      "error": null
+    },
+    {
+      "seed": 1067,
+      "success": true,
+      "runtime_s": 12.737956375000067,
+      "facts_summary": {
+        "excess_kurtosis": 21.257935880492695,
+        "hill_tail_index": 57.11286480097846,
+        "vol_autocorr_lag_1": 0.2107214136310311,
+        "vol_autocorr_lag_10": 0.3952510216756826,
+        "vol_autocorr_lag_50": 0.08336461493278581,
+        "spread_bps_median": 0.09752719789731361,
+        "spread_bps_p95": 19.362576282289023,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 36.0,
+        "n_returns": 299,
+        "n_spread_obs": 32658,
+        "n_trades": 16226
+      },
+      "error": null
+    },
+    {
+      "seed": 1068,
+      "success": true,
+      "runtime_s": 22.96058112499304,
+      "facts_summary": {
+        "excess_kurtosis": 69.59177907205107,
+        "hill_tail_index": 0.9271755653276159,
+        "vol_autocorr_lag_1": 0.0420512594031564,
+        "vol_autocorr_lag_10": 0.6824543334613219,
+        "vol_autocorr_lag_50": 0.2057776790503386,
+        "spread_bps_median": 2.7336068170396466,
+        "spread_bps_p95": 343.787588200593,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 29.0,
+        "n_returns": 299,
+        "n_spread_obs": 34103,
+        "n_trades": 17716
+      },
+      "error": null
+    },
+    {
+      "seed": 1069,
+      "success": true,
+      "runtime_s": 29.87704137491528,
+      "facts_summary": {
+        "excess_kurtosis": 298.3210550486546,
+        "hill_tail_index": 1.0036836873581325,
+        "vol_autocorr_lag_1": 0.016317125818149467,
+        "vol_autocorr_lag_10": 0.00456326410767717,
+        "vol_autocorr_lag_50": -0.0012869109208900856,
+        "spread_bps_median": 0.3098373353989156,
+        "spread_bps_p95": 31.23661693114239,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 10.849999999998545,
+        "n_returns": 299,
+        "n_spread_obs": 37921,
+        "n_trades": 20664
+      },
+      "error": null
+    },
+    {
+      "seed": 1070,
+      "success": true,
+      "runtime_s": 22.23348870803602,
+      "facts_summary": {
+        "excess_kurtosis": 56.65691208659371,
+        "hill_tail_index": 1.2430022765879618,
+        "vol_autocorr_lag_1": -0.01861112850746427,
+        "vol_autocorr_lag_10": 0.7575420628785074,
+        "vol_autocorr_lag_50": 0.2800161041698006,
+        "spread_bps_median": 9.06198189663162,
+        "spread_bps_p95": 475.401542716774,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 27.0,
+        "n_returns": 299,
+        "n_spread_obs": 34024,
+        "n_trades": 16190
+      },
+      "error": null
+    },
+    {
+      "seed": 1071,
+      "success": true,
+      "runtime_s": 19.363207584014162,
+      "facts_summary": {
+        "excess_kurtosis": 39.85632340364325,
+        "hill_tail_index": 1.9633964777359973,
+        "vol_autocorr_lag_1": 0.014843441158680809,
+        "vol_autocorr_lag_10": 0.7137356736146043,
+        "vol_autocorr_lag_50": 0.6584584623178383,
+        "spread_bps_median": 1.3046800738076156,
+        "spread_bps_p95": 53.28163388096869,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 32.0,
+        "n_returns": 299,
+        "n_spread_obs": 34092,
+        "n_trades": 18234
+      },
+      "error": null
+    },
+    {
+      "seed": 1072,
+      "success": true,
+      "runtime_s": 20.235493707936257,
+      "facts_summary": {
+        "excess_kurtosis": 70.25470572449197,
+        "hill_tail_index": 0.7086920428140339,
+        "vol_autocorr_lag_1": -0.0016478502418315081,
+        "vol_autocorr_lag_10": 0.8458315392361043,
+        "vol_autocorr_lag_50": 0.26345720077478996,
+        "spread_bps_median": 0.7759607363867389,
+        "spread_bps_p95": 302.0846412744885,
+        "trade_size_median": 4.0,
+        "trade_size_p95": 30.0,
+        "n_returns": 299,
+        "n_spread_obs": 33917,
+        "n_trades": 17342
+      },
+      "error": null
+    },
+    {
+      "seed": 1073,
+      "success": true,
+      "runtime_s": 23.61842275003437,
+      "facts_summary": {
+        "excess_kurtosis": 174.90942127374004,
+        "hill_tail_index": 0.9816064567818631,
+        "vol_autocorr_lag_1": 0.04419623633395752,
+        "vol_autocorr_lag_10": -0.014565062864548388,
+        "vol_autocorr_lag_50": -0.007834991862076647,
+        "spread_bps_median": 0.7199380551200686,
+        "spread_bps_p95": 1060.8699353023871,
+        "trade_size_median": 4.0,
+        "trade_size_p95": 17.0,
+        "n_returns": 299,
+        "n_spread_obs": 37617,
+        "n_trades": 20776
+      },
+      "error": null
+    },
+    {
+      "seed": 1074,
+      "success": true,
+      "runtime_s": 21.69144604203757,
+      "facts_summary": {
+        "excess_kurtosis": 36.01301878144465,
+        "hill_tail_index": 1.5547697434521663,
+        "vol_autocorr_lag_1": -0.0022142399564173973,
+        "vol_autocorr_lag_10": 0.8791165486459238,
+        "vol_autocorr_lag_50": 0.562510842999626,
+        "spread_bps_median": 1.6864159197662825,
+        "spread_bps_p95": 169.73572542285908,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 31.0,
+        "n_returns": 299,
+        "n_spread_obs": 33405,
+        "n_trades": 16074
+      },
+      "error": null
+    },
+    {
+      "seed": 1075,
+      "success": true,
+      "runtime_s": 19.944885957986116,
+      "facts_summary": {
+        "excess_kurtosis": 55.6078601110218,
+        "hill_tail_index": 1.4969574087572763,
+        "vol_autocorr_lag_1": 0.013826132061954483,
+        "vol_autocorr_lag_10": 0.878867649050966,
+        "vol_autocorr_lag_50": 0.3650849502924132,
+        "spread_bps_median": 3.853012512411146,
+        "spread_bps_p95": 271.4037923497855,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 38.0,
+        "n_returns": 299,
+        "n_spread_obs": 32997,
+        "n_trades": 15588
+      },
+      "error": null
+    },
+    {
+      "seed": 1076,
+      "success": true,
+      "runtime_s": 23.183050707913935,
+      "facts_summary": {
+        "excess_kurtosis": 176.89286241131956,
+        "hill_tail_index": 1.4438977400446382,
+        "vol_autocorr_lag_1": 0.40093215400257787,
+        "vol_autocorr_lag_10": 0.054884110113674216,
+        "vol_autocorr_lag_50": 0.0006648096923227468,
+        "spread_bps_median": 0.5610818606580857,
+        "spread_bps_p95": 347.9185008772099,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 20.0,
+        "n_returns": 299,
+        "n_spread_obs": 36487,
+        "n_trades": 20498
+      },
+      "error": null
+    },
+    {
+      "seed": 1077,
+      "success": false,
+      "runtime_s": 0.94187820807565,
+      "facts_summary": null,
+      "error": "is/vendor/abides-sim/config/calib_aapl.py\", line 494, in <module>\n    kernel.runner(agents=agents,\n  File \"/Users/lucasking/Projects/HFT Date Analysis/vendor/abides-sim/Kernel.py\", line 259, in runner\n    agents[agent].receiveMessage(self.currentTime, msg)\n  File \"/Users/lucasking/Projects/HFT Date Analysis/vendor/abides-sim/agent/market_makers/AdaptiveMarketMakerAgent.py\", line 168, in receiveMessage\n    self.placeOrders(mid)\nUnboundLocalError: local variable 'mid' referenced before assignment\n"
+    },
+    {
+      "seed": 1078,
+      "success": true,
+      "runtime_s": 19.54996279196348,
+      "facts_summary": {
+        "excess_kurtosis": 170.70272740701284,
+        "hill_tail_index": 1.0554962614300953,
+        "vol_autocorr_lag_1": 0.05253998927008244,
+        "vol_autocorr_lag_10": 0.4764768894033663,
+        "vol_autocorr_lag_50": 0.026473828059016106,
+        "spread_bps_median": 0.9886633271816504,
+        "spread_bps_p95": 88.45095882824684,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 32.0,
+        "n_returns": 299,
+        "n_spread_obs": 32712,
+        "n_trades": 15536
+      },
+      "error": null
+    },
+    {
+      "seed": 1079,
+      "success": true,
+      "runtime_s": 24.99054100003559,
+      "facts_summary": {
+        "excess_kurtosis": 38.99154364019553,
+        "hill_tail_index": 1.0168686926420365,
+        "vol_autocorr_lag_1": 0.01216297764375976,
+        "vol_autocorr_lag_10": 0.8580356532453776,
+        "vol_autocorr_lag_50": 0.5226037262278899,
+        "spread_bps_median": 12.798210146610607,
+        "spread_bps_p95": 406.38256397879906,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 32.0,
+        "n_returns": 299,
+        "n_spread_obs": 35007,
+        "n_trades": 16190
+      },
+      "error": null
+    },
+    {
+      "seed": 1080,
+      "success": true,
+      "runtime_s": 24.309417583979666,
+      "facts_summary": {
+        "excess_kurtosis": 23.62006580734749,
+        "hill_tail_index": 3.097741973850466,
+        "vol_autocorr_lag_1": 0.17213547014639688,
+        "vol_autocorr_lag_10": 0.4818426829885673,
+        "vol_autocorr_lag_50": 0.45825573933589636,
+        "spread_bps_median": 5.414951419271073,
+        "spread_bps_p95": 377.0231099188893,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 26.349999999998545,
+        "n_returns": 299,
+        "n_spread_obs": 34745,
+        "n_trades": 16274
+      },
+      "error": null
+    },
+    {
+      "seed": 1081,
+      "success": false,
+      "runtime_s": 0.9996295419987291,
+      "facts_summary": null,
+      "error": "is/vendor/abides-sim/config/calib_aapl.py\", line 494, in <module>\n    kernel.runner(agents=agents,\n  File \"/Users/lucasking/Projects/HFT Date Analysis/vendor/abides-sim/Kernel.py\", line 259, in runner\n    agents[agent].receiveMessage(self.currentTime, msg)\n  File \"/Users/lucasking/Projects/HFT Date Analysis/vendor/abides-sim/agent/market_makers/AdaptiveMarketMakerAgent.py\", line 168, in receiveMessage\n    self.placeOrders(mid)\nUnboundLocalError: local variable 'mid' referenced before assignment\n"
+    },
+    {
+      "seed": 1082,
+      "success": true,
+      "runtime_s": 29.07419420790393,
+      "facts_summary": {
+        "excess_kurtosis": 51.30933583972991,
+        "hill_tail_index": 0.9542831325108028,
+        "vol_autocorr_lag_1": 0.016715776980652946,
+        "vol_autocorr_lag_10": 0.7353416851197268,
+        "vol_autocorr_lag_50": 0.2356539935914953,
+        "spread_bps_median": 8.769317112829679,
+        "spread_bps_p95": 397.89292345057055,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 23.0,
+        "n_returns": 299,
+        "n_spread_obs": 36270,
+        "n_trades": 16942
+      },
+      "error": null
+    },
+    {
+      "seed": 1083,
+      "success": true,
+      "runtime_s": 19.902217166963965,
+      "facts_summary": {
+        "excess_kurtosis": 53.24275469337668,
+        "hill_tail_index": 1.1475079020641874,
+        "vol_autocorr_lag_1": 0.024424440610140822,
+        "vol_autocorr_lag_10": 0.8065937564708938,
+        "vol_autocorr_lag_50": 0.3477472184189512,
+        "spread_bps_median": 1.5569690392127231,
+        "spread_bps_p95": 298.82095442280524,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 35.0,
+        "n_returns": 299,
+        "n_spread_obs": 32723,
+        "n_trades": 15352
+      },
+      "error": null
+    },
+    {
+      "seed": 1084,
+      "success": true,
+      "runtime_s": 13.150900874985382,
+      "facts_summary": {
+        "excess_kurtosis": 40.767177104342906,
+        "hill_tail_index": 3.957298310636839,
+        "vol_autocorr_lag_1": 0.07616339541314586,
+        "vol_autocorr_lag_10": 0.9377160736730831,
+        "vol_autocorr_lag_50": 0.43135689538846483,
+        "spread_bps_median": 0.6884444597432102,
+        "spread_bps_p95": 57.210106839665116,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 35.0,
+        "n_returns": 299,
+        "n_spread_obs": 32557,
+        "n_trades": 16020
+      },
+      "error": null
+    },
+    {
+      "seed": 1085,
+      "success": true,
+      "runtime_s": 26.09295458404813,
+      "facts_summary": {
+        "excess_kurtosis": 51.267213895546185,
+        "hill_tail_index": 0.8885582954550846,
+        "vol_autocorr_lag_1": 0.049749119802041976,
+        "vol_autocorr_lag_10": 0.5005866033039301,
+        "vol_autocorr_lag_50": 0.04333176217777895,
+        "spread_bps_median": 0.5019354116935222,
+        "spread_bps_p95": 415.22309250861764,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 26.0,
+        "n_returns": 299,
+        "n_spread_obs": 34909,
+        "n_trades": 16700
+      },
+      "error": null
+    },
+    {
+      "seed": 1086,
+      "success": true,
+      "runtime_s": 19.827034874935634,
+      "facts_summary": {
+        "excess_kurtosis": 134.5694830340277,
+        "hill_tail_index": 1.3025030140476879,
+        "vol_autocorr_lag_1": 0.014998408450993329,
+        "vol_autocorr_lag_10": 0.4398567031806616,
+        "vol_autocorr_lag_50": 0.0767400625943202,
+        "spread_bps_median": 1.6693840529306037,
+        "spread_bps_p95": 46.10250259071585,
+        "trade_size_median": 7.0,
+        "trade_size_p95": 34.0,
+        "n_returns": 299,
+        "n_spread_obs": 32658,
+        "n_trades": 15068
+      },
+      "error": null
+    },
+    {
+      "seed": 1087,
+      "success": true,
+      "runtime_s": 27.514183667022735,
+      "facts_summary": {
+        "excess_kurtosis": 88.06120596350327,
+        "hill_tail_index": 0.8917945163175923,
+        "vol_autocorr_lag_1": 0.03348818499858354,
+        "vol_autocorr_lag_10": 0.18351076264463978,
+        "vol_autocorr_lag_50": 0.01000816002272047,
+        "spread_bps_median": 1.712983462992,
+        "spread_bps_p95": 660.3919507171576,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 21.0,
+        "n_returns": 299,
+        "n_spread_obs": 36285,
+        "n_trades": 18780
+      },
+      "error": null
+    },
+    {
+      "seed": 1088,
+      "success": true,
+      "runtime_s": 22.51690425002016,
+      "facts_summary": {
+        "excess_kurtosis": 125.6115093984775,
+        "hill_tail_index": 0.8879239479533053,
+        "vol_autocorr_lag_1": 0.010384390039025818,
+        "vol_autocorr_lag_10": 0.45356532161961066,
+        "vol_autocorr_lag_50": 0.024910683583859273,
+        "spread_bps_median": 0.592049915537395,
+        "spread_bps_p95": 210.45750591911738,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 27.0,
+        "n_returns": 299,
+        "n_spread_obs": 35118,
+        "n_trades": 18786
+      },
+      "error": null
+    },
+    {
+      "seed": 1089,
+      "success": true,
+      "runtime_s": 21.584804209065624,
+      "facts_summary": {
+        "excess_kurtosis": 48.30397423303717,
+        "hill_tail_index": 1.7265414133769916,
+        "vol_autocorr_lag_1": 0.15128319887353214,
+        "vol_autocorr_lag_10": 0.768289709953016,
+        "vol_autocorr_lag_50": 0.3272282897266196,
+        "spread_bps_median": 2.1730784553758338,
+        "spread_bps_p95": 473.9944353175932,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 32.0,
+        "n_returns": 299,
+        "n_spread_obs": 33153,
+        "n_trades": 15358
+      },
+      "error": null
+    },
+    {
+      "seed": 1090,
+      "success": true,
+      "runtime_s": 27.65910745796282,
+      "facts_summary": {
+        "excess_kurtosis": 65.00757576950043,
+        "hill_tail_index": 0.8959714640832632,
+        "vol_autocorr_lag_1": 0.03418269323122188,
+        "vol_autocorr_lag_10": 0.8464210640045491,
+        "vol_autocorr_lag_50": 0.028875104285654086,
+        "spread_bps_median": 3.071977971827067,
+        "spread_bps_p95": 419.13478318187606,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 22.0,
+        "n_returns": 299,
+        "n_spread_obs": 37518,
+        "n_trades": 19578
+      },
+      "error": null
+    },
+    {
+      "seed": 1091,
+      "success": true,
+      "runtime_s": 21.968224291107617,
+      "facts_summary": {
+        "excess_kurtosis": 150.39022008994854,
+        "hill_tail_index": 0.7586939695297081,
+        "vol_autocorr_lag_1": 0.051881887528462095,
+        "vol_autocorr_lag_10": 0.19985000051954263,
+        "vol_autocorr_lag_50": 9.00767683224852e-05,
+        "spread_bps_median": 1.0419645431043365,
+        "spread_bps_p95": 237.408101956633,
+        "trade_size_median": 4.0,
+        "trade_size_p95": 29.0,
+        "n_returns": 299,
+        "n_spread_obs": 34220,
+        "n_trades": 16656
+      },
+      "error": null
+    },
+    {
+      "seed": 1092,
+      "success": true,
+      "runtime_s": 18.88522258400917,
+      "facts_summary": {
+        "excess_kurtosis": 116.59537609525707,
+        "hill_tail_index": 1.1395795046222672,
+        "vol_autocorr_lag_1": 0.06018630648905852,
+        "vol_autocorr_lag_10": 0.6662789598859353,
+        "vol_autocorr_lag_50": 0.19673610287090043,
+        "spread_bps_median": 0.29930411792582245,
+        "spread_bps_p95": 55.281872376315434,
+        "trade_size_median": 7.0,
+        "trade_size_p95": 33.0,
+        "n_returns": 299,
+        "n_spread_obs": 32623,
+        "n_trades": 15748
+      },
+      "error": null
+    },
+    {
+      "seed": 1093,
+      "success": true,
+      "runtime_s": 18.395008083083667,
+      "facts_summary": {
+        "excess_kurtosis": 17.923202717079768,
+        "hill_tail_index": 4.576359967920072,
+        "vol_autocorr_lag_1": 0.09404948791344508,
+        "vol_autocorr_lag_10": 0.606866864288951,
+        "vol_autocorr_lag_50": 0.2727187548643142,
+        "spread_bps_median": 0.17962673564333315,
+        "spread_bps_p95": 7.681542665671892,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 36.0,
+        "n_returns": 299,
+        "n_spread_obs": 32768,
+        "n_trades": 15722
+      },
+      "error": null
+    },
+    {
+      "seed": 1094,
+      "success": true,
+      "runtime_s": 21.867049416992813,
+      "facts_summary": {
+        "excess_kurtosis": 128.84251639199317,
+        "hill_tail_index": 0.3267307860264276,
+        "vol_autocorr_lag_1": 0.6756735181743041,
+        "vol_autocorr_lag_10": -0.0004955867616522867,
+        "vol_autocorr_lag_50": -0.0008764787857156687,
+        "spread_bps_median": 0.07763985201844205,
+        "spread_bps_p95": 1.7816858416238495,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 32.0,
+        "n_returns": 299,
+        "n_spread_obs": 34415,
+        "n_trades": 17694
+      },
+      "error": null
+    },
+    {
+      "seed": 1095,
+      "success": true,
+      "runtime_s": 25.64457962499,
+      "facts_summary": {
+        "excess_kurtosis": 48.59624946363984,
+        "hill_tail_index": 1.11676261750093,
+        "vol_autocorr_lag_1": -0.017909011929589064,
+        "vol_autocorr_lag_10": 0.8792276578591227,
+        "vol_autocorr_lag_50": 0.4393098730015304,
+        "spread_bps_median": 3.5006476198096648,
+        "spread_bps_p95": 421.0962212566858,
+        "trade_size_median": 5.0,
+        "trade_size_p95": 29.0,
+        "n_returns": 299,
+        "n_spread_obs": 34902,
+        "n_trades": 16552
+      },
+      "error": null
+    },
+    {
+      "seed": 1096,
+      "success": false,
+      "runtime_s": 0.9848105419659987,
+      "facts_summary": null,
+      "error": "is/vendor/abides-sim/config/calib_aapl.py\", line 494, in <module>\n    kernel.runner(agents=agents,\n  File \"/Users/lucasking/Projects/HFT Date Analysis/vendor/abides-sim/Kernel.py\", line 259, in runner\n    agents[agent].receiveMessage(self.currentTime, msg)\n  File \"/Users/lucasking/Projects/HFT Date Analysis/vendor/abides-sim/agent/market_makers/AdaptiveMarketMakerAgent.py\", line 168, in receiveMessage\n    self.placeOrders(mid)\nUnboundLocalError: local variable 'mid' referenced before assignment\n"
+    },
+    {
+      "seed": 1097,
+      "success": true,
+      "runtime_s": 21.66172012500465,
+      "facts_summary": {
+        "excess_kurtosis": 48.863315248074805,
+        "hill_tail_index": 2.0635124896959685,
+        "vol_autocorr_lag_1": 0.008355229400982054,
+        "vol_autocorr_lag_10": 0.668357960997027,
+        "vol_autocorr_lag_50": 0.5217775092571529,
+        "spread_bps_median": 6.909493487017219,
+        "spread_bps_p95": 201.59474512857844,
+        "trade_size_median": 6.0,
+        "trade_size_p95": 35.0,
+        "n_returns": 299,
+        "n_spread_obs": 33542,
+        "n_trades": 15386
+      },
+      "error": null
+    },
+    {
+      "seed": 1098,
+      "success": false,
+      "runtime_s": 10.704387290985323,
+      "facts_summary": null,
+      "error": "facts_failed: ValueError: Hill estimator: too few positive log-ratios after filtering"
+    },
+    {
+      "seed": 1099,
+      "success": true,
+      "runtime_s": 24.295490042073652,
+      "facts_summary": {
+        "excess_kurtosis": 49.9497082069977,
+        "hill_tail_index": 0.9311334438038216,
+        "vol_autocorr_lag_1": 0.004638333596369143,
+        "vol_autocorr_lag_10": 0.8448256739300231,
+        "vol_autocorr_lag_50": 0.39380580546711585,
+        "spread_bps_median": 6.800804438010668,
+        "spread_bps_p95": 683.2038604105335,
+        "trade_size_median": 4.0,
+        "trade_size_p95": 28.0,
+        "n_returns": 299,
+        "n_spread_obs": 35198,
+        "n_trades": 16884
+      },
+      "error": null
+    }
+  ]
+}
