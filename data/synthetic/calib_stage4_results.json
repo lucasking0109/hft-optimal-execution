@@ -1,0 +1,1267 @@
+{
+  "cells": [
+    {
+      "cell_id": 401,
+      "params": {
+        "id": 401,
+        "num_noise": 200,
+        "fund_vol": 0.001,
+        "mm": "aggressive",
+        "num_momentum": 25,
+        "num_obi": 0,
+        "num_herder": 0,
+        "herder_max_size": null
+      },
+      "n_success": 5,
+      "n_total": 5,
+      "median_total_distance": 2.721501006394832,
+      "iqr_total_distance": [
+        2.618005186776099,
+        2.788835222163471
+      ],
+      "median_autocorr_l2": 2.0264243503623063,
+      "iqr_autocorr_l2": [
+        1.8611865970338326,
+        2.0586980572485585
+      ],
+      "median_kurtosis_ratio": 2.9750800433556472,
+      "median_spread_ks": 0.522069794607553,
+      "all_seed_results": [
+        {
+          "seed": 1234,
+          "success": true,
+          "total_distance": 2.721501006394832,
+          "distances": {
+            "kurtosis_ratio": 4.1524180773607835,
+            "hill_ratio": 0.2568311445216548,
+            "spread_ks_dist": 0.44478049091082744,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 210.4019261560353,
+            "trade_size_ks_dist": 0.7304228383738832,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 1.5575464831132446
+          },
+          "facts_summary": {
+            "excess_kurtosis": 67.9052852695435,
+            "hill_tail_index": 0.9887988244599902,
+            "vol_autocorr_lag_1": 0.16273596780793217,
+            "vol_autocorr_lag_10": 0.11712333661803948,
+            "vol_autocorr_lag_50": 0.48179328964487333,
+            "spread_bps_median": 0.8770420744069003,
+            "spread_bps_p95": 408.4916288356218,
+            "trade_size_median": 6.0,
+            "trade_size_p95": 23.0,
+            "n_returns": 299,
+            "n_spread_obs": 31411,
+            "n_trades": 13786
+          },
+          "runtime_s": 17.961895124986768
+        },
+        {
+          "seed": 5678,
+          "success": true,
+          "total_distance": 2.788835222163471,
+          "distances": {
+            "kurtosis_ratio": 4.556888914548044,
+            "hill_ratio": 0.26804855887450374,
+            "spread_ks_dist": 0.48078344151773234,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 47.68031580468757,
+            "trade_size_ks_dist": 0.6988183206891111,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 1.8611865970338326
+          },
+          "facts_summary": {
+            "excess_kurtosis": 74.51967405957323,
+            "hill_tail_index": 1.03198582246304,
+            "vol_autocorr_lag_1": 0.01874661283662839,
+            "vol_autocorr_lag_10": 0.780042016756731,
+            "vol_autocorr_lag_50": 0.19104206825918416,
+            "spread_bps_median": 1.475136573061056,
+            "spread_bps_p95": 276.4973496076067,
+            "trade_size_median": 3.0,
+            "trade_size_p95": 31.0,
+            "n_returns": 299,
+            "n_spread_obs": 31757,
+            "n_trades": 14276
+          },
+          "runtime_s": 16.58831804106012
+        },
+        {
+          "seed": 9012,
+          "success": true,
+          "total_distance": 2.618005186776099,
+          "distances": {
+            "kurtosis_ratio": 2.951019054354314,
+            "hill_ratio": 0.28788708333566404,
+            "spread_ks_dist": 0.5538299718779478,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 76.112715899791,
+            "trade_size_ks_dist": 0.6793270256371423,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 2.0586980572485585
+          },
+          "facts_summary": {
+            "excess_kurtosis": 48.258577770462125,
+            "hill_tail_index": 1.1083640580650782,
+            "vol_autocorr_lag_1": 0.03477382807816117,
+            "vol_autocorr_lag_10": 0.9388187080978831,
+            "vol_autocorr_lag_50": 0.27363554054376854,
+            "spread_bps_median": 4.610616371103389,
+            "spread_bps_p95": 466.02642601120334,
+            "trade_size_median": 7.0,
+            "trade_size_p95": 33.0,
+            "n_returns": 299,
+            "n_spread_obs": 31684,
+            "n_trades": 14314
+          },
+          "runtime_s": 15.900852459017187
+        },
+        {
+          "seed": 3456,
+          "success": true,
+          "total_distance": 2.4221476528950148,
+          "distances": {
+            "kurtosis_ratio": 2.597282090329314,
+            "hill_ratio": 0.5308159892226203,
+            "spread_ks_dist": 0.5603081852840891,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 100.82276889313098,
+            "trade_size_ks_dist": 0.6904201094897543,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 2.3598090077138223
+          },
+          "facts_summary": {
+            "excess_kurtosis": 42.4738496903438,
+            "hill_tail_index": 2.0436393223472136,
+            "vol_autocorr_lag_1": -0.006887733299716462,
+            "vol_autocorr_lag_10": 0.7315812889054268,
+            "vol_autocorr_lag_50": 0.41474741641417673,
+            "spread_bps_median": 7.235769737475391,
+            "spread_bps_p95": 579.1135839640643,
+            "trade_size_median": 6.0,
+            "trade_size_p95": 32.0,
+            "n_returns": 299,
+            "n_spread_obs": 31504,
+            "n_trades": 14120
+          },
+          "runtime_s": 15.41022337495815
+        },
+        {
+          "seed": 7890,
+          "success": true,
+          "total_distance": 2.790387481350351,
+          "distances": {
+            "kurtosis_ratio": 2.9750800433556472,
+            "hill_ratio": 0.21128138095504587,
+            "spread_ks_dist": 0.522069794607553,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 110.59434616230519,
+            "trade_size_ks_dist": 0.7183443576323556,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 2.0264243503623063
+          },
+          "facts_summary": {
+            "excess_kurtosis": 48.65205171541743,
+            "hill_tail_index": 0.8134324266152932,
+            "vol_autocorr_lag_1": 0.04638128222358093,
+            "vol_autocorr_lag_10": 0.8034414719948187,
+            "vol_autocorr_lag_50": 0.07697258010834312,
+            "spread_bps_median": 4.33788153639877,
+            "spread_bps_p95": 649.9451223448899,
+            "trade_size_median": 5.0,
+            "trade_size_p95": 26.0,
+            "n_returns": 299,
+            "n_spread_obs": 31695,
+            "n_trades": 13706
+          },
+          "runtime_s": 15.988066749996506
+        }
+      ]
+    },
+    {
+      "cell_id": 402,
+      "params": {
+        "id": 402,
+        "num_noise": 200,
+        "fund_vol": 0.001,
+        "mm": "aggressive",
+        "num_momentum": 25,
+        "num_obi": 50,
+        "num_herder": 50,
+        "herder_max_size": 7,
+        "herder_threshold_bps": 1.1212288670555184
+      },
+      "n_success": 5,
+      "n_total": 5,
+      "median_total_distance": 3.0552419126262884,
+      "iqr_total_distance": [
+        3.0299663225941065,
+        3.690194760084422
+      ],
+      "median_autocorr_l2": 1.8294514688722907,
+      "iqr_autocorr_l2": [
+        1.5973642220626991,
+        1.9537519891714556
+      ],
+      "median_kurtosis_ratio": 8.218243712225162,
+      "median_spread_ks": 0.49761805514202345,
+      "all_seed_results": [
+        {
+          "seed": 1234,
+          "success": true,
+          "total_distance": 4.067213793892359,
+          "distances": {
+            "kurtosis_ratio": 13.142229060710934,
+            "hill_ratio": 0.10757289048194306,
+            "spread_ks_dist": 0.7760034263338228,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 2.4565411340461525,
+            "trade_size_ks_dist": 0.6876516498255141,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 1.595097088579131
+          },
+          "facts_summary": {
+            "excess_kurtosis": 214.91737990228432,
+            "hill_tail_index": 0.4141551751849166,
+            "vol_autocorr_lag_1": -0.0016440407280502618,
+            "vol_autocorr_lag_10": -0.00021445545853710933,
+            "vol_autocorr_lag_50": -0.0013291914271571362,
+            "spread_bps_median": 0.06811928777197476,
+            "spread_bps_p95": 2.128148888042206,
+            "trade_size_median": 7.0,
+            "trade_size_p95": 36.0,
+            "n_returns": 299,
+            "n_spread_obs": 32688,
+            "n_trades": 15466
+          },
+          "runtime_s": 19.95602962502744
+        },
+        {
+          "seed": 5678,
+          "success": true,
+          "total_distance": 2.3592238745405147,
+          "distances": {
+            "kurtosis_ratio": 2.3469066354631143,
+            "hill_ratio": 0.5356085457148558,
+            "spread_ks_dist": 0.5506675772926461,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 46.689618809009794,
+            "trade_size_ks_dist": 0.6985108883951617,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 2.266042220144216
+          },
+          "facts_summary": {
+            "excess_kurtosis": 38.379412095084334,
+            "hill_tail_index": 2.0620906446527956,
+            "vol_autocorr_lag_1": 0.04854378086922244,
+            "vol_autocorr_lag_10": 0.8323948514850306,
+            "vol_autocorr_lag_50": 0.5819250348823273,
+            "spread_bps_median": 2.665448176071891,
+            "spread_bps_p95": 290.96249064843676,
+            "trade_size_median": 3.0,
+            "trade_size_p95": 33.0,
+            "n_returns": 299,
+            "n_spread_obs": 33153,
+            "n_trades": 15284
+          },
+          "runtime_s": 21.986169875017367
+        },
+        {
+          "seed": 9012,
+          "success": true,
+          "total_distance": 3.690194760084422,
+          "distances": {
+            "kurtosis_ratio": 12.908694524584137,
+            "hill_ratio": 0.1542234469735696,
+            "spread_ks_dist": 0.49761805514202345,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 10.487485732558294,
+            "trade_size_ks_dist": 0.6985362584298048,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 1.5973642220626991
+          },
+          "facts_summary": {
+            "excess_kurtosis": 211.09834506510342,
+            "hill_tail_index": 0.5937596211536391,
+            "vol_autocorr_lag_1": 0.08999668501293734,
+            "vol_autocorr_lag_10": 0.02085895267600576,
+            "vol_autocorr_lag_50": 0.0018717768536591149,
+            "spread_bps_median": 0.3304934503280148,
+            "spread_bps_p95": 67.9749187260125,
+            "trade_size_median": 6.0,
+            "trade_size_p95": 30.0,
+            "n_returns": 299,
+            "n_spread_obs": 33586,
+            "n_trades": 17366
+          },
+          "runtime_s": 22.08115345798433
+        },
+        {
+          "seed": 3456,
+          "success": true,
+          "total_distance": 3.0299663225941065,
+          "distances": {
+            "kurtosis_ratio": 8.218243712225162,
+            "hill_ratio": 0.3443315377679193,
+            "spread_ks_dist": 0.487162203566395,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 2.218524670078072,
+            "trade_size_ks_dist": 0.6747685514160999,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 1.8294514688722907
+          },
+          "facts_summary": {
+            "excess_kurtosis": 134.39450780157907,
+            "hill_tail_index": 1.3256749698466268,
+            "vol_autocorr_lag_1": 0.019360200222592605,
+            "vol_autocorr_lag_10": 0.5549204541862658,
+            "vol_autocorr_lag_50": 0.14418885321267244,
+            "spread_bps_median": 0.3422518460208945,
+            "spread_bps_p95": 12.240478320229744,
+            "trade_size_median": 6.0,
+            "trade_size_p95": 36.0,
+            "n_returns": 299,
+            "n_spread_obs": 32638,
+            "n_trades": 15360
+          },
+          "runtime_s": 18.392363792052492
+        },
+        {
+          "seed": 7890,
+          "success": true,
+          "total_distance": 3.0552419126262884,
+          "distances": {
+            "kurtosis_ratio": 5.541343885271717,
+            "hill_ratio": 0.19567549151657668,
+            "spread_ks_dist": 0.4193566512150583,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 61.9036182962943,
+            "trade_size_ks_dist": 0.7217840228775259,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 1.9537519891714556
+          },
+          "facts_summary": {
+            "excess_kurtosis": 90.61865406991453,
+            "hill_tail_index": 0.7533498180198632,
+            "vol_autocorr_lag_1": 0.02899610774829616,
+            "vol_autocorr_lag_10": 0.6866770368956439,
+            "vol_autocorr_lag_50": 0.16611489608914604,
+            "spread_bps_median": 0.6338210544464851,
+            "spread_bps_p95": 370.1661482121121,
+            "trade_size_median": 6.0,
+            "trade_size_p95": 25.0,
+            "n_returns": 299,
+            "n_spread_obs": 35595,
+            "n_trades": 19132
+          },
+          "runtime_s": 24.30217741697561
+        }
+      ]
+    },
+    {
+      "cell_id": 403,
+      "params": {
+        "id": 403,
+        "num_noise": 200,
+        "fund_vol": 0.001,
+        "mm": "aggressive",
+        "num_momentum": 25,
+        "num_obi": 50,
+        "num_herder": 50,
+        "herder_max_size": 3,
+        "herder_threshold_bps": 1.1212288670555184
+      },
+      "n_success": 5,
+      "n_total": 5,
+      "median_total_distance": 3.389405188237848,
+      "iqr_total_distance": [
+        3.108573769450709,
+        4.046348261094694
+      ],
+      "median_autocorr_l2": 1.6239750499319232,
+      "iqr_autocorr_l2": [
+        1.6006899126567695,
+        1.738589153136845
+      ],
+      "median_kurtosis_ratio": 8.000594169125373,
+      "median_spread_ks": 0.5268089222027443,
+      "all_seed_results": [
+        {
+          "seed": 1234,
+          "success": true,
+          "total_distance": 4.046348261094694,
+          "distances": {
+            "kurtosis_ratio": 13.142261412099403,
+            "hill_ratio": 0.10272072896510659,
+            "spread_ks_dist": 0.7062920123539029,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 3.25152297816883,
+            "trade_size_ks_dist": 0.6940946168273983,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 1.5956897692678231
+          },
+          "facts_summary": {
+            "excess_kurtosis": 214.91790895071392,
+            "hill_tail_index": 0.39547437378571804,
+            "vol_autocorr_lag_1": -0.0016499919865301462,
+            "vol_autocorr_lag_10": -0.00031241346491050527,
+            "vol_autocorr_lag_50": -0.0013569183040982823,
+            "spread_bps_median": 0.05549397266089437,
+            "spread_bps_p95": 2.6265887213724413,
+            "trade_size_median": 6.0,
+            "trade_size_p95": 36.0,
+            "n_returns": 299,
+            "n_spread_obs": 33026,
+            "n_trades": 16144
+          },
+          "runtime_s": 19.63940783403814
+        },
+        {
+          "seed": 5678,
+          "success": true,
+          "total_distance": 3.0965485686835237,
+          "distances": {
+            "kurtosis_ratio": 6.730428722063012,
+            "hill_ratio": 0.22709851744371956,
+            "spread_ks_dist": 0.5139859029036289,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 44.175705398085576,
+            "trade_size_ks_dist": 0.6970504673576423,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 1.738589153136845
+          },
+          "facts_summary": {
+            "excess_kurtosis": 110.06398533177097,
+            "hill_tail_index": 0.8743283354640936,
+            "vol_autocorr_lag_1": 0.0034214104682148035,
+            "vol_autocorr_lag_10": 0.6745489131172782,
+            "vol_autocorr_lag_50": 0.1867469275992032,
+            "spread_bps_median": 2.5127914079863443,
+            "spread_bps_p95": 261.6008761356357,
+            "trade_size_median": 3.0,
+            "trade_size_p95": 33.0,
+            "n_returns": 299,
+            "n_spread_obs": 33693,
+            "n_trades": 16370
+          },
+          "runtime_s": 22.511835915967822
+        },
+        {
+          "seed": 9012,
+          "success": true,
+          "total_distance": 4.116922451368893,
+          "distances": {
+            "kurtosis_ratio": 8.000594169125373,
+            "hill_ratio": 0.06335334784030305,
+            "spread_ks_dist": 0.7922505436095675,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 2.913465168558261,
+            "trade_size_ks_dist": 0.6821355854362245,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 1.6006899126567695
+          },
+          "facts_summary": {
+            "excess_kurtosis": 130.83524328687233,
+            "hill_tail_index": 0.24391012229754985,
+            "vol_autocorr_lag_1": 0.3946166562865872,
+            "vol_autocorr_lag_10": -0.0003328144996642121,
+            "vol_autocorr_lag_50": -0.0019086626269049856,
+            "spread_bps_median": 0.05442364453377985,
+            "spread_bps_p95": 0.947099003569092,
+            "trade_size_median": 6.0,
+            "trade_size_p95": 33.0,
+            "n_returns": 299,
+            "n_spread_obs": 33112,
+            "n_trades": 16696
+          },
+          "runtime_s": 19.38646208308637
+        },
+        {
+          "seed": 3456,
+          "success": true,
+          "total_distance": 3.389405188237848,
+          "distances": {
+            "kurtosis_ratio": 11.948867612576988,
+            "hill_ratio": 0.2710799079225975,
+            "spread_ks_dist": 0.5268089222027443,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 6.320823290619233,
+            "trade_size_ks_dist": 0.6821214925925705,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 1.6239750499319232
+          },
+          "facts_summary": {
+            "excess_kurtosis": 195.40211239898994,
+            "hill_tail_index": 1.0436565035280863,
+            "vol_autocorr_lag_1": 0.03963625581244083,
+            "vol_autocorr_lag_10": 0.4368001728769388,
+            "vol_autocorr_lag_50": 0.13335771498112559,
+            "spread_bps_median": 0.28307361329313685,
+            "spread_bps_p95": 28.281716059112558,
+            "trade_size_median": 5.0,
+            "trade_size_p95": 34.0,
+            "n_returns": 299,
+            "n_spread_obs": 33086,
+            "n_trades": 16320
+          },
+          "runtime_s": 18.468812917009927
+        },
+        {
+          "seed": 7890,
+          "success": true,
+          "total_distance": 3.108573769450709,
+          "distances": {
+            "kurtosis_ratio": 4.737577064410932,
+            "hill_ratio": 0.16367172992757137,
+            "spread_ks_dist": 0.45767708509565486,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 66.49995038089783,
+            "trade_size_ks_dist": 0.7318751504008715,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 1.9873813668315001
+          },
+          "facts_summary": {
+            "excess_kurtosis": 77.47450185693795,
+            "hill_tail_index": 0.6301354707239181,
+            "vol_autocorr_lag_1": 0.018508037928852073,
+            "vol_autocorr_lag_10": 0.8921222788066921,
+            "vol_autocorr_lag_50": 0.07995618868100617,
+            "spread_bps_median": 1.083026684803675,
+            "spread_bps_p95": 447.0128223821838,
+            "trade_size_median": 4.0,
+            "trade_size_p95": 23.0,
+            "n_returns": 299,
+            "n_spread_obs": 35807,
+            "n_trades": 18912
+          },
+          "runtime_s": 25.72201791696716
+        }
+      ]
+    },
+    {
+      "cell_id": 404,
+      "params": {
+        "id": 404,
+        "num_noise": 350,
+        "fund_vol": 0.001,
+        "mm": "aggressive",
+        "num_momentum": 25,
+        "num_obi": 50,
+        "num_herder": 50,
+        "herder_max_size": 7,
+        "herder_threshold_bps": 1.1212288670555184
+      },
+      "n_success": 5,
+      "n_total": 5,
+      "median_total_distance": 2.4360463887962718,
+      "iqr_total_distance": [
+        2.2483587097527717,
+        3.017245803081421
+      ],
+      "median_autocorr_l2": 1.9022266232326481,
+      "iqr_autocorr_l2": [
+        1.6654522227642592,
+        1.9617403097841113
+      ],
+      "median_kurtosis_ratio": 2.0281299689102363,
+      "median_spread_ks": 0.48993711058109624,
+      "all_seed_results": [
+        {
+          "seed": 1234,
+          "success": true,
+          "total_distance": 2.1091366847208994,
+          "distances": {
+            "kurtosis_ratio": 2.0281299689102363,
+            "hill_ratio": 0.9602673076236046,
+            "spread_ks_dist": 0.4704104455056519,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 6.101635014383072,
+            "trade_size_ks_dist": 0.6756217387953659,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 2.2233312276178645
+          },
+          "facts_summary": {
+            "excess_kurtosis": 33.16639643137602,
+            "hill_tail_index": 3.6970250890484264,
+            "vol_autocorr_lag_1": -0.005336021306247679,
+            "vol_autocorr_lag_10": 0.6990619386733703,
+            "vol_autocorr_lag_50": 0.47261737261893627,
+            "spread_bps_median": 0.5981099724869412,
+            "spread_bps_p95": 33.64494496090483,
+            "trade_size_median": 5.0,
+            "trade_size_p95": 29.0,
+            "n_returns": 299,
+            "n_spread_obs": 33086,
+            "n_trades": 15530
+          },
+          "runtime_s": 21.88381233403925
+        },
+        {
+          "seed": 5678,
+          "success": true,
+          "total_distance": 3.017245803081421,
+          "distances": {
+            "kurtosis_ratio": 7.424668351055633,
+            "hill_ratio": 0.2764854893086518,
+            "spread_ks_dist": 0.45042940018836464,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 27.27660669127819,
+            "trade_size_ks_dist": 0.6940421826882454,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 1.6654522227642592
+          },
+          "facts_summary": {
+            "excess_kurtosis": 121.41701847387912,
+            "hill_tail_index": 1.0644679690923906,
+            "vol_autocorr_lag_1": 0.045352025058977626,
+            "vol_autocorr_lag_10": 0.5604096780930694,
+            "vol_autocorr_lag_50": 0.08769567271615795,
+            "spread_bps_median": 0.8838563635203017,
+            "spread_bps_p95": 139.35595353808455,
+            "trade_size_median": 6.0,
+            "trade_size_p95": 31.0,
+            "n_returns": 299,
+            "n_spread_obs": 34083,
+            "n_trades": 17498
+          },
+          "runtime_s": 23.2793068329338
+        },
+        {
+          "seed": 9012,
+          "success": true,
+          "total_distance": 2.2483587097527717,
+          "distances": {
+            "kurtosis_ratio": 1.9021526498376269,
+            "hill_ratio": 0.6894354636020902,
+            "spread_ks_dist": 0.675494071146245,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 0.6132940725142271,
+            "trade_size_ks_dist": 0.6550026774273772,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 1.9617403097841113
+          },
+          "facts_summary": {
+            "excess_kurtosis": 31.106265290979152,
+            "hill_tail_index": 2.6543236304944955,
+            "vol_autocorr_lag_1": 0.07397187630982344,
+            "vol_autocorr_lag_10": 0.5836255513688586,
+            "vol_autocorr_lag_50": 0.26962059359767365,
+            "spread_bps_median": 0.10008056485470804,
+            "spread_bps_p95": 2.4460044517281023,
+            "trade_size_median": 6.0,
+            "trade_size_p95": 32.0,
+            "n_returns": 299,
+            "n_spread_obs": 32890,
+            "n_trades": 16316
+          },
+          "runtime_s": 19.25873350002803
+        },
+        {
+          "seed": 3456,
+          "success": true,
+          "total_distance": 2.4360463887962718,
+          "distances": {
+            "kurtosis_ratio": 2.0059630783924507,
+            "hill_ratio": 0.33212826963516795,
+            "spread_ks_dist": 0.5971880508086493,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 92.19840528401437,
+            "trade_size_ks_dist": 0.6898663509271024,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 1.9022266232326481
+          },
+          "facts_summary": {
+            "excess_kurtosis": 32.80389704039329,
+            "hill_tail_index": 1.278692438944043,
+            "vol_autocorr_lag_1": 0.1465686732780866,
+            "vol_autocorr_lag_10": 0.780245968837148,
+            "vol_autocorr_lag_50": 0.38569131673581525,
+            "spread_bps_median": 5.1200655368388714,
+            "spread_bps_p95": 553.206042113585,
+            "trade_size_median": 4.0,
+            "trade_size_p95": 30.0,
+            "n_returns": 299,
+            "n_spread_obs": 33294,
+            "n_trades": 16360
+          },
+          "runtime_s": 20.695428457926027
+        },
+        {
+          "seed": 7890,
+          "success": true,
+          "total_distance": 3.156554382577478,
+          "distances": {
+            "kurtosis_ratio": 7.472725112785199,
+            "hill_ratio": 0.22102306246549416,
+            "spread_ks_dist": 0.48993711058109624,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 56.37735077466878,
+            "trade_size_ks_dist": 0.7057372076348395,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 1.6585555199946302
+          },
+          "facts_summary": {
+            "excess_kurtosis": 122.20289986962979,
+            "hill_tail_index": 0.8509378593918961,
+            "vol_autocorr_lag_1": 0.004181372891560586,
+            "vol_autocorr_lag_10": 0.044785021853160994,
+            "vol_autocorr_lag_50": 0.02987122063645846,
+            "spread_bps_median": 1.5127734810808766,
+            "spread_bps_p95": 282.7831020585829,
+            "trade_size_median": 5.0,
+            "trade_size_p95": 26.0,
+            "n_returns": 299,
+            "n_spread_obs": 34958,
+            "n_trades": 17994
+          },
+          "runtime_s": 25.160082332906313
+        }
+      ]
+    },
+    {
+      "cell_id": 405,
+      "params": {
+        "id": 405,
+        "num_noise": 200,
+        "fund_vol": 0.001,
+        "mm": "aggressive",
+        "num_momentum": 25,
+        "num_obi": 50,
+        "num_herder": 100,
+        "herder_max_size": 5,
+        "herder_threshold_bps": 1.1212288670555184
+      },
+      "n_success": 5,
+      "n_total": 5,
+      "median_total_distance": 2.5915469184011592,
+      "iqr_total_distance": [
+        2.3392190936701245,
+        2.7005647367752488
+      ],
+      "median_autocorr_l2": 1.9810566494970603,
+      "iqr_autocorr_l2": [
+        1.8868342403785903,
+        2.072628655357726
+      ],
+      "median_kurtosis_ratio": 3.0113464381540913,
+      "median_spread_ks": 0.4783943626525733,
+      "all_seed_results": [
+        {
+          "seed": 1234,
+          "success": true,
+          "total_distance": 2.7005647367752488,
+          "distances": {
+            "kurtosis_ratio": 4.05806374130148,
+            "hill_ratio": 0.3082711120919005,
+            "spread_ks_dist": 0.46238202258188854,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 25.647647606930846,
+            "trade_size_ks_dist": 0.7262810944559426,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 1.9810566494970603
+          },
+          "facts_summary": {
+            "excess_kurtosis": 66.36229080531612,
+            "hill_tail_index": 1.1868424829051225,
+            "vol_autocorr_lag_1": 0.023058873632700806,
+            "vol_autocorr_lag_10": 0.7167445142590081,
+            "vol_autocorr_lag_50": 0.1823710922425981,
+            "spread_bps_median": 1.0449966037610379,
+            "spread_bps_p95": 174.72625330030155,
+            "trade_size_median": 5.0,
+            "trade_size_p95": 28.0,
+            "n_returns": 299,
+            "n_spread_obs": 37867,
+            "n_trades": 20330
+          },
+          "runtime_s": 32.35588875005487
+        },
+        {
+          "seed": 5678,
+          "success": true,
+          "total_distance": 2.3392190936701245,
+          "distances": {
+            "kurtosis_ratio": 2.905813996447969,
+            "hill_ratio": 0.42513655096030084,
+            "spread_ks_dist": 0.4850016852039097,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 5.374422479706945,
+            "trade_size_ks_dist": 0.6923244000589373,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 1.7254500630319347
+          },
+          "facts_summary": {
+            "excess_kurtosis": 47.51933083155379,
+            "hill_tail_index": 1.6367739302313324,
+            "vol_autocorr_lag_1": 0.019770338450584853,
+            "vol_autocorr_lag_10": 0.36836621904538785,
+            "vol_autocorr_lag_50": 0.13069090350392332,
+            "spread_bps_median": 0.500053130645131,
+            "spread_bps_p95": 29.729636915770936,
+            "trade_size_median": 5.0,
+            "trade_size_p95": 33.0,
+            "n_returns": 299,
+            "n_spread_obs": 35604,
+            "n_trades": 17002
+          },
+          "runtime_s": 25.734133874997497
+        },
+        {
+          "seed": 9012,
+          "success": true,
+          "total_distance": 2.5915469184011592,
+          "distances": {
+            "kurtosis_ratio": 3.26155277296571,
+            "hill_ratio": 0.332691801619532,
+            "spread_ks_dist": 0.4545772576829903,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 64.67831214041999,
+            "trade_size_ks_dist": 0.7427677523394773,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 2.072628655357726
+          },
+          "facts_summary": {
+            "excess_kurtosis": 53.33679493339325,
+            "hill_tail_index": 1.2808620347098625,
+            "vol_autocorr_lag_1": 0.01182247193969355,
+            "vol_autocorr_lag_10": 0.8139031496775402,
+            "vol_autocorr_lag_50": 0.17699812840868256,
+            "spread_bps_median": 1.1988131749567927,
+            "spread_bps_p95": 402.37940821635044,
+            "trade_size_median": 5.0,
+            "trade_size_p95": 20.0,
+            "n_returns": 299,
+            "n_spread_obs": 36905,
+            "n_trades": 22526
+          },
+          "runtime_s": 24.49963895790279
+        },
+        {
+          "seed": 3456,
+          "success": true,
+          "total_distance": 2.816026369896634,
+          "distances": {
+            "kurtosis_ratio": 3.0113464381540913,
+            "hill_ratio": 0.2026297222886228,
+            "spread_ks_dist": 0.4783943626525733,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 75.18919760405517,
+            "trade_size_ks_dist": 0.7354546673024382,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 2.0854876648664886
+          },
+          "facts_summary": {
+            "excess_kurtosis": 49.24512299066134,
+            "hill_tail_index": 0.780123577196266,
+            "vol_autocorr_lag_1": -0.0042996493426411715,
+            "vol_autocorr_lag_10": 0.8556127179161785,
+            "vol_autocorr_lag_50": 0.19045444500800215,
+            "spread_bps_median": 0.36224182580815806,
+            "spread_bps_p95": 633.6758688038992,
+            "trade_size_median": 5.0,
+            "trade_size_p95": 21.0,
+            "n_returns": 299,
+            "n_spread_obs": 39735,
+            "n_trades": 19778
+          },
+          "runtime_s": 33.934983958955854
+        },
+        {
+          "seed": 7890,
+          "success": true,
+          "total_distance": 2.0575998335187293,
+          "distances": {
+            "kurtosis_ratio": 1.8026894796492068,
+            "hill_ratio": 0.7973331722762594,
+            "spread_ks_dist": 0.49468558708959376,
+            "spread_ks_pvalue": 0.0,
+            "spread_wass": 12.402339107395811,
+            "trade_size_ks_dist": 0.7011206972126902,
+            "trade_size_ks_pvalue": 0.0,
+            "autocorr_l2": 1.8868342403785903
+          },
+          "facts_summary": {
+            "excess_kurtosis": 29.47972508726474,
+            "hill_tail_index": 3.069729354351127,
+            "vol_autocorr_lag_1": -0.013353302079143708,
+            "vol_autocorr_lag_10": 0.6478268477289646,
+            "vol_autocorr_lag_50": 0.3080625163526867,
+            "spread_bps_median": 0.35285815102328866,
+            "spread_bps_p95": 73.18769606381922,
+            "trade_size_median": 5.0,
+            "trade_size_p95": 31.0,
+            "n_returns": 299,
+            "n_spread_obs": 35940,
+            "n_trades": 17010
+          },
+          "runtime_s": 27.309546208009124
+        }
+      ]
+    }
+  ],
+  "best_cell": {
+    "cell_id": 404,
+    "params": {
+      "id": 404,
+      "num_noise": 350,
+      "fund_vol": 0.001,
+      "mm": "aggressive",
+      "num_momentum": 25,
+      "num_obi": 50,
+      "num_herder": 50,
+      "herder_max_size": 7,
+      "herder_threshold_bps": 1.1212288670555184
+    },
+    "n_success": 5,
+    "n_total": 5,
+    "median_total_distance": 2.4360463887962718,
+    "iqr_total_distance": [
+      2.2483587097527717,
+      3.017245803081421
+    ],
+    "median_autocorr_l2": 1.9022266232326481,
+    "iqr_autocorr_l2": [
+      1.6654522227642592,
+      1.9617403097841113
+    ],
+    "median_kurtosis_ratio": 2.0281299689102363,
+    "median_spread_ks": 0.48993711058109624,
+    "all_seed_results": [
+      {
+        "seed": 1234,
+        "success": true,
+        "total_distance": 2.1091366847208994,
+        "distances": {
+          "kurtosis_ratio": 2.0281299689102363,
+          "hill_ratio": 0.9602673076236046,
+          "spread_ks_dist": 0.4704104455056519,
+          "spread_ks_pvalue": 0.0,
+          "spread_wass": 6.101635014383072,
+          "trade_size_ks_dist": 0.6756217387953659,
+          "trade_size_ks_pvalue": 0.0,
+          "autocorr_l2": 2.2233312276178645
+        },
+        "facts_summary": {
+          "excess_kurtosis": 33.16639643137602,
+          "hill_tail_index": 3.6970250890484264,
+          "vol_autocorr_lag_1": -0.005336021306247679,
+          "vol_autocorr_lag_10": 0.6990619386733703,
+          "vol_autocorr_lag_50": 0.47261737261893627,
+          "spread_bps_median": 0.5981099724869412,
+          "spread_bps_p95": 33.64494496090483,
+          "trade_size_median": 5.0,
+          "trade_size_p95": 29.0,
+          "n_returns": 299,
+          "n_spread_obs": 33086,
+          "n_trades": 15530
+        },
+        "runtime_s": 21.88381233403925
+      },
+      {
+        "seed": 5678,
+        "success": true,
+        "total_distance": 3.017245803081421,
+        "distances": {
+          "kurtosis_ratio": 7.424668351055633,
+          "hill_ratio": 0.2764854893086518,
+          "spread_ks_dist": 0.45042940018836464,
+          "spread_ks_pvalue": 0.0,
+          "spread_wass": 27.27660669127819,
+          "trade_size_ks_dist": 0.6940421826882454,
+          "trade_size_ks_pvalue": 0.0,
+          "autocorr_l2": 1.6654522227642592
+        },
+        "facts_summary": {
+          "excess_kurtosis": 121.41701847387912,
+          "hill_tail_index": 1.0644679690923906,
+          "vol_autocorr_lag_1": 0.045352025058977626,
+          "vol_autocorr_lag_10": 0.5604096780930694,
+          "vol_autocorr_lag_50": 0.08769567271615795,
+          "spread_bps_median": 0.8838563635203017,
+          "spread_bps_p95": 139.35595353808455,
+          "trade_size_median": 6.0,
+          "trade_size_p95": 31.0,
+          "n_returns": 299,
+          "n_spread_obs": 34083,
+          "n_trades": 17498
+        },
+        "runtime_s": 23.2793068329338
+      },
+      {
+        "seed": 9012,
+        "success": true,
+        "total_distance": 2.2483587097527717,
+        "distances": {
+          "kurtosis_ratio": 1.9021526498376269,
+          "hill_ratio": 0.6894354636020902,
+          "spread_ks_dist": 0.675494071146245,
+          "spread_ks_pvalue": 0.0,
+          "spread_wass": 0.6132940725142271,
+          "trade_size_ks_dist": 0.6550026774273772,
+          "trade_size_ks_pvalue": 0.0,
+          "autocorr_l2": 1.9617403097841113
+        },
+        "facts_summary": {
+          "excess_kurtosis": 31.106265290979152,
+          "hill_tail_index": 2.6543236304944955,
+          "vol_autocorr_lag_1": 0.07397187630982344,
+          "vol_autocorr_lag_10": 0.5836255513688586,
+          "vol_autocorr_lag_50": 0.26962059359767365,
+          "spread_bps_median": 0.10008056485470804,
+          "spread_bps_p95": 2.4460044517281023,
+          "trade_size_median": 6.0,
+          "trade_size_p95": 32.0,
+          "n_returns": 299,
+          "n_spread_obs": 32890,
+          "n_trades": 16316
+        },
+        "runtime_s": 19.25873350002803
+      },
+      {
+        "seed": 3456,
+        "success": true,
+        "total_distance": 2.4360463887962718,
+        "distances": {
+          "kurtosis_ratio": 2.0059630783924507,
+          "hill_ratio": 0.33212826963516795,
+          "spread_ks_dist": 0.5971880508086493,
+          "spread_ks_pvalue": 0.0,
+          "spread_wass": 92.19840528401437,
+          "trade_size_ks_dist": 0.6898663509271024,
+          "trade_size_ks_pvalue": 0.0,
+          "autocorr_l2": 1.9022266232326481
+        },
+        "facts_summary": {
+          "excess_kurtosis": 32.80389704039329,
+          "hill_tail_index": 1.278692438944043,
+          "vol_autocorr_lag_1": 0.1465686732780866,
+          "vol_autocorr_lag_10": 0.780245968837148,
+          "vol_autocorr_lag_50": 0.38569131673581525,
+          "spread_bps_median": 5.1200655368388714,
+          "spread_bps_p95": 553.206042113585,
+          "trade_size_median": 4.0,
+          "trade_size_p95": 30.0,
+          "n_returns": 299,
+          "n_spread_obs": 33294,
+          "n_trades": 16360
+        },
+        "runtime_s": 20.695428457926027
+      },
+      {
+        "seed": 7890,
+        "success": true,
+        "total_distance": 3.156554382577478,
+        "distances": {
+          "kurtosis_ratio": 7.472725112785199,
+          "hill_ratio": 0.22102306246549416,
+          "spread_ks_dist": 0.48993711058109624,
+          "spread_ks_pvalue": 0.0,
+          "spread_wass": 56.37735077466878,
+          "trade_size_ks_dist": 0.7057372076348395,
+          "trade_size_ks_pvalue": 0.0,
+          "autocorr_l2": 1.6585555199946302
+        },
+        "facts_summary": {
+          "excess_kurtosis": 122.20289986962979,
+          "hill_tail_index": 0.8509378593918961,
+          "vol_autocorr_lag_1": 0.004181372891560586,
+          "vol_autocorr_lag_10": 0.044785021853160994,
+          "vol_autocorr_lag_50": 0.02987122063645846,
+          "spread_bps_median": 1.5127734810808766,
+          "spread_bps_p95": 282.7831020585829,
+          "trade_size_median": 5.0,
+          "trade_size_p95": 26.0,
+          "n_returns": 299,
+          "n_spread_obs": 34958,
+          "n_trades": 17994
+        },
+        "runtime_s": 25.160082332906313
+      }
+    ]
+  },
+  "real_facts_summary": {
+    "excess_kurtosis": 16.35319084072168,
+    "hill_tail_index": 3.8499957873162827,
+    "vol_autocorr_lag_1": 0.26883956685455684,
+    "vol_autocorr_lag_10": 0.18075280182081094,
+    "vol_autocorr_lag_50": 0.1374770818117086,
+    "spread_bps_median": 0.6420958006928794,
+    "spread_bps_p95": 1.283573468535238,
+    "trade_size_median": 71.0,
+    "trade_size_p95": 300.0,
+    "n_returns": 23399,
+    "n_spread_obs": 431291,
+    "n_trades": 246275
+  },
+  "real_benchmark_dist": {
+    "n_slices": 20,
+    "excess_kurtosis": {
+      "median": 5.671976405240009,
+      "iqr_low": 4.2786230008134645,
+      "iqr_high": 7.35482331568758,
+      "min": 2.6307124149325576,
+      "max": 21.826278955575308
+    },
+    "hill_tail_index": {
+      "median": 3.8619266403577024,
+      "iqr_low": 3.3087189339838683,
+      "iqr_high": 4.4991473107937585,
+      "min": 1.369175577594436,
+      "max": 14.977451184935871
+    },
+    "vol_autocorr_lag_1": {
+      "median": 0.06524254660616652,
+      "iqr_low": 0.032740676644735026,
+      "iqr_high": 0.11166701440416762,
+      "min": -0.00858317660071386,
+      "max": 0.21276025162485723
+    },
+    "vol_autocorr_lag_10": {
+      "median": 0.03786493382519073,
+      "iqr_low": -0.020064432954532137,
+      "iqr_high": 0.09705415298271472,
+      "min": -0.06257298362409819,
+      "max": 0.10518475492922462
+    },
+    "vol_autocorr_lag_50": {
+      "median": -0.0251791410354889,
+      "iqr_low": -0.06636827944445388,
+      "iqr_high": 0.0071295664670174026,
+      "min": -0.1425609469775616,
+      "max": 0.12546494881998327
+    },
+    "spread_bps_median": {
+      "median": 0.6389076636886298,
+      "iqr_low": 0.6350163914805054,
+      "iqr_high": 0.9617195792618306,
+      "min": 0.633191920470519,
+      "max": 1.2800819252438704
+    },
+    "spread_bps_p95": {
+      "median": 1.2745563044153168,
+      "iqr_low": 0.9568844152847628,
+      "iqr_high": 1.2831720014351862,
+      "min": 0.9500134585249319,
+      "max": 1.6010502889899414
+    },
+    "trade_size_median": {
+      "median": 54.0,
+      "iqr_low": 50.0,
+      "iqr_high": 68.25,
+      "min": 40.0,
+      "max": 90.0
+    },
+    "trade_size_p95": {
+      "median": 300.0,
+      "iqr_low": 300.0,
+      "iqr_high": 316.37499999999864,
+      "min": 200.0,
+      "max": 394.0999999999981
+    }
+  },
+  "n_seeds": 5,
+  "metadata": {
+    "timestamp_et": "2026-05-04T13:11:34.302906-05:00",
+    "seeds": [
+      1234,
+      5678,
+      9012,
+      3456,
+      7890
+    ],
+    "cells": [
+      401,
+      402,
+      403,
+      404,
+      405
+    ],
+    "stage": "Stage 4 (low-noise mix experiment)",
+    "lit_basis": "Bamberg BERG_107 + CHAD framework \u2014 noise < 50% recommendation",
+    "herder_params_source": "scripts/herder_param_calibration.py",
+    "herder_threshold_bps": 1.1212288670555184,
+    "real_benchmark_dist": {
+      "n_slices": 20,
+      "excess_kurtosis": {
+        "median": 5.671976405240009,
+        "iqr_low": 4.2786230008134645,
+        "iqr_high": 7.35482331568758,
+        "min": 2.6307124149325576,
+        "max": 21.826278955575308
+      },
+      "hill_tail_index": {
+        "median": 3.8619266403577024,
+        "iqr_low": 3.3087189339838683,
+        "iqr_high": 4.4991473107937585,
+        "min": 1.369175577594436,
+        "max": 14.977451184935871
+      },
+      "vol_autocorr_lag_1": {
+        "median": 0.06524254660616652,
+        "iqr_low": 0.032740676644735026,
+        "iqr_high": 0.11166701440416762,
+        "min": -0.00858317660071386,
+        "max": 0.21276025162485723
+      },
+      "vol_autocorr_lag_10": {
+        "median": 0.03786493382519073,
+        "iqr_low": -0.020064432954532137,
+        "iqr_high": 0.09705415298271472,
+        "min": -0.06257298362409819,
+        "max": 0.10518475492922462
+      },
+      "vol_autocorr_lag_50": {
+        "median": -0.0251791410354889,
+        "iqr_low": -0.06636827944445388,
+        "iqr_high": 0.0071295664670174026,
+        "min": -0.1425609469775616,
+        "max": 0.12546494881998327
+      },
+      "spread_bps_median": {
+        "median": 0.6389076636886298,
+        "iqr_low": 0.6350163914805054,
+        "iqr_high": 0.9617195792618306,
+        "min": 0.633191920470519,
+        "max": 1.2800819252438704
+      },
+      "spread_bps_p95": {
+        "median": 1.2745563044153168,
+        "iqr_low": 0.9568844152847628,
+        "iqr_high": 1.2831720014351862,
+        "min": 0.9500134585249319,
+        "max": 1.6010502889899414
+      },
+      "trade_size_median": {
+        "median": 54.0,
+        "iqr_low": 50.0,
+        "iqr_high": 68.25,
+        "min": 40.0,
+        "max": 90.0
+      },
+      "trade_size_p95": {
+        "median": 300.0,
+        "iqr_low": 300.0,
+        "iqr_high": 316.37499999999864,
+        "min": 200.0,
+        "max": 394.0999999999981
+      }
+    },
+    "real_facts_summary": {
+      "excess_kurtosis": 16.35319084072168,
+      "hill_tail_index": 3.8499957873162827,
+      "vol_autocorr_lag_1": 0.26883956685455684,
+      "vol_autocorr_lag_10": 0.18075280182081094,
+      "vol_autocorr_lag_50": 0.1374770818117086,
+      "spread_bps_median": 0.6420958006928794,
+      "spread_bps_p95": 1.283573468535238,
+      "trade_size_median": 71.0,
+      "trade_size_p95": 300.0,
+      "n_returns": 23399,
+      "n_spread_obs": 431291,
+      "n_trades": 246275
+    },
+    "verdict_code": "AUTOCORR_OK_KURT_BAD",
+    "verdict_msg": "\ud83d\udfe2 Autocorr \u7dad\u6301\uff0c\u4f46 kurt \u4ecd\u504f\u9ad8 \u2014 fine-tune max_size"
+  }
+}

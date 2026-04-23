@@ -1,0 +1,40 @@
+{
+  "real_ac_l1_target": 0.065,
+  "n0": {
+    "excess_kurtosis": 39.02310729088133,
+    "hill_tail_index": 2.415347056607645,
+    "vol_autocorr_lag_1": 0.25216545824163505,
+    "vol_autocorr_lag_10": 0.30372483747988993,
+    "vol_autocorr_lag_50": 0.32129434879064456,
+    "spread_bps_median": 0.18527954050673953,
+    "spread_bps_p95": 1.8816976676357409,
+    "trade_size_median": 5.0,
+    "trade_size_p95": 38.54999999999927,
+    "n_returns": 299,
+    "n_spread_obs": 31924,
+    "n_trades": 14910,
+    "runtime_s": 17.6,
+    "raw_return_std": 0.001069273902382581,
+    "autocorr_l2_self": 0.9315609202673136
+  },
+  "n50": {
+    "excess_kurtosis": 46.499844354974925,
+    "hill_tail_index": 2.4494853679255346,
+    "vol_autocorr_lag_1": -0.033031488893325904,
+    "vol_autocorr_lag_10": 0.7495445323208715,
+    "vol_autocorr_lag_50": 0.5907356973261502,
+    "spread_bps_median": 1.0050183918365705,
+    "spread_bps_p95": 95.52040130893762,
+    "trade_size_median": 5.0,
+    "trade_size_p95": 30.0,
+    "n_returns": 299,
+    "n_spread_obs": 33879,
+    "n_trades": 15836,
+    "runtime_s": 21.27,
+    "raw_return_std": 0.019383448985302344,
+    "autocorr_l2_self": 1.4854521640854426
+  },
+  "improvement_pct_to_real": 47.62308717949178,
+  "std_change_pct": 1712.7674248956878,
+  "pass": true
+}
