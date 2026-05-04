@@ -1,0 +1,23 @@
+{
+  "timestamp_et": "2026-05-05T17:07:03.473784-05:00",
+  "train_rows": 638063,
+  "test_rows": 124144,
+  "train_rmse": 4.863302437123123,
+  "test_rmse": 3.081133422778334,
+  "train_mae": 2.979805459638488,
+  "test_mae": 1.9352424065386087,
+  "train_r2": 0.15825934322978208,
+  "test_r2": 0.018256252646722926,
+  "static_r2_train": 1.528967279029736e-05,
+  "static_r2_test": -0.01107517923713619,
+  "go_no_go_passes": false,
+  "feature_importance": {
+    "recent_volume_15m_pct_adv": 0.18115247786045074,
+    "ticker_idx": 0.17184743285179138,
+    "recent_vol_bps_15m": 0.16286157071590424,
+    "seconds_from_open": 0.14311282336711884,
+    "recent_aggressor_imb_15m": 0.1298399716615677,
+    "recent_spread_bps_15m": 0.11397896707057953,
+    "size_pct_adv": 0.09720680117607117
+  }
+}
