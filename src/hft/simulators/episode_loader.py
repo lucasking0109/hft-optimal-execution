@@ -1,18 +1,15 @@
-"""Episode loaders for ExecutionEnv (Phase 5E).
+"""Episode loaders for ExecutionEnv.
 
 Two episode sources:
-  1. Synthetic — pre-generated 5-min ABIDES episodes (Stage 4 cell 404 anchor)
-     stored as `data/synthetic/aapl/episode_seed{N}.parquet` (~89 AAPL +
-     100 multi-ticker = 189 episodes).
-     Each parquet contains a single column `mid_price_1hz` with 300 floats
-     (1 Hz × 300 sec = 5 min).
-
+  1. Synthetic — pre-generated 5-min ABIDES episodes
+     (`data/synthetic/aapl/episode_seed{N}.parquet`, 300 floats × 1 Hz).
   2. Real — slice from real TAQ tick data via `hft.data.load_eq_taq` +
-     `hft.simulators.stylized_facts.extract_real_taq_series` with
-     sample_seconds=1.
+     `hft.simulators.stylized_facts.extract_real_taq_series`
+     (sample_seconds=1).
 
-Both produce `EpisodeData` with a 300-element `mid_prices` array (zero-padded
-or truncated to length 300 if the underlying data is off by a few samples).
+`EpisodeData.mid_prices` is 1 Hz; length = slice_minutes × 60. Synthetic
+is always 300 (5 min). Real supports configurable slice length (5, 30, 60
+min etc.) via the `slice_minutes` argument to `load_real_episode`.
 """
 
 from __future__ import annotations
@@ -29,17 +26,22 @@ PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
 @dataclass
 class EpisodeData:
-    """A 5-min execution episode replayed from synthetic or real data."""
+    """An execution episode (5–60 min) replayed from synthetic or real data."""
 
-    mid_prices: np.ndarray            # shape (300,) — 1 Hz mid prices
+    mid_prices: np.ndarray            # 1-D 1 Hz mid prices; length = slice_seconds
     arrival_mid: float                 # = mid_prices[0]
-    source: str                        # 'synthetic_seed1042' or 'real_AAPL_20200113_09:30:00'
+    source: str                        # 'synthetic_seed1042' or 'real_AAPL_20200113_09:30'
     metadata: dict = field(default_factory=dict)
 
     def __post_init__(self):
-        if self.mid_prices.shape != (300,):
+        if self.mid_prices.ndim != 1:
             raise ValueError(
-                f"mid_prices must have shape (300,), got {self.mid_prices.shape} "
+                f"mid_prices must be 1-D, got shape {self.mid_prices.shape} "
+                f"(source={self.source})"
+            )
+        if len(self.mid_prices) < 60:
+            raise ValueError(
+                f"mid_prices must have ≥ 60 samples, got {len(self.mid_prices)} "
                 f"(source={self.source})"
             )
         if self.arrival_mid <= 0:
@@ -163,12 +165,13 @@ def load_real_episode(
             f"Real slice {ticker} {date} from {start_ns/1e9/3600:.2f}h has only "
             f"{len(mids)} 1-Hz mid samples (need ≥ 60)"
         )
-    # Pad/truncate to 300
-    if len(mids) < 300:
-        pad = np.full(300 - len(mids), mids[-1])
+    # Pad/truncate to slice_minutes × 60 (1-Hz target length).
+    target_len = slice_minutes * 60
+    if len(mids) < target_len:
+        pad = np.full(target_len - len(mids), mids[-1])
         mids = np.concatenate([mids, pad])
-    elif len(mids) > 300:
-        mids = mids[:300]
+    elif len(mids) > target_len:
+        mids = mids[:target_len]
 
     hours = start_ns / 1e9 / 3600
     src = f"real_{ticker}_{date}_{int(hours):02d}:{int((hours % 1) * 60):02d}"

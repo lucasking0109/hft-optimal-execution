@@ -67,8 +67,16 @@ Side = Literal["sell", "buy"]
 Mode = Literal["synthetic", "real_replay"]
 
 
+ObservationMode = Literal["v1", "v2"]
+
+
 class ExecutionEnv(gym.Env):
-    """5-min execution episode environment for RL training."""
+    """Execution episode environment for RL training.
+
+    Supports 5-min (default) or longer (e.g. 60-min) episodes via
+    `slice_minutes`. Multi-ticker training via `ticker_pool`. Richer
+    13-dim microstructure observation via `observation_mode='v2'`.
+    """
 
     metadata = {"render_modes": []}
 
@@ -81,8 +89,11 @@ class ExecutionEnv(gym.Env):
         ticker: str = "AAPL",
         date: str = "20200113",
         date_pool: list[str] | None = None,
+        ticker_pool: list[str] | None = None,
+        slice_minutes: int = 5,
         step_seconds: int = 5,
         n_steps: int = 60,
+        observation_mode: ObservationMode = "v1",
         max_action_per_step: float | None = None,
         seed: int | None = None,
     ):
@@ -93,11 +104,23 @@ class ExecutionEnv(gym.Env):
             raise ValueError(f"side must be 'sell' or 'buy', got {side}")
         if total_qty <= 0:
             raise ValueError(f"total_qty must be > 0, got {total_qty}")
-        if step_seconds * n_steps != 300:
+        if slice_minutes <= 0:
+            raise ValueError(f"slice_minutes must be > 0, got {slice_minutes}")
+        if step_seconds * n_steps != slice_minutes * 60:
             raise ValueError(
-                f"step_seconds × n_steps must equal 300 (5 min), "
-                f"got {step_seconds} × {n_steps} = {step_seconds * n_steps}"
+                f"step_seconds × n_steps must equal slice_minutes × 60 "
+                f"({slice_minutes * 60}), got {step_seconds} × {n_steps} = "
+                f"{step_seconds * n_steps}"
             )
+        if observation_mode not in ("v1", "v2"):
+            raise ValueError(f"observation_mode must be 'v1' or 'v2', got {observation_mode}")
+        if observation_mode == "v2" and mode != "real_replay":
+            raise ValueError(
+                "observation_mode='v2' requires mode='real_replay' "
+                "(synthetic episodes lack TAQ data needed for microstructure features)"
+            )
+        if ticker_pool is not None and mode != "real_replay":
+            raise ValueError("ticker_pool requires mode='real_replay'")
         if max_action_per_step is not None:
             if not (0 < max_action_per_step <= 1.0):
                 raise ValueError(
@@ -111,17 +134,23 @@ class ExecutionEnv(gym.Env):
         self.ticker = ticker
         self.date = date
         self.date_pool = list(date_pool) if date_pool else None
+        self.ticker_pool = list(ticker_pool) if ticker_pool else None
+        self.slice_minutes = slice_minutes
         self.step_seconds = step_seconds
         self.n_steps = n_steps
+        self.observation_mode = observation_mode
         self.max_action_per_step = max_action_per_step
 
-        # Spaces
-        self.observation_space = gym.spaces.Box(
-            low=np.array([0.0, 0.0, 0.0, -50.0, -1.0], dtype=np.float32),
-            high=np.array([1.0, 1.0, 50.0, 50.0, 1.0], dtype=np.float32),
-            shape=(5,),
-            dtype=np.float32,
-        )
+        # Track current episode (ticker, date, anchor_ns) for v2 obs
+        self._current_ticker: str = ticker
+        self._current_date: str = date
+        self._current_anchor_ns: int = 0
+
+        # Lazy-loaded helpers for v2 observation (built on first use per ticker/date)
+        self._v2_helpers: dict[tuple[str, str], dict] = {}
+
+        # Spaces — v1 = 5-dim, v2 = 13-dim
+        self._setup_observation_space()
         # Action space upper bound matches max_action_per_step when set
         # (so PPO doesn't waste exploration above the cap).
         action_high = float(max_action_per_step) if max_action_per_step is not None else 1.0
@@ -136,19 +165,35 @@ class ExecutionEnv(gym.Env):
                 raise RuntimeError(
                     "No synthetic episodes found. Run scripts/run_phase5c_batch.py first."
                 )
+            # Backward-compat: keep date-keyed dict empty for synthetic mode
             self._real_starts_by_date: dict[str, list[int]] = {}
+            self._real_starts_by_td: dict[tuple[str, str], list[int]] = {}
         else:  # real_replay
-            # Build per-date slice pool. If date_pool provided, use those; else single date.
+            # Build per-(ticker, date) slice pool. ticker_pool extends the
+            # single-ticker default; date_pool extends single-date.
+            tickers_to_use = self.ticker_pool if self.ticker_pool else [ticker]
             dates_to_use = self.date_pool if self.date_pool else [date]
-            self._real_starts_by_date = {}
-            for d in dates_to_use:
-                starts = list_real_5min_slices(ticker=ticker, date=d, step_minutes=5)
-                if starts:
-                    self._real_starts_by_date[d] = starts
-            if not self._real_starts_by_date:
+            self._real_starts_by_td = {}
+            for t in tickers_to_use:
+                for d in dates_to_use:
+                    try:
+                        starts = list_real_5min_slices(
+                            ticker=t, date=d, step_minutes=slice_minutes,
+                        )
+                    except Exception:
+                        continue
+                    if starts:
+                        self._real_starts_by_td[(t, d)] = starts
+            if not self._real_starts_by_td:
                 raise RuntimeError(
-                    f"No real 5-min slices found for {ticker} on any of {dates_to_use}."
+                    f"No real {slice_minutes}-min slices found for any "
+                    f"(ticker, date) in {tickers_to_use} × {dates_to_use}."
                 )
+            # Backward-compat alias for single-ticker callers / tests
+            self._real_starts_by_date = {
+                d: starts for (t, d), starts in self._real_starts_by_td.items()
+                if t == ticker
+            }
             self._synthetic_paths = []
 
         # RNG
@@ -196,18 +241,28 @@ class ExecutionEnv(gym.Env):
                         f"Failed to load synthetic episode after retries: {e}"
                     )
         else:
-            # Multi-date: pick random date from pool, then random slice within
-            available_dates = list(self._real_starts_by_date.keys())
-            chosen_date = available_dates[
-                int(self._rng.integers(0, len(available_dates)))
-            ]
-            starts = self._real_starts_by_date[chosen_date]
-            idx = int(self._rng.integers(0, len(starts)))
-            start_ns = starts[idx]
+            # Pin a specific (ticker, date, start_ns) if caller passes options;
+            # otherwise sample uniformly across the (ticker, date) pool.
+            if options and "force_anchor" in options:
+                fa = options["force_anchor"]
+                chosen_t = fa.get("ticker", self.ticker)
+                chosen_d = fa.get("date", self.date)
+                start_ns = int(fa["start_ns"])
+            else:
+                td_keys = list(self._real_starts_by_td.keys())
+                chosen_t, chosen_d = td_keys[
+                    int(self._rng.integers(0, len(td_keys)))
+                ]
+                starts = self._real_starts_by_td[(chosen_t, chosen_d)]
+                idx = int(self._rng.integers(0, len(starts)))
+                start_ns = starts[idx]
             self._episode = load_real_episode(
-                ticker=self.ticker, date=chosen_date,
-                start_ns=start_ns, slice_minutes=5,
+                ticker=chosen_t, date=chosen_d,
+                start_ns=start_ns, slice_minutes=self.slice_minutes,
             )
+            self._current_ticker = chosen_t
+            self._current_date = chosen_d
+            self._current_anchor_ns = start_ns
 
         self._step_idx = 0
         self._inventory_left = float(self.total_qty)
@@ -299,10 +354,32 @@ class ExecutionEnv(gym.Env):
     # Helpers
     # ---------------------------------------------------------------------
 
+    def _setup_observation_space(self):
+        """Configure the gym observation Box according to observation_mode."""
+        if self.observation_mode == "v1":
+            self.observation_space = gym.spaces.Box(
+                low=np.array([0.0, 0.0, 0.0, -50.0, -1.0], dtype=np.float32),
+                high=np.array([1.0, 1.0, 50.0, 50.0, 1.0], dtype=np.float32),
+                shape=(5,),
+                dtype=np.float32,
+            )
+        else:  # v2 — 13-dim, see obs_v2.OBS_V2_LOW/HIGH
+            from hft.simulators.obs_v2 import OBS_V2_LOW, OBS_V2_HIGH
+            self.observation_space = gym.spaces.Box(
+                low=OBS_V2_LOW, high=OBS_V2_HIGH,
+                shape=(len(OBS_V2_LOW),), dtype=np.float32,
+            )
+
     def _compute_obs(self) -> np.ndarray:
-        """Build 5-dim observation from current state + episode mid_prices."""
+        """Dispatch to v1 (mid-only, 5-dim) or v2 (microstructure, 13-dim)."""
         if self._episode is None:
             raise RuntimeError("Episode not loaded")
+        if self.observation_mode == "v2":
+            return self._compute_obs_v2()
+        return self._compute_obs_v1()
+
+    def _compute_obs_v1(self) -> np.ndarray:
+        """Build 5-dim observation from current state + episode mid_prices."""
 
         mids = self._episode.mid_prices
         current_mid_idx = min(self._step_idx * self.step_seconds, len(mids) - 1)
@@ -350,3 +427,70 @@ class ExecutionEnv(gym.Env):
             ],
             dtype=np.float32,
         )
+
+    def _compute_obs_v2(self) -> np.ndarray:
+        """Build 13-dim microstructure observation. Requires real_replay mode.
+
+        Lazy-loads per-(ticker, date) NBBOLookup, VenueBBOLookup, trades
+        DataFrame, and volume-profile baseline on first reset for that pair.
+        """
+        from hft.simulators.obs_v2 import build_obs_v2
+        td = (self._current_ticker, self._current_date)
+        helpers = self._v2_helpers.get(td)
+        if helpers is None:
+            helpers = self._build_v2_helpers(self._current_ticker, self._current_date)
+            self._v2_helpers[td] = helpers
+
+        # Anchor inside the episode: start_ns + step_idx * step_seconds (in ns)
+        anchor_ns = (
+            self._current_anchor_ns
+            + self._step_idx * self.step_seconds * 1_000_000_000
+        )
+        return build_obs_v2(
+            inventory_left=self._inventory_left,
+            total_qty=self.total_qty,
+            step_idx=self._step_idx,
+            n_steps=self.n_steps,
+            cumulative_filled=self._cumulative_filled,
+            anchor_ns=anchor_ns,
+            episode_arrival_mid=self._episode.arrival_mid,
+            episode_mids=self._episode.mid_prices,
+            step_seconds=self.step_seconds,
+            ticker_idx=helpers["ticker_idx"],
+            nbbo_lookup=helpers["nbbo_lookup"],
+            venue_bbo_lookup=helpers["venue_bbo_lookup"],
+            trades_df=helpers["trades_df"],
+            vol_profile_baseline=helpers["vol_profile_baseline"],
+        )
+
+    def _build_v2_helpers(self, ticker: str, date: str) -> dict:
+        """Build NBBO / per-venue / trades / volume-profile lookups for one (ticker, date)."""
+        from hft.analysis.nbbo_lookup import NBBOLookup, VenueBBOLookup
+        from hft.data import load_eq_taq
+        from hft.data.timeparse import add_eq_ns_of_day, filter_rth
+        from hft.simulators.vol_profile_baseline import VolProfileBaseline
+        from hft.simulators.obs_v2 import TICKER_IDX
+
+        df = load_eq_taq(ticker, date)
+        if "ns_of_day" not in df.columns:
+            df = add_eq_ns_of_day(df)
+        df = filter_rth(df, src="Timestamp")
+        nbbo_lookup = NBBOLookup(df)
+        venue_bbo_lookup = VenueBBOLookup(df)
+        # Pre-extract TRADE rows (used for aggressor imbalance / trade-rate features)
+        import polars as pl
+        trades_df = (
+            df.filter(pl.col("EventType").is_in(["TRADE", "TRADE NB"]))
+            .select(["ns_of_day", "Price", "Quantity"])
+            .sort("ns_of_day")
+        )
+        vol_profile_baseline = VolProfileBaseline.for_ticker(
+            ticker=ticker, exclude_dates=[date],
+        )
+        return {
+            "ticker_idx": TICKER_IDX.get(ticker, 0),
+            "nbbo_lookup": nbbo_lookup,
+            "venue_bbo_lookup": venue_bbo_lookup,
+            "trades_df": trades_df,
+            "vol_profile_baseline": vol_profile_baseline,
+        }
