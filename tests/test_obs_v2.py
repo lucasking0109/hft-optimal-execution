@@ -181,3 +181,84 @@ def test_executionenv_multi_ticker_pool_samples_diversity():
     assert len(seen_tickers) >= 2, (
         f"expected ≥ 2 unique tickers, got {seen_tickers}"
     )
+
+
+# ---------------------------------------------------------------------------
+# Phase E — v3 (ticker-agnostic obs) + spread-cost fills
+# ---------------------------------------------------------------------------
+
+def test_obs_v3_dim_and_bounds_consistent():
+    """v3 has 13 dims; low/high/names align."""
+    from hft.simulators.obs_v2 import OBS_V3_LOW, OBS_V3_HIGH, OBS_V3_NAMES
+    assert len(OBS_V3_LOW) == 13
+    assert len(OBS_V3_HIGH) == 13
+    assert len(OBS_V3_NAMES) == 13
+    assert OBS_V3_NAMES[12] == "log_adv_norm", "dim 12 must be log_adv_norm"
+    assert "ticker_idx" not in OBS_V3_NAMES, "ticker_idx must be dropped in v3"
+
+
+def test_obs_v3_in_box_for_unseen_ticker():
+    """v3 obs computes valid features on tickers outside the Phase D pool."""
+    env = ExecutionEnv(
+        mode="real_replay",
+        ticker="MSFT", date="20200117",   # MSFT was NOT in Phase D's 5-ticker pool
+        slice_minutes=60, step_seconds=30, n_steps=120,
+        observation_mode="v3",
+        max_action_per_step=0.05,
+        seed=0,
+    )
+    obs, info = env.reset(seed=0, options={"force_anchor": {
+        "ticker": "MSFT", "date": "20200117",
+        "start_ns": int(10 * 3600 * 1e9),
+    }})
+    assert obs.shape == (13,)
+    assert env.observation_space.contains(obs), f"obs out of bounds: {obs}"
+    # log_adv_norm should be in [-2, 2]
+    assert -2.0 <= obs[12] <= 2.0
+
+
+def test_fill_at_spread_lower_reward_than_mid():
+    """Same episode, same action sequence: fill_at_spread=True must give
+    strictly lower (or equal) reward than mid-fill (half-spread cost).
+    """
+    opts = {"force_anchor": {
+        "ticker": "AAPL", "date": "20200113",
+        "start_ns": int(10 * 3600 * 1e9),
+    }}
+
+    def run(fill_at_spread: bool) -> float:
+        env = ExecutionEnv(
+            mode="real_replay", ticker="AAPL", date="20200113",
+            slice_minutes=5, step_seconds=5, n_steps=60,
+            fill_at_spread=fill_at_spread,
+            seed=0,
+        )
+        env.reset(seed=0, options=opts)
+        total = 0.0
+        for _ in range(60):
+            _, r, term, trunc, _ = env.step(np.array([0.05], dtype=np.float32))
+            total += r
+            if term or trunc:
+                break
+        return total
+
+    r_mid = run(False)
+    r_spread = run(True)
+    assert r_spread < r_mid, (
+        f"spread fills must cost half-spread vs mid; got mid={r_mid:.4f}, "
+        f"spread={r_spread:.4f}"
+    )
+
+
+def test_fill_at_spread_rejected_on_synthetic_mode():
+    """fill_at_spread requires real_replay (synthetic has no NBBO)."""
+    with pytest.raises(ValueError, match="fill_at_spread requires"):
+        ExecutionEnv(mode="synthetic", fill_at_spread=True)
+
+
+def test_adv_cache_returns_finite_for_known_tickers():
+    """ADV cache produces positive finite ADV for tickers in the cache."""
+    from hft.simulators.adv_cache import get_adv
+    for t in ["AAPL", "MSFT", "TSLA"]:
+        adv = get_adv(t, exclude_dates=["20200117"])
+        assert adv > 0 and np.isfinite(adv), f"ADV bad for {t}: {adv}"

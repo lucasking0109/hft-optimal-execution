@@ -67,7 +67,7 @@ Side = Literal["sell", "buy"]
 Mode = Literal["synthetic", "real_replay"]
 
 
-ObservationMode = Literal["v1", "v2"]
+ObservationMode = Literal["v1", "v2", "v3"]
 
 
 class ExecutionEnv(gym.Env):
@@ -95,6 +95,8 @@ class ExecutionEnv(gym.Env):
         n_steps: int = 60,
         observation_mode: ObservationMode = "v1",
         max_action_per_step: float | None = None,
+        fill_at_spread: bool = False,
+        adv_exclude_dates: list[str] | None = None,
         seed: int | None = None,
     ):
         super().__init__()
@@ -112,13 +114,15 @@ class ExecutionEnv(gym.Env):
                 f"({slice_minutes * 60}), got {step_seconds} × {n_steps} = "
                 f"{step_seconds * n_steps}"
             )
-        if observation_mode not in ("v1", "v2"):
-            raise ValueError(f"observation_mode must be 'v1' or 'v2', got {observation_mode}")
-        if observation_mode == "v2" and mode != "real_replay":
+        if observation_mode not in ("v1", "v2", "v3"):
+            raise ValueError(f"observation_mode must be 'v1', 'v2', or 'v3', got {observation_mode}")
+        if observation_mode in ("v2", "v3") and mode != "real_replay":
             raise ValueError(
-                "observation_mode='v2' requires mode='real_replay' "
+                f"observation_mode='{observation_mode}' requires mode='real_replay' "
                 "(synthetic episodes lack TAQ data needed for microstructure features)"
             )
+        if fill_at_spread and mode != "real_replay":
+            raise ValueError("fill_at_spread requires mode='real_replay'")
         if ticker_pool is not None and mode != "real_replay":
             raise ValueError("ticker_pool requires mode='real_replay'")
         if max_action_per_step is not None:
@@ -140,6 +144,12 @@ class ExecutionEnv(gym.Env):
         self.n_steps = n_steps
         self.observation_mode = observation_mode
         self.max_action_per_step = max_action_per_step
+        self.fill_at_spread = fill_at_spread
+        # Dates to ALWAYS exclude when computing ticker-state baselines (ADV,
+        # volume profile, etc.). Pass [Day 5] during training to prevent
+        # leakage; pass the same [Day 5] during eval so the values match.
+        # If None, defaults to "exclude current episode's date" (legacy v2 behaviour).
+        self.adv_exclude_dates = list(adv_exclude_dates) if adv_exclude_dates else None
 
         # Track current episode (ticker, date, anchor_ns) for v2 obs
         self._current_ticker: str = ticker
@@ -148,6 +158,9 @@ class ExecutionEnv(gym.Env):
 
         # Lazy-loaded helpers for v2 observation (built on first use per ticker/date)
         self._v2_helpers: dict[tuple[str, str], dict] = {}
+        # Light-weight NBBO-only cache for `fill_at_spread` (avoids paying for
+        # the full v2 helper build when we don't need v2 obs).
+        self._nbbo_cache: dict[tuple[str, str], object] = {}
 
         # Spaces — v1 = 5-dim, v2 = 13-dim
         self._setup_observation_space()
@@ -290,11 +303,30 @@ class ExecutionEnv(gym.Env):
         # 2. Compute quantity to fill this step
         qty_to_fill = trade_rate * self._inventory_left
 
-        # 3. Fill price = current mid (no spread modelling — see caveat 1)
+        # 3. Fill price:
+        #    fill_at_spread=False → mid (legacy, no spread cost; biases RL aggressive)
+        #    fill_at_spread=True  → NBB for sell / NBO for buy (matches BacktestEngine)
         current_mid_idx = self._step_idx * self.step_seconds
         if current_mid_idx >= len(self._episode.mid_prices):
             current_mid_idx = len(self._episode.mid_prices) - 1
-        fill_price = float(self._episode.mid_prices[current_mid_idx])
+        mid_now = float(self._episode.mid_prices[current_mid_idx])
+
+        if self.fill_at_spread:
+            anchor_ns = (
+                self._current_anchor_ns
+                + self._step_idx * self.step_seconds * 1_000_000_000
+            )
+            nbbo_lookup = self._get_nbbo_lookup(self._current_ticker, self._current_date)
+            snap = nbbo_lookup.at(anchor_ns)
+            if self.side == "sell" and snap.nbb is not None and snap.nbb > 0:
+                fill_price = float(snap.nbb)
+            elif self.side == "buy" and snap.nbo is not None and snap.nbo > 0:
+                fill_price = float(snap.nbo)
+            else:
+                # NBBO unavailable — fall back to mid (rare).
+                fill_price = mid_now
+        else:
+            fill_price = mid_now
 
         # 4. Update inventory + fill stats
         self._inventory_left -= qty_to_fill
@@ -363,17 +395,25 @@ class ExecutionEnv(gym.Env):
                 shape=(5,),
                 dtype=np.float32,
             )
-        else:  # v2 — 13-dim, see obs_v2.OBS_V2_LOW/HIGH
+        elif self.observation_mode == "v2":
             from hft.simulators.obs_v2 import OBS_V2_LOW, OBS_V2_HIGH
             self.observation_space = gym.spaces.Box(
                 low=OBS_V2_LOW, high=OBS_V2_HIGH,
                 shape=(len(OBS_V2_LOW),), dtype=np.float32,
             )
+        else:  # v3 — ticker-agnostic, 13-dim
+            from hft.simulators.obs_v2 import OBS_V3_LOW, OBS_V3_HIGH
+            self.observation_space = gym.spaces.Box(
+                low=OBS_V3_LOW, high=OBS_V3_HIGH,
+                shape=(len(OBS_V3_LOW),), dtype=np.float32,
+            )
 
     def _compute_obs(self) -> np.ndarray:
-        """Dispatch to v1 (mid-only, 5-dim) or v2 (microstructure, 13-dim)."""
+        """Dispatch to v1 / v2 / v3 observation builders."""
         if self._episode is None:
             raise RuntimeError("Episode not loaded")
+        if self.observation_mode == "v3":
+            return self._compute_obs_v3()
         if self.observation_mode == "v2":
             return self._compute_obs_v2()
         return self._compute_obs_v1()
@@ -463,6 +503,59 @@ class ExecutionEnv(gym.Env):
             vol_profile_baseline=helpers["vol_profile_baseline"],
         )
 
+    def _get_nbbo_lookup(self, ticker: str, date: str):
+        """Lazy-cache an NBBOLookup per (ticker, date) for spread fills.
+
+        If v2 helpers are already built (e.g. obs v2/v3), reuse the lookup
+        from there. Otherwise build a standalone lookup.
+        """
+        td = (ticker, date)
+        if td in self._v2_helpers:
+            return self._v2_helpers[td]["nbbo_lookup"]
+        if td in self._nbbo_cache:
+            return self._nbbo_cache[td]
+        from hft.analysis.nbbo_lookup import NBBOLookup
+        from hft.data import load_eq_taq
+        from hft.data.timeparse import add_eq_ns_of_day, filter_rth
+        df = load_eq_taq(ticker, date)
+        if "ns_of_day" not in df.columns:
+            df = add_eq_ns_of_day(df)
+        df = filter_rth(df, src="Timestamp")
+        nbbo = NBBOLookup(df)
+        self._nbbo_cache[td] = nbbo
+        return nbbo
+
+    def _compute_obs_v3(self) -> np.ndarray:
+        """Build 13-dim ticker-agnostic obs (v3): same as v2 but log_adv_norm
+        in place of ticker_idx so unseen tickers are usable.
+        """
+        from hft.simulators.obs_v2 import build_obs_v3
+        td = (self._current_ticker, self._current_date)
+        helpers = self._v2_helpers.get(td)
+        if helpers is None:
+            helpers = self._build_v2_helpers(self._current_ticker, self._current_date)
+            self._v2_helpers[td] = helpers
+        anchor_ns = (
+            self._current_anchor_ns
+            + self._step_idx * self.step_seconds * 1_000_000_000
+        )
+        return build_obs_v3(
+            inventory_left=self._inventory_left,
+            total_qty=self.total_qty,
+            step_idx=self._step_idx,
+            n_steps=self.n_steps,
+            cumulative_filled=self._cumulative_filled,
+            anchor_ns=anchor_ns,
+            episode_arrival_mid=self._episode.arrival_mid,
+            episode_mids=self._episode.mid_prices,
+            step_seconds=self.step_seconds,
+            log_adv_norm=helpers["log_adv_norm"],
+            nbbo_lookup=helpers["nbbo_lookup"],
+            venue_bbo_lookup=helpers["venue_bbo_lookup"],
+            trades_df=helpers["trades_df"],
+            vol_profile_baseline=helpers["vol_profile_baseline"],
+        )
+
     def _build_v2_helpers(self, ticker: str, date: str) -> dict:
         """Build NBBO / per-venue / trades / volume-profile lookups for one (ticker, date)."""
         from hft.analysis.nbbo_lookup import NBBOLookup, VenueBBOLookup
@@ -470,6 +563,8 @@ class ExecutionEnv(gym.Env):
         from hft.data.timeparse import add_eq_ns_of_day, filter_rth
         from hft.simulators.vol_profile_baseline import VolProfileBaseline
         from hft.simulators.obs_v2 import TICKER_IDX
+        from hft.simulators.adv_cache import get_adv
+        import math
 
         df = load_eq_taq(ticker, date)
         if "ns_of_day" not in df.columns:
@@ -484,11 +579,22 @@ class ExecutionEnv(gym.Env):
             .select(["ns_of_day", "Price", "Quantity"])
             .sort("ns_of_day")
         )
+        # ADV / volume profile baselines: exclude either the explicit OOS
+        # day(s) the caller pinned, or fall back to "exclude current date"
+        # (legacy v2 behaviour).
+        exclude = self.adv_exclude_dates if self.adv_exclude_dates else [date]
         vol_profile_baseline = VolProfileBaseline.for_ticker(
-            ticker=ticker, exclude_dates=[date],
+            ticker=ticker, exclude_dates=exclude,
         )
+        # log_adv_norm: log10(ADV / 1e8). AAPL ≈ 33M shares → log10(0.33) ≈ -0.48.
+        try:
+            adv = get_adv(ticker, exclude_dates=exclude)
+        except Exception:
+            adv = 1e7  # defensive fallback if cache misses
+        log_adv_norm = math.log10(max(adv, 1e3) / 1e8)
         return {
             "ticker_idx": TICKER_IDX.get(ticker, 0),
+            "log_adv_norm": log_adv_norm,
             "nbbo_lookup": nbbo_lookup,
             "venue_bbo_lookup": venue_bbo_lookup,
             "trades_df": trades_df,

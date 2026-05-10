@@ -11,16 +11,21 @@ on 5 days of full TAQ + 14-venue NBBO data, and writes down what worked
 - **Volume-aware schedules** (VWAP-follow / POV / Tóth) beat TWAP by
   ~7.5 bps median IS for 10k-share parents on liquid large-caps.
 - **Almgren-Chriss risk-averse** wins on *both* median IS and variance
-  vs every other classical strategy. Best multi-metric classical strategy
-  across 9 strategies × 200 backtests.
+  vs every other classical strategy. Best multi-metric classical strategy.
 - **PPO RL with 5-min episodes + mid-only obs (Phase 6 + A) doesn't beat
   TWAP.** First version of the RL story is a negative finding: the
   variance reduction is from the action cap, not the policy.
-- **PPO RL with 60-min episodes + 13-dim microstructure obs (Phase D)
-  *does* tie or beat the best classical**. Median IS −13.69 bps across
-  150 backtests (vs AC-RA −13.24, TWAP −5.77); on the held-out OOS day,
-  rl_v2 ties AC-RA at −8.52 bps median IS. Episode horizon and
-  observation richness were the bottleneck — not RL itself.
+- **PPO RL with 60-min episodes + microstructure obs (Phase D) ties
+  AC-RA on 5 tickers** — first sign the bottleneck was horizon/obs,
+  not RL itself.
+- **PPO RL ticker-agnostic + spread cost in training (Phase E) generalises
+  to a 104-ticker universe**: trained on 20 diverse tickers from Day 1-4,
+  evaluated on all 104 on Day 5 OOS. Beats VWAP-following on **62% of
+  tickers**, lowest median IS across all 6 strategies tested (+1.55 bps
+  RL vs +5.78 VWAP-follow, both paying half-spread cost). 4-fold mini
+  walk-forward CV: RL wins on 3 of 4 folds, edge grows monotonically
+  with more training data (+1.47 → −1.16 → −6.06 → −9.71 bps vs VWAP).
+  Headline positive result of the project.
 - **Static venue allocation** loses to NBBO routing by 0.1–9 bps —
   validates dynamic per-order routing.
 - **Trying ML for the η coefficient** (xgboost on 762k trade events)
@@ -44,7 +49,7 @@ src/hft/
 └── analysis/     # impact regression, SOR, metrics
 
 scripts/          # one driver per phase
-tests/            # 135 unit tests
+tests/            # 140 unit tests
 reports/          # per-phase writeups + figures
 dashboards/       # streamlit explorers
 vendor/abides-sim # vendored ABIDES (BSD-3) with patch notes
@@ -54,9 +59,10 @@ vendor/abides-sim # vendored ABIDES (BSD-3) with patch notes
 
 ```bash
 uv sync && uv pip install -e .
-uv run pytest tests/                              # 135 tests
+uv run pytest tests/                              # 140 tests
 uv run python scripts/eval_ppo_oos.py             # phase 6/A 5-min OOS comparison
 uv run python scripts/run_phase_d_eval.py         # phase D 60-min RL vs 5 baselines
+uv run python scripts/run_phase_e_xticker_eval.py # phase E 104-ticker OOS sweep
 uv run streamlit run dashboards/01_data_explorer.py
 ```
 
@@ -71,7 +77,8 @@ uv run streamlit run dashboards/01_data_explorer.py
 | 6 + A | PPO RL on synthetic + real 5-min episodes, mid-only obs, with action cap | doesn't beat TWAP on median IS; variance reduction comes from the cap, not the policy |
 | B | Strategy zoo (POV, Tóth, CVXPY-constrained AC) + 8-strategy sweep | adds nothing material on top of AC-RA |
 | B.3 | xgboost-predicted state-conditional η | overfits, loses to static η, kept as negative finding |
-| **D** | **PPO RL on 60-min episodes, 13-dim microstructure obs, multi-ticker train pool** | **median IS −13.69 bps — best of all 9 strategies, beats AC-RA by 0.45 bps and TWAP by 7.92 bps; ties AC-RA on Day-5 OOS (both −8.52)** |
+| **D** | **PPO RL on 60-min episodes, 13-dim microstructure obs, 5-ticker train pool** | **median IS −13.69 bps — best of all 9 strategies, beats AC-RA by 0.45 bps and TWAP by 7.92 bps; ties AC-RA on Day-5 OOS (both −8.52)** |
+| **E** | **Ticker-agnostic v3 obs (log_adv_norm replaces ticker_idx) + spread cost in training; 20-ticker train pool, 104-ticker OOS sweep, 4-fold walk-forward CV** | **RL beats VWAP-following on 62% of 104 tickers on Day-5 OOS; lowest median IS of all 6 strategies (+1.55 vs +5.78 VWAP-follow). Generalises to ~84 unseen tickers. Walk-forward: wins on 3 of 4 folds; edge grows monotonically with more training data.** |
 
 ## Caveats
 
@@ -88,14 +95,19 @@ Most "RL beats TWAP" papers I read either trained on something that
 doesn't look like real markets or compared against a strawman baseline.
 Wanted to do this on real ticks with a fair fight.
 
-First answer (Phase 6 + A): the volume-aware classical schedules are
+**First answer (Phase 6 + A)**: the volume-aware classical schedules are
 hard to beat — RL with 5-min episodes and mid-only observation doesn't
-add anything beyond what the action cap gets you. **Negative finding,
-preserved.**
+add anything beyond what the action cap gets you. Negative finding,
+preserved.
 
-Second answer (Phase D): give PPO 60-min episodes and a richer
-13-dim observation (NBBO depth, microprice drift, per-venue
-concentration, trade-flow imbalance, intraday volume-profile percentile)
-and it actually does match or slightly beat AC-RA. Same parent spec,
-same backtest engine, same OOS day. **The earlier negative finding was
-about horizon and observation, not about RL.**
+**Second answer (Phase D)**: give PPO 60-min episodes and a richer
+13-dim observation (NBBO depth, microprice drift, per-venue concentration,
+trade-flow imbalance, intraday volume-profile percentile) and it actually
+matches AC-RA on a 5-ticker eval.
+
+**Third answer (Phase E)**: drop the categorical ticker index, add
+log_adv_norm so the model is ticker-agnostic, add spread cost to training
+so the policy isn't biased aggressive. Train on 20 diverse tickers from
+Day 1-4, evaluate on all 104 tickers on Day 5 OOS. PPO ends up with the
+lowest median IS of any strategy tested and beats VWAP-following on 62%
+of tickers — including ~84 tickers the policy never saw during training.

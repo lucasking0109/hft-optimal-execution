@@ -20,6 +20,32 @@ from hft.simulators.vol_profile_baseline import VolProfileBaseline
 
 TICKER_IDX: dict[str, int] = {"AAPL": 0, "AMZN": 1, "AMD": 2, "TSLA": 3, "NVDA": 4}
 
+# v3 (Phase E): drop ticker_idx, add log_adv_norm. Same 13-dim shape.
+OBS_V3_NAMES = [
+    "inv_pct_left",          # 0
+    "time_pct_left",         # 1
+    "recent_vol_bps_1m",     # 2
+    "mid_drift_5m_bps",      # 3
+    "schedule_lag",          # 4
+    "spread_bps",            # 5
+    "nbbo_size_imbalance",   # 6
+    "microprice_drift_5m_bps",  # 7
+    "venue_concentration",   # 8
+    "aggressor_imb_5m",      # 9
+    "trade_rate_5m_norm",    # 10
+    "vol_profile_pct",       # 11
+    "log_adv_norm",          # 12  (replaces ticker_idx)
+]
+
+OBS_V3_LOW = np.array(
+    [0.0, 0.0, 0.0, -100.0, -1.0, 0.0, -1.0, -100.0, 0.0, -1.0, -10.0, 0.0, -2.0],
+    dtype=np.float32,
+)
+OBS_V3_HIGH = np.array(
+    [1.0, 1.0, 100.0, 100.0, 1.0, 100.0, 1.0, 100.0, 1.0, 1.0, 10.0, 1.0, 2.0],
+    dtype=np.float32,
+)
+
 OBS_V2_NAMES = [
     "inv_pct_left",          # 0
     "time_pct_left",         # 1
@@ -204,3 +230,40 @@ def build_obs_v2(
         ],
         dtype=np.float32,
     )
+
+
+def build_obs_v3(
+    *,
+    inventory_left: float,
+    total_qty: int,
+    step_idx: int,
+    n_steps: int,
+    cumulative_filled: float,
+    anchor_ns: int,
+    episode_arrival_mid: float,
+    episode_mids: np.ndarray,
+    step_seconds: int,
+    log_adv_norm: float,
+    nbbo_lookup: NBBOLookup,
+    venue_bbo_lookup: VenueBBOLookup,
+    trades_df: pl.DataFrame,
+    vol_profile_baseline: VolProfileBaseline,
+) -> np.ndarray:
+    """Same 12 microstructure features as v2 but with `log_adv_norm` at
+    dim 12 instead of `ticker_idx`. This makes the policy ticker-agnostic
+    — it can be applied to any ticker (the log_adv_norm value distinguishes
+    high- vs low-liquidity names).
+    """
+    v2 = build_obs_v2(
+        inventory_left=inventory_left, total_qty=total_qty,
+        step_idx=step_idx, n_steps=n_steps,
+        cumulative_filled=cumulative_filled, anchor_ns=anchor_ns,
+        episode_arrival_mid=episode_arrival_mid,
+        episode_mids=episode_mids, step_seconds=step_seconds,
+        ticker_idx=0,   # placeholder; we replace dim 12 below
+        nbbo_lookup=nbbo_lookup, venue_bbo_lookup=venue_bbo_lookup,
+        trades_df=trades_df, vol_profile_baseline=vol_profile_baseline,
+    )
+    v3 = v2.copy()
+    v3[12] = float(np.clip(log_adv_norm, -2.0, 2.0))
+    return v3
