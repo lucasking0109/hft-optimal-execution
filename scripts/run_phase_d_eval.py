@@ -36,6 +36,7 @@ from hft.analysis.impact import (                                 # noqa: E402
     GAMMA_PRIOR_BPS_PER_PCT_ADV,
     average_daily_volume_from_history,
 )
+from hft.analysis.vwap import compute_lookback_volume_profile    # noqa: E402
 from hft.backtest.engine import BacktestEngine                   # noqa: E402
 from hft.data import load_eq_taq                                 # noqa: E402
 from hft.strategies.almgren_chriss import AlmgrenChrissStrategy  # noqa: E402
@@ -116,7 +117,14 @@ def main():
             try:
                 df = load_eq_taq(ticker, date)
                 engine = BacktestEngine(ticker, date, market_df=df)
-                ctx = engine.market_context(bin_minutes=5)
+                # Leave-one-out lookback volume profile (no same-day leak).
+                lookback = [d for d in DATES if d != date]
+                profile = compute_lookback_volume_profile(
+                    ticker, lookback_dates=lookback, bin_minutes=5,
+                )
+                ctx = engine.market_context(
+                    bin_minutes=5, volume_profile_override=profile,
+                )
                 ctx["adv_shares"] = get_adv(ticker)
             except Exception as e:
                 print(f"  ❌ {ticker} {date}: load failed: {e}")

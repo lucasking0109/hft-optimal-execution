@@ -21,6 +21,7 @@ import polars as pl
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from hft.analysis.vwap import compute_lookback_volume_profile  # noqa: E402
 from hft.backtest.engine import BacktestEngine                 # noqa: E402
 from hft.data import AVAILABLE_DATES                           # noqa: E402
 from hft.strategies.base import ParentOrder                    # noqa: E402
@@ -58,9 +59,22 @@ def run_one(ticker: str, date: str) -> list[dict]:
         start_ns=WINDOW_START_NS, end_ns=WINDOW_END_NS,
     )
 
+    # Leave-one-out lookback baseline: average volume profile across all
+    # other days for this ticker (excludes the current eval date — no leak).
+    lookback = [d for d in DATES if d != date]
+    try:
+        profile = compute_lookback_volume_profile(
+            ticker, lookback_dates=lookback, bin_minutes=5,
+        )
+    except Exception as e:
+        return [{
+            "ticker": ticker, "date": date, "strategy": "(lookback_profile)",
+            "error": f"{type(e).__name__}: {e}",
+        }]
+
     for strat in [TWAPStrategy(num_slices=NUM_SLICES), VWAPFollowingStrategy(num_slices=NUM_SLICES)]:
         try:
-            ctx = engine.market_context(bin_minutes=5)
+            ctx = engine.market_context(bin_minutes=5, volume_profile_override=profile)
             res = engine.run(parent, strat, market_context=ctx)
             rows.append({
                 "ticker": ticker, "date": date, "strategy": strat.name,

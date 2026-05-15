@@ -27,6 +27,7 @@ from hft.analysis.impact import (                                    # noqa: E40
     ETA_PRIOR_BPS_PER_PCT_ADV,
     GAMMA_PRIOR_BPS_PER_PCT_ADV,
 )
+from hft.analysis.vwap import compute_lookback_volume_profile        # noqa: E402
 from hft.backtest.engine import BacktestEngine                       # noqa: E402
 from hft.data import load_eq_taq                                    # noqa: E402
 from hft.strategies.ac_ml import ACMLStrategy                       # noqa: E402
@@ -118,7 +119,14 @@ def main():
             try:
                 df = load_eq_taq(ticker, date)
                 engine = BacktestEngine(ticker, date, market_df=df)
-                ctx = engine.market_context(bin_minutes=5)
+                # Leave-one-out lookback volume profile (no same-day leak).
+                lookback = [d for d in DATES if d != date]
+                profile = compute_lookback_volume_profile(
+                    ticker, lookback_dates=lookback, bin_minutes=5,
+                )
+                ctx = engine.market_context(
+                    bin_minutes=5, volume_profile_override=profile,
+                )
                 ctx["adv_shares"] = ADV_LOOKUP[ticker]
                 ctx["market_df"] = df  # ACML needs full df
             except Exception as e:

@@ -30,6 +30,7 @@ from hft.analysis.impact import (                                 # noqa: E402
     ETA_PRIOR_BPS_PER_PCT_ADV,
     GAMMA_PRIOR_BPS_PER_PCT_ADV,
 )
+from hft.analysis.vwap import compute_lookback_volume_profile    # noqa: E402
 from hft.backtest.engine import BacktestEngine                   # noqa: E402
 from hft.data import load_eq_taq                                 # noqa: E402
 from hft.simulators.adv_cache import get_adv                     # noqa: E402
@@ -122,11 +123,18 @@ def main():
     rows = []
     t0 = time.perf_counter()
     n_done = n_failed = 0
+    # Causal lookback: only Day 1-4 (NEVER include the OOS day = Day 5).
+    TRAIN_DATES = ["20200113", "20200114", "20200115", "20200116"]
     for ticker in tickers:
         try:
             df = load_eq_taq(ticker, OOS_DATE)
             engine = BacktestEngine(ticker, OOS_DATE, market_df=df)
-            ctx = engine.market_context(bin_minutes=5)
+            profile = compute_lookback_volume_profile(
+                ticker, lookback_dates=TRAIN_DATES, bin_minutes=5,
+            )
+            ctx = engine.market_context(
+                bin_minutes=5, volume_profile_override=profile,
+            )
             ctx["adv_shares"] = get_adv(ticker, exclude_dates=[OOS_DATE])
         except Exception as e:
             print(f"  ❌ {ticker}: load failed — {e}")

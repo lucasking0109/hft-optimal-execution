@@ -64,6 +64,10 @@ def compute_volume_profile(
 
     Returns DataFrame[bucket_min, volume]. Used by VWAP-following strategy
     as a forecast of market volume distribution.
+
+    ⚠️  Computed from the input `df` — if `df` is the **current day's** TAQ
+    this introduces look-ahead bias when used by a strategy. For
+    leakage-free backtests use `compute_lookback_volume_profile()` below.
     """
     from hft.data.timeparse import add_eq_minute_bucket, filter_rth
     trades = df.filter(pl.col("EventType").is_in(["TRADE", "TRADE NB"]))
@@ -76,3 +80,77 @@ def compute_volume_profile(
         .agg(pl.col("Quantity").sum().alias("volume"))
         .sort("bucket_min")
     )
+
+
+def compute_lookback_volume_profile(
+    ticker: str,
+    *,
+    lookback_dates: list[str],
+    bin_minutes: int = 5,
+    cache_root: "Path | None" = None,
+) -> pl.DataFrame:
+    """Cross-day rolling-average per-bucket volume profile (no leakage).
+
+    Walks each date in `lookback_dates`, computes per-day volume profile,
+    then averages per-bucket volume across all loaded days.
+
+    Args:
+        ticker: stock symbol (e.g. "AAPL").
+        lookback_dates: explicit list of dates to average across. The
+            evaluation date MUST be excluded by the caller — this function
+            does not know which day you're evaluating.
+        bin_minutes: bucket granularity (default 5 minutes).
+        cache_root: override path to processed parquet cache.
+
+    Returns:
+        DataFrame[bucket_min, volume] — same schema as
+        `compute_volume_profile()` so strategies don't need to change.
+
+    Raises:
+        RuntimeError if no parquet from `lookback_dates` is loadable
+        (NO Silent Fallback — caller picks how to handle missing data).
+    """
+    from pathlib import Path
+
+    if not lookback_dates:
+        raise ValueError(
+            "compute_lookback_volume_profile: lookback_dates is empty. "
+            "Must provide at least one historical date to average over."
+        )
+
+    project_root = Path(__file__).resolve().parents[3]
+    root = cache_root or (project_root / "data" / "processed" / "eq_taq")
+    if not root.exists():
+        raise RuntimeError(
+            f"compute_lookback_volume_profile: cache root {root} not found"
+        )
+
+    per_day_profiles: list[pl.DataFrame] = []
+    for date in lookback_dates:
+        parquet = root / date / f"{ticker}.parquet"
+        if not parquet.exists():
+            continue
+        try:
+            df = pl.read_parquet(parquet)
+        except Exception:
+            continue
+        try:
+            prof = compute_volume_profile(df, bin_minutes=bin_minutes, rth_only=True)
+        except Exception:
+            continue
+        per_day_profiles.append(prof)
+
+    if not per_day_profiles:
+        raise RuntimeError(
+            f"compute_lookback_volume_profile: no parquet loadable for "
+            f"{ticker} across {lookback_dates}"
+        )
+
+    # Stack and average per bucket_min.
+    stacked = pl.concat(per_day_profiles, how="vertical")
+    avg = (
+        stacked.group_by("bucket_min")
+        .agg(pl.col("volume").mean().alias("volume"))
+        .sort("bucket_min")
+    )
+    return avg

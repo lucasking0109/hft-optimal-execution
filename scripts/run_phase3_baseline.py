@@ -28,6 +28,7 @@ from hft.analysis.impact import (              # noqa: E402
     adv_from_tick_files,
     average_daily_volume,
 )
+from hft.analysis.vwap import compute_lookback_volume_profile  # noqa: E402
 from hft.backtest.engine import BacktestEngine        # noqa: E402
 from hft.data import AVAILABLE_DATES, load_eq_daily_ohlc  # noqa: E402
 from hft.strategies.almgren_chriss import (    # noqa: E402
@@ -76,13 +77,11 @@ def run_one(ticker: str, date: str, *, daily_df: pl.DataFrame) -> list[dict]:
     except Exception as e:
         return [{"ticker": ticker, "date": date, "strategy": "(adv)", "error": str(e)}]
 
-    try:
-        sigma = estimate_intraday_sigma_bps_per_sqrt_sec(engine.df, sample_seconds=60)
-    except Exception as e:
-        sigma = 1.0
-        sigma_note = f"sigma estimation failed; default 1.0: {e}"
-    else:
-        sigma_note = ""
+    # Use literature-prior σ=1.0 bps/√sec to stay consistent with
+    # Phase B/D/E (and avoid the same-day-mids leakage that the original
+    # `estimate_intraday_sigma_bps_per_sqrt_sec(engine.df)` introduced).
+    sigma = 1.0
+    sigma_note = "sigma=1.0 (literature prior, no leakage)"
 
     eta = ETA_PRIOR_BPS_PER_PCT_ADV.get(ticker, ETA_PRIOR_BPS_PER_PCT_ADV["_default"])
     gamma = GAMMA_PRIOR_BPS_PER_PCT_ADV.get(ticker, GAMMA_PRIOR_BPS_PER_PCT_ADV["_default"])
@@ -103,9 +102,19 @@ def run_one(ticker: str, date: str, *, daily_df: pl.DataFrame) -> list[dict]:
     ]
     strategy_labels = ["twap", "vwap_following", "ac_risk_neutral", "ac_risk_averse"]
 
+    # Leave-one-out volume profile (no same-day leak).
+    lookback = [d for d in DATES if d != date]
+    try:
+        profile = compute_lookback_volume_profile(
+            ticker, lookback_dates=lookback, bin_minutes=5,
+        )
+    except Exception as e:
+        return [{"ticker": ticker, "date": date, "strategy": "(lookback)",
+                 "error": f"{type(e).__name__}: {e}"}]
+
     for strat, label in zip(strategies, strategy_labels):
         try:
-            ctx = engine.market_context(bin_minutes=5)
+            ctx = engine.market_context(bin_minutes=5, volume_profile_override=profile)
             res = engine.run(parent, strat, market_context=ctx)
             rows.append({
                 "ticker": ticker, "date": date, "strategy": label,

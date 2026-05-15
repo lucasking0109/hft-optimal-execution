@@ -39,6 +39,7 @@ from hft.analysis.impact import (                                 # noqa: E402
     ETA_PRIOR_BPS_PER_PCT_ADV,
     GAMMA_PRIOR_BPS_PER_PCT_ADV,
 )
+from hft.analysis.vwap import compute_lookback_volume_profile    # noqa: E402
 from hft.backtest.engine import BacktestEngine                   # noqa: E402
 from hft.data import load_eq_taq                                 # noqa: E402
 from hft.simulators.adv_cache import get_adv                     # noqa: E402
@@ -131,9 +132,13 @@ def train_fold(k: int, train_dates: list[str], train_pool: list[str]) -> Path:
     return model_path
 
 
-def eval_fold(k: int, test_date: str, model_path: Path, eval_pool: list[str]) -> dict:
+def eval_fold(k: int, test_date: str, model_path: Path, eval_pool: list[str],
+              train_dates: list[str]) -> dict:
     """Evaluate RL vs TWAP / AC-RA / VWAP-follow on the test date.
-    Returns a dict of per-strategy median IS + RL vs VWAP delta.
+
+    Causal lookback: volume profile is averaged only across `train_dates`
+    (= days strictly before test_date in this fold), so no future data
+    leaks into the strategies.
     """
     rl_strat = RLAgentStrategy(
         model_path=str(model_path),
@@ -146,7 +151,12 @@ def eval_fold(k: int, test_date: str, model_path: Path, eval_pool: list[str]) ->
         try:
             df = load_eq_taq(ticker, test_date)
             engine = BacktestEngine(ticker, test_date, market_df=df)
-            ctx = engine.market_context(bin_minutes=5)
+            profile = compute_lookback_volume_profile(
+                ticker, lookback_dates=train_dates, bin_minutes=5,
+            )
+            ctx = engine.market_context(
+                bin_minutes=5, volume_profile_override=profile,
+            )
             ctx["adv_shares"] = get_adv(ticker, exclude_dates=["20200117"])
         except Exception:
             continue
@@ -203,7 +213,7 @@ def main():
         test_date = DATES[k]
         print(f"\n=== Fold {k}: train {train_dates} → test {test_date} ===")
         model_path = train_fold(k, train_dates, train_pool)
-        result = eval_fold(k, test_date, model_path, eval_pool)
+        result = eval_fold(k, test_date, model_path, eval_pool, train_dates)
         for r in result["rows"]:
             r["fold"] = k
             r["test_date"] = test_date

@@ -17,6 +17,10 @@ htmlcov/
 # Personal / internal docs
 .claude/
 HANDOFF.md
+_notes/
+
+# Test-only checkpoints (created during pytest)
+rl/checkpoints/_test_*/
 
 # IDE
 .vscode/

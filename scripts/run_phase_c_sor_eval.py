@@ -42,6 +42,7 @@ from hft.analysis.sor import (                                      # noqa: E402
     sor_score_allocation,
 )
 from hft.analysis.venue_metrics import compute_all_venue_metrics    # noqa: E402
+from hft.analysis.vwap import compute_lookback_volume_profile        # noqa: E402
 from hft.backtest.engine import BacktestEngine                       # noqa: E402
 from hft.data import load_eq_taq                                    # noqa: E402
 from hft.strategies.almgren_chriss import (                          # noqa: E402
@@ -117,7 +118,7 @@ def build_allocations(df: pl.DataFrame) -> dict[str, dict[str, float]]:
     }
 
 
-def run_one(engine, parent, base_name, mode, allocations):
+def run_one(engine, parent, base_name, mode, allocations, market_context):
     base_strat = make_base_strategy(base_name, parent.ticker)
     if mode == "nbbo":
         strat = base_strat
@@ -128,7 +129,8 @@ def run_one(engine, parent, base_name, mode, allocations):
             return None  # no routable venues
         strat = SORRoutingStrategy(base_strat, alloc, mode=mode, seed=42)
         venue_aware = True
-    res = engine.run(parent, strat, venue_aware_fills=venue_aware)
+    res = engine.run(parent, strat, market_context=market_context,
+                     venue_aware_fills=venue_aware)
     return res
 
 
@@ -158,6 +160,14 @@ def main():
                 df = load_eq_taq(ticker, date)
                 engine = BacktestEngine(ticker, date, market_df=df)
                 allocations = build_allocations(df)
+                # Leave-one-out lookback volume profile (no same-day leak).
+                lookback = [d for d in DATES if d != date]
+                profile = compute_lookback_volume_profile(
+                    ticker, lookback_dates=lookback, bin_minutes=5,
+                )
+                ctx = engine.market_context(
+                    bin_minutes=5, volume_profile_override=profile,
+                )
             except Exception as e:
                 print(f"  ❌ {ticker} {date}: load/alloc failed: {e}")
                 n_failed += 1
@@ -171,7 +181,7 @@ def main():
             for base_name in BASE_STRATEGIES:
                 for mode in ROUTING_MODES:
                     try:
-                        res = run_one(engine, parent, base_name, mode, allocations)
+                        res = run_one(engine, parent, base_name, mode, allocations, ctx)
                         if res is None:
                             n_skipped += 1
                             continue
