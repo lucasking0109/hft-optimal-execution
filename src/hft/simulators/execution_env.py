@@ -91,6 +91,7 @@ class ExecutionEnv(gym.Env):
         date_pool: list[str] | None = None,
         ticker_pool: list[str] | None = None,
         slice_minutes: int = 5,
+        window_step_minutes: int | None = None,
         step_seconds: int = 5,
         n_steps: int = 60,
         observation_mode: ObservationMode = "v1",
@@ -140,6 +141,11 @@ class ExecutionEnv(gym.Env):
         self.date_pool = list(date_pool) if date_pool else None
         self.ticker_pool = list(ticker_pool) if ticker_pool else None
         self.slice_minutes = slice_minutes
+        # window_step_minutes controls step between window starts. If None,
+        # defaults to slice_minutes (non-overlapping). For Phase G v4 we set
+        # window_step_minutes < slice_minutes to get overlapping windows
+        # (e.g., 30/60 = 12 overlapping 60-min windows covering full RTH).
+        self.window_step_minutes = window_step_minutes
         self.step_seconds = step_seconds
         self.n_steps = n_steps
         self.observation_mode = observation_mode
@@ -187,11 +193,19 @@ class ExecutionEnv(gym.Env):
             tickers_to_use = self.ticker_pool if self.ticker_pool else [ticker]
             dates_to_use = self.date_pool if self.date_pool else [date]
             self._real_starts_by_td = {}
+            # Phase G: window_step_minutes < slice_minutes → overlapping windows
+            step_for_slices = (
+                self.window_step_minutes
+                if self.window_step_minutes is not None
+                else slice_minutes
+            )
             for t in tickers_to_use:
                 for d in dates_to_use:
                     try:
                         starts = list_real_5min_slices(
-                            ticker=t, date=d, step_minutes=slice_minutes,
+                            ticker=t, date=d,
+                            step_minutes=step_for_slices,
+                            window_minutes=slice_minutes,
                         )
                     except Exception:
                         continue

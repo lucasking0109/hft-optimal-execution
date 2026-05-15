@@ -19,13 +19,22 @@ on 5 days of full TAQ + 14-venue NBBO data, and writes down what worked
   AC-RA on 5 tickers** — first sign the bottleneck was horizon/obs,
   not RL itself.
 - **PPO RL ticker-agnostic + spread cost in training (Phase E) generalises
-  to a 104-ticker universe**: trained on 20 diverse tickers from Day 1-4,
-  evaluated on all 104 on Day 5 OOS. Beats VWAP-following on **62% of
-  tickers**, lowest median IS across all 6 strategies tested (+1.55 bps
-  RL vs +5.78 VWAP-follow, both paying half-spread cost). 4-fold mini
-  walk-forward CV: RL wins on 3 of 4 folds, edge grows monotonically
-  with more training data (+1.47 → −1.16 → −6.06 → −9.71 bps vs VWAP).
-  Headline positive result of the project.
+  to a 104-ticker universe** for **mid-morning execution (10:00–11:00 ET)**:
+  trained on 20 diverse tickers from Day 1-4, evaluated on all 104 on
+  Day 5 OOS. Beats VWAP-following on **60% of tickers**, lowest median IS
+  across all 6 strategies (+1.55 vs +5.78 bps, both paying half-spread).
+  4-fold walk-forward: wins 3 of 4 folds.
+- **Time-of-day generalization (Phase G)**: tested across 5 RTH windows.
+  RL wins open/early-mid/late-mid, **loses in mid and close** (close
+  Δ +10 bps vs VWAP, win-rate 25%). v4 retrain with overlapping windows
+  didn't fix close — root cause is **action cap (0.05) saturation** under
+  tight regimes (both v3 and v4 collapse to TWAP-cap-uniform). Honest
+  scope-limited finding; action-cap redesign is Phase H candidate.
+- **Parent size sensitivity (Phase G.2)**: tested 0.1% / 1% / 5% ADV.
+  Strategy ranking effectively unchanged across sizes — but that's a
+  **limitation, not a robustness claim**: we lack a self-impact model,
+  so big parents don't push price in our backtest. Real 1%+ ADV
+  execution would behave differently. Phase H candidate.
 - **Static venue allocation** loses to NBBO routing by 0.1–9 bps —
   validates dynamic per-order routing.
 - **Trying ML for the η coefficient** (xgboost on 762k trade events)
@@ -49,7 +58,7 @@ src/hft/
 └── analysis/     # impact regression, SOR, metrics
 
 scripts/          # one driver per phase
-tests/            # 140 unit tests
+tests/            # 155 unit tests
 reports/          # per-phase writeups + figures
 dashboards/       # streamlit explorers
 vendor/abides-sim # vendored ABIDES (BSD-3) with patch notes
@@ -59,10 +68,11 @@ vendor/abides-sim # vendored ABIDES (BSD-3) with patch notes
 
 ```bash
 uv sync && uv pip install -e .
-uv run pytest tests/                              # 140 tests
+uv run pytest tests/                              # 155 tests
 uv run python scripts/eval_ppo_oos.py             # phase 6/A 5-min OOS comparison
 uv run python scripts/run_phase_d_eval.py         # phase D 60-min RL vs 5 baselines
 uv run python scripts/run_phase_e_xticker_eval.py # phase E 104-ticker OOS sweep
+uv run python scripts/run_phase_g_multi_window.py # phase G multi-window eval
 uv run streamlit run dashboards/01_data_explorer.py
 ```
 
@@ -78,7 +88,9 @@ uv run streamlit run dashboards/01_data_explorer.py
 | B | Strategy zoo (POV, Tóth, CVXPY-constrained AC) + 8-strategy sweep | adds nothing material on top of AC-RA |
 | B.3 | xgboost-predicted state-conditional η | overfits, loses to static η, kept as negative finding |
 | **D** | **PPO RL on 60-min episodes, 13-dim microstructure obs, 5-ticker train pool** | **median IS −13.69 bps — best of all 9 strategies, beats AC-RA by 0.45 bps and TWAP by 7.92 bps; ties AC-RA on Day-5 OOS (both −8.52)** |
-| **E** | **Ticker-agnostic v3 obs (log_adv_norm replaces ticker_idx) + spread cost in training; 20-ticker train pool, 104-ticker OOS sweep, 4-fold walk-forward CV** | **RL beats VWAP-following on 62% of 104 tickers on Day-5 OOS; lowest median IS of all 6 strategies (+1.55 vs +5.78 VWAP-follow). Generalises to ~84 unseen tickers. Walk-forward: wins on 3 of 4 folds; edge grows monotonically with more training data.** |
+| **E** | **Ticker-agnostic v3 obs (log_adv_norm replaces ticker_idx) + spread cost in training; 20-ticker train pool, 104-ticker OOS sweep, 4-fold walk-forward CV** | **RL beats VWAP-following on 60% of 104 tickers in the 10:00–11:00 ET window; lowest median IS of all 6 strategies (+1.55 vs +5.78 VWAP-follow). Generalises to ~84 unseen tickers. Walk-forward: wins on 3 of 4 folds; edge grows monotonically with more training data.** |
+| **F** | Volume-profile **data-leakage audit + fix** — `compute_lookback_volume_profile()` (leave-one-out across other days), regression test guards; Phase 3 σ leak also fixed (constant σ instead of same-day-mid estimate) | Volume-aware classical strategies' apparent "−13.22 bps beats TWAP by 7.5 bps" was a same-day-leakage artifact; under clean lookback they're ~−4.51 bps (essentially tied with TWAP). RL / AC-RA unaffected (don't use volume_profile). Phase E.3 headline numbers unchanged. |
+| **G** | **Multi-window OOS** (5 RTH windows × 104 tickers) + **parent size sweep** (0.1% / 1% / 5% ADV); attempted **v4 retrain** with overlapping training windows | **Time-of-day mixed**: RL beats VWAP-follow in open/early-mid/late-mid (Δ −1 to −5 bps, win 49–67%), loses in mid and close (close Δ +10 bps, win 25%). v4 retrain (overlapping 60-min windows) didn't fix close — **action cap (0.05) saturates**, both v3 and v4 collapse to TWAP-cap-uniform in tight regimes. Parent-size sensitivity ≈ 0 across sizes — but that's a **limitation** (no self-impact model), not a feature. |
 
 ## Caveats
 

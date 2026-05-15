@@ -114,21 +114,33 @@ def list_real_5min_slices(
     ticker: str = "AAPL",
     date: str = "20200113",
     step_minutes: int = 5,
+    window_minutes: int | None = None,
 ) -> list[int]:
-    """Return list of valid `start_ns` for `step_minutes`-long slices in RTH.
+    """Return list of valid `start_ns` for slices within RTH.
 
-    RTH = 09:30:00 to 16:00:00 ET. Returns one slice every step_minutes
-    starting on each step_minutes boundary (no overlap). Caller picks one
-    randomly per env.reset().
+    RTH = 09:30:00 to 16:00:00 ET.
+
+    Args:
+        step_minutes: gap between consecutive slice start times.
+        window_minutes: slice length. If None (default), uses step_minutes
+            (i.e., non-overlapping slices, backward-compat behavior).
+            If different from step_minutes, slices overlap.
+
+    Phase G use case: `step_minutes=30, window_minutes=60` gives 12 overlapping
+    60-min slices starting every 30 min from 09:30 to 15:00 — covers full
+    RTH including 15:00–16:00 (which non-overlapping 60-min step would miss).
     """
     rth_start_ns = 9 * 3600 * int(1e9) + 30 * 60 * int(1e9)        # 09:30:00
     rth_end_ns = 16 * 3600 * int(1e9)                              # 16:00:00
-    slice_ns = step_minutes * 60 * int(1e9)
+    if window_minutes is None:
+        window_minutes = step_minutes
+    slice_ns = window_minutes * 60 * int(1e9)
+    step_ns = step_minutes * 60 * int(1e9)
     starts: list[int] = []
     t = rth_start_ns
     while t + slice_ns <= rth_end_ns:
         starts.append(t)
-        t += slice_ns
+        t += step_ns
     return starts
 
 
