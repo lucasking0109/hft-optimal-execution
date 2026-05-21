@@ -167,17 +167,17 @@ def main():
         )
         if em_rl_median is None:
             sanity_ok = False
-            sanity_msg = f"❌ No {RL_MODEL_NAME} data in early_mid window"
+            sanity_msg = f"FAIL: no {RL_MODEL_NAME} data in early_mid window"
         elif abs(em_rl_median) > 30:
             sanity_ok = False
             sanity_msg = (
-                f"❌ {RL_MODEL_NAME} early_mid median IS = {em_rl_median:+.3f} "
+                f"FAIL: {RL_MODEL_NAME} early_mid median IS = {em_rl_median:+.3f} "
                 f"(out of plausible range [-30, +30]). Eval pipeline regressed?"
             )
         else:
-            sanity_msg = (f"✅ {RL_MODEL_NAME} early_mid median IS = "
+            sanity_msg = (f"{RL_MODEL_NAME} early_mid median IS = "
                           f"{em_rl_median:+.3f} (within plausible range)")
-        print(f"\n🔍 Sanity: {sanity_msg}")
+        print(f"\nSanity: {sanity_msg}")
 
     # Build markdown report
     md = ["# Phase G.1 — Multi-Window OOS Eval (104 ticker × 5 RTH windows)\n"]
@@ -226,22 +226,22 @@ def main():
         close_wr = win_rates.get(("close", RL_MODEL_NAME), None)
         md.append("\n## G.4 retrain trigger check\n")
         if close_wr is None:
-            md.append("- ⚠️  RL win-rate in close window unavailable")
+            md.append("- RL win-rate in close window unavailable")
         elif close_wr >= 0.55:
-            md.append(f"- ✅ RL win-rate vs VWAP-follow in close = {close_wr*100:.0f}% "
-                      f"— **no retrain needed** (≥55% threshold)")
+            md.append(f"- RL win-rate vs VWAP-follow in close = {close_wr*100:.0f}% "
+                      f"— no retrain needed (>=55% threshold)")
         elif close_wr >= 0.45:
             mean_wr = np.mean([win_rates.get((w[0], RL_MODEL_NAME), 0.0) for w in WINDOWS])
             if mean_wr >= 0.50:
-                md.append(f"- 🟡 RL win-rate in close = {close_wr*100:.0f}% borderline, "
-                          f"but mean across windows = {mean_wr*100:.0f}% ≥ 50% "
-                          f"— **no retrain needed**")
+                md.append(f"- RL win-rate in close = {close_wr*100:.0f}% borderline, "
+                          f"but mean across windows = {mean_wr*100:.0f}% >= 50% "
+                          f"— no retrain needed")
             else:
-                md.append(f"- 🔴 RL win-rate in close = {close_wr*100:.0f}% borderline, "
-                          f"mean = {mean_wr*100:.0f}% < 50% — **retrain v4 recommended**")
+                md.append(f"- RL win-rate in close = {close_wr*100:.0f}% borderline, "
+                          f"mean = {mean_wr*100:.0f}% < 50% — retrain v4 recommended")
         else:
-            md.append(f"- 🔴 RL win-rate vs VWAP-follow in close = {close_wr*100:.0f}% "
-                      f"< 45% — **generalization failed, retrain v4 (G.4)**")
+            md.append(f"- RL win-rate vs VWAP-follow in close = {close_wr*100:.0f}% "
+                      f"< 45% — generalization failed, retrain v4 (G.4)")
 
     md.append("\n## Caveats\n")
     md.append("- Single OOS day (20200117).")

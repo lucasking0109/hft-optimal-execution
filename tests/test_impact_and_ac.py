@@ -53,7 +53,9 @@ def test_check_gamma_against_prior_runs(aapl_day, aapl_adv):
         aapl_day, ticker="AAPL", adv_shares=aapl_adv,
         long_horizon_seconds=600, percentile_threshold=0.95,
     )
-    assert chk.prior_bps_per_pct_adv == GAMMA_PRIOR_BPS_PER_PCT_ADV["AAPL"]
+    assert chk.prior_bps_per_pct_adv == GAMMA_PRIOR_BPS_PER_PCT_ADV.get(
+        "AAPL", GAMMA_PRIOR_BPS_PER_PCT_ADV["_default"]
+    )
     # Ratio should be a number (or NaN if too few events)
     assert isinstance(chk.note, str)
 

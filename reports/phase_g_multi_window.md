@@ -7,7 +7,7 @@
 
 ## Regression sanity
 
-✅ rl_v4 early_mid median IS = +3.626 (within plausible range)
+rl_v4 early_mid median IS = +3.626 (within plausible range)
 
 ## Per-(window, strategy) median IS
 
@@ -56,7 +56,7 @@
 
 ## G.4 retrain trigger check
 
-- 🔴 RL win-rate vs VWAP-follow in close = 25% < 45% — **generalization failed, retrain v4 (G.4)**
+- RL win-rate vs VWAP-follow in close = 25% < 45% — generalization failed, retrain v4 (G.4)
 
 ## Caveats
 

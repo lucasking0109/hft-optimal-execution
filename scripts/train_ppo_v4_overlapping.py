@@ -33,7 +33,7 @@ from stable_baselines3.common.monitor import Monitor
 from hft.simulators.execution_env import ExecutionEnv  # noqa: E402
 
 
-TOTAL_TIMESTEPS = 500_000
+TOTAL_TIMESTEPS = 100_000     # starting budget; final budget tuned offline
 SLICE_MIN = 60                # episode length
 WINDOW_STEP_MIN = 30          # step between window starts → OVERLAPPING
 STEP_SEC = 30

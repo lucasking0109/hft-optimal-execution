@@ -6,12 +6,15 @@
 **Windows**: open, early_mid, mid, late_mid, close
 **Total backtests**: 9343 done / 17 failed / 0 skipped
 
-## ⚠️ Caveats
+## Caveats
 
-- **0.1% ADV** → no-impact assumption safe, results directly comparable
-- **1% ADV** → borderline; POV 5% cap occasionally binds on illiquid names
-- **5% ADV × 1-hour** → POV 5% cap **heavily violated** (per-bucket participation ~20-30%). force_completion water-fill makes every child ~4-5× POV cap. Use this row as **stress test**, not production scenario.
-- Self-impact NOT modelled — all results assume price-taker. At 1%+ ADV, real fills would push the market. Phase H candidate.
+- 0.1% ADV: no-impact assumption safe, results directly comparable
+- 1% ADV: borderline; POV 5% cap occasionally binds on illiquid names
+- 5% ADV × 1-hour: POV 5% cap heavily violated (per-bucket participation
+  ~20-30%); force_completion water-fill makes every child ~4-5× POV cap.
+  Treat this row as stress test, not production scenario.
+- Self-impact not modelled — all results assume price-taker. At 1%+ ADV,
+  real fills would push the market. Phase H candidate.
 
 ## RL vs VWAP-following per (size, window) — key signal
 

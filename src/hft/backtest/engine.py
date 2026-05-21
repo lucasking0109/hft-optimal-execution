@@ -59,12 +59,12 @@ class BacktestEngine:
 
         Args:
             bin_minutes: bucket granularity for volume profile.
-            volume_profile_override: pre-computed (leakage-free)
+            volume_profile_override: pre-computed (causal, no look-ahead)
                 DataFrame[bucket_min, volume] — typically from
-                `compute_lookback_volume_profile()`. **Strongly recommended
-                in production / OOS evaluation**. If None, falls back to
-                same-day volume profile and emits a UserWarning (data
-                leakage; left for backward compatibility with old test code).
+                `compute_lookback_volume_profile()`. Recommended for
+                OOS evaluation. If None, falls back to same-day volume
+                profile and emits a UserWarning (look-ahead bias; kept
+                for backward compatibility with older test code).
         """
         if volume_profile_override is not None:
             profile = volume_profile_override
@@ -73,8 +73,8 @@ class BacktestEngine:
             warnings.warn(
                 "BacktestEngine.market_context() called without "
                 "volume_profile_override — using same-day volume_profile "
-                "(DATA LEAKAGE). Pass `volume_profile_override` from "
-                "compute_lookback_volume_profile() to fix.",
+                "(look-ahead bias). Pass `volume_profile_override` from "
+                "compute_lookback_volume_profile() for OOS-clean results.",
                 UserWarning, stacklevel=2,
             )
             profile = compute_volume_profile(

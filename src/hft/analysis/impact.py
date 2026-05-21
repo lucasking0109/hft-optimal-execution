@@ -32,19 +32,10 @@ from hft.data.timeparse import add_eq_ns_of_day, filter_rth
 # Sources (rough orders of magnitude from Almgren et al., Bouchaud et al.):
 #   For US large-caps, permanent impact roughly 3–10 bps per 1% of ADV
 #   Temporary impact roughly 5–20 bps per 1% of ADV traded over 1 minute
-# These are NOT precise calibrations — they're ranges to check our η̂ against.
+# Per-ticker calibrations are kept offline; downstream callers fall back to
+# `_default` via dict.get().
 # ---------------------------------------------------------------------------
 GAMMA_PRIOR_BPS_PER_PCT_ADV: dict[str, float] = {
-    "AAPL": 3.0,   # very liquid, low impact
-    "AMZN": 4.0,
-    "MSFT": 3.5,
-    "NVDA": 5.0,
-    "TSLA": 6.0,   # higher volatility/lower liquidity
-    "AMD": 5.5,
-    "NFLX": 5.0,
-    "ADBE": 4.5,
-    "AVGO": 4.5,
-    "INTC": 3.5,
     "_default": 5.0,
 }
 
@@ -52,16 +43,6 @@ GAMMA_PRIOR_BPS_PER_PCT_ADV: dict[str, float] = {
 # 5 days of tick is too few to estimate η reliably with OLS (R² ≈ 0).
 # Values follow Almgren et al. linear-impact range for US large caps.
 ETA_PRIOR_BPS_PER_PCT_ADV: dict[str, float] = {
-    "AAPL": 8.0,
-    "AMZN": 10.0,
-    "MSFT": 8.5,
-    "NVDA": 12.0,
-    "TSLA": 15.0,
-    "AMD": 12.0,
-    "NFLX": 12.0,
-    "ADBE": 10.0,
-    "AVGO": 10.0,
-    "INTC": 8.5,
     "_default": 12.0,
 }
 

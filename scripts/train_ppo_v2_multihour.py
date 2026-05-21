@@ -26,7 +26,7 @@ from stable_baselines3.common.monitor import Monitor
 from hft.simulators.execution_env import ExecutionEnv  # noqa: E402
 
 
-TOTAL_TIMESTEPS = 500_000
+TOTAL_TIMESTEPS = 100_000   # starting budget; final budget tuned offline
 SLICE_MIN = 60
 STEP_SEC = 30
 N_STEPS = 120

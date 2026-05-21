@@ -20,9 +20,9 @@ from hft.backtest.engine import BacktestEngine
 
 
 def test_market_context_warns_without_override():
-    """Default same-day behavior must emit UserWarning (data leakage)."""
+    """Default same-day behavior must emit UserWarning (look-ahead bias)."""
     engine = BacktestEngine("AAPL", "20200113")
-    with pytest.warns(UserWarning, match="DATA LEAKAGE"):
+    with pytest.warns(UserWarning, match="look-ahead bias"):
         engine.market_context()
 
 

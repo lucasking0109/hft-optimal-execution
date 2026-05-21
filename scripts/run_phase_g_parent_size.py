@@ -189,7 +189,7 @@ def main():
     md.append(f"**Windows**: {', '.join([w[0] for w in WINDOWS])}")
     md.append(f"**Total backtests**: {n_done} done / {n_failed} failed / {n_skipped} skipped\n")
 
-    md.append("## ⚠️ Caveats\n")
+    md.append("## Caveats\n")
     md.append("- **0.1% ADV** → no-impact assumption safe, results directly comparable")
     md.append("- **1% ADV** → borderline; POV 5% cap occasionally binds on illiquid names")
     md.append("- **5% ADV × 1-hour** → POV 5% cap **heavily violated** (per-bucket "

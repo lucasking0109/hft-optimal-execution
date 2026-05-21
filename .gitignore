@@ -22,6 +22,9 @@ _notes/
 # Test-only checkpoints (created during pytest)
 rl/checkpoints/_test_*/
 
+# Trained model weights — kept offline (retrain via training scripts)
+rl/checkpoints/**/model.zip
+
 # IDE
 .vscode/
 .idea/
