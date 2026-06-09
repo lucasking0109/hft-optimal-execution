@@ -45,7 +45,7 @@ on 5 days of full TAQ + 14-venue NBBO data, and writes down what worked
 ## Data
 
 - 5 days of full TAQ tick data (2020-01-13 to 2020-01-17)
-- 208 equities × 14 venues, NBBO reconstructed from raw quotes
+- 104 equities (NDX-100 class) × 14 venues, NBBO reconstructed from raw quotes
 - NQ futures L2 + 1-min aggregates
 - Raw tick data is proprietary and **not** included in this repo
 
